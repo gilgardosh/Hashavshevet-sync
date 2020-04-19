@@ -2,7 +2,7 @@ import * as fs from "fs";
 import csvParser from "csv-parser";
 const results = [];
 
-fs.createReadStream('./demidata.csv')
+fs.createReadStream('./demiBankData.csv')
   .pipe(csvParser())
   .on('data', (data) => results.push(data))
   .on('end', () => {
