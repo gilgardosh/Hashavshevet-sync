@@ -1,0 +1,5 @@
+sources:
+  - name: Hashavshevet
+    handler:
+      openapi:
+        source: ./openapi/wizcloud.yaml
