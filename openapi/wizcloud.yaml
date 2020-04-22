@@ -66,7 +66,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/companiesForTokenResData"
+                $ref: "#/components/schemas/companiesForTokenRes"
   "/api/napi":
     post:
       summary: "Get User Details"
@@ -119,7 +119,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/batchResData"
+                $ref: "#/components/schemas/batchRes"
   "/jtransApi/chkBatch":
     post:
       summary: "Checks if there are errors in the batch"
@@ -155,7 +155,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/batchResData"
+                $ref: "#/components/schemas/batchRes"
   "/jtransApi/newBatch":
     post:
       summary: "Opens a new batch and return the number"
@@ -178,7 +178,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/batchResData"
+                $ref: "#/components/schemas/batchRes"
   "/jtransApi/issueBatch":
     post:
       summary: "Checks and inputs the temporary batch into the permanent storage."
@@ -214,7 +214,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/batchResData"
+                $ref: "#/components/schemas/batchRes"
   "/IndexApi/importIndex":
     post:
       summary: "Imports or updates records to the selected index"
@@ -244,13 +244,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/indexResData"
+                $ref: "#/components/schemas/indexRes"
         "304":
           description: "Errors in data"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/indexResData"
+                $ref: "#/components/schemas/indexRes"
   "/invApi/createDoc":
     post:
       summary: "Imports and updates temporary documents"
@@ -281,7 +281,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/documentResData"
+                $ref: "#/components/schemas/documentRes"
   "/invApi/issueDocument":
     post:
       summary: "Checks if there are errors in the batch"
@@ -316,7 +316,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/documentResData"
+                $ref: "#/components/schemas/documentRes"
   "/invApi/delDocument":
     post:
       summary: "Delete document from tables"
@@ -350,7 +350,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/documentResData"
+                $ref: "#/components/schemas/documentRes"
   "/invApi/getDoc":
     post:
       summary: "Show document data"
@@ -384,7 +384,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/documentResData"
+                $ref: "#/components/schemas/documentRes"
   "/BankPagesApi/importBankPage":
     post:
       summary: "Import  or update records to chosen index"
@@ -420,7 +420,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/companiesForTokenResData"
+                $ref: "#/components/schemas/companiesForTokenRes"
   "/ExportDataApi/exportData":
     post:
       summary: "Export data according to the selected report"
@@ -1371,7 +1371,7 @@ components:
         Warehouse:
           $ref: "#/components/schemas/Warehouse"
 
-    companiesForTokenResData:
+    companiesForTokenRes:
       type: object
       properties:
         repdata:
@@ -1381,7 +1381,7 @@ components:
           description: "List of companies for user"
       example: "{'repdata':[{'Company_File_Name':'wizdb77c2b','Company_Name':'חברה של עדנה ','Comp_Vatnum':'999999999'}]}"
 
-    batchResData:
+    batchRes:
       type: object
       properties:
         status:
@@ -1409,7 +1409,7 @@ components:
               items:
                 type: object
 
-    indexResData:
+    indexRes:
       type: object
       properties:
         status:
@@ -1429,7 +1429,7 @@ components:
         err:
           type: string
     
-    documentResData:
+    documentRes:
       type: object
       properties:
         status:
@@ -1574,7 +1574,7 @@ components:
               items:
                 type: object
 
-    bankPageResData:
+    bankPageRes:
       type: object
       properties:
         status:
@@ -1585,54 +1585,6 @@ components:
           items:
             $ref: "#/components/schemas/errorItem"
           description: "List of errors"
-
-  responses:
-    batchRes:
-      description: ""
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/batchResData"
-    
-    indexRes:
-      description: ""
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/indexResData"
-    
-    documentRes:
-      description: ""
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/documentResData"
-
-    bankPageRes:
-      description: ""
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/bankPageResData"
-
-    companiesForTokenRes:
-      description: ""
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/companiesForTokenResData"
-
-    exportDataRes:
-      description: ""
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              repdata:
-                type: array
-                items:
-                  type: object
 
   securitySchemes:
     wizAuth:
