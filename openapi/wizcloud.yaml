@@ -15,7 +15,7 @@ servers:
   - url: "https://lb1.wizcloud.co.il"
     description: "main database server"
 paths:
-  "/createSession/{wizKey}/{company}":
+  "/createSession/{wizKey}/{company}": #TODO
     get:
       summary: "Authentication endpoint. Returns a Token"
       tags:
@@ -235,7 +235,6 @@ paths:
         required: true
         content:
           application/x-www-form-urlencoded:
-            #TODO check if all parameters are required, and api validation
             schema:
               $ref: "#/components/schemas/importIndexRecordsBody"
       responses:
@@ -272,7 +271,6 @@ paths:
         required: true
         content:
           application/x-www-form-urlencoded:
-            #TODO check if all parameters are required, and api validation
             schema:
               $ref: "#/components/schemas/createDocumentBody"
       responses:
@@ -385,7 +383,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/documentRes"
-  "/BankPagesApi/importBankPage":
+  "/BankPagesApi/importBankPage": #TODO
     post:
       summary: "Import  or update records to chosen index"
       tags:
@@ -405,7 +403,6 @@ paths:
         required: true
         content:
           application/x-www-form-urlencoded:
-            #TODO check if all parameters are required, and api validation
             schema:
               type: object
               required:
@@ -413,7 +410,7 @@ paths:
               properties:
                 rows:
                   type: object
-                  #TODO define the object and create schema
+                  $ref: "#/components/schemas/bankPageBody"
       responses:
         "200":
           description: ""
@@ -506,7 +503,7 @@ components:
       description: "name acc 111"
       maximum: 50
       example: "222"
-    Address:
+    Address: #TODO
       type: string
       description: "Address"
       maximum: 50 #NOTE: in StockData can be 100
@@ -558,7 +555,7 @@ components:
       type: string
       maximum: 5
       description: "Bank branch code"
-    City:
+    City: #TODO
       type: string
       maximum: 20 #NOTE: in StockData could be 50
       description: "City"
@@ -605,7 +602,7 @@ components:
       type: string
       maximum: 250
       description: "Message for the customer"
-    DatF3:
+    DatF3: #TODO
       type: string #TODO: maybe can validate here: mm/dd/yyyy
       description: "Additional date"
       example: "mm/dd/yyyy"
@@ -631,7 +628,7 @@ components:
       format: float
       description: "% withholding tax"
       example: "10.5"
-    DeductionValid:
+    DeductionValid: #TODO
       type: string #maybe can validate here: mm/dd/yyyy
       description: "Validity date of the % withholding tax"
       example: "28/02/2019"
@@ -655,7 +652,7 @@ components:
       type: string
       maximum: 50
       description: "Additional remarks"
-    Details:
+    Details: #TODO
       type: string
       maximum: 50 #NOTE: in StockData could be 250
       description: "Details, Remarks"
@@ -668,7 +665,7 @@ components:
       type: integer
       format: int32
       description: "Discount code"
-    DiscountPrc:
+    DiscountPrc: #TODO
       type: number
       format: float #TODO: make sure Items_Data accepts not only INT
       description: "% of sale promotion or general discount "
@@ -687,7 +684,7 @@ components:
       format: int32
       description: "Document type (according to the DocumentDef table)"
       example: "1"
-    DueDate:
+    DueDate: #TODO
       type: string #TODO: maybe can validate here: mm/dd/yyyy
       description: "Due date"
       example: "30/01/2018"
@@ -703,7 +700,7 @@ components:
       type: string
       maximum: 30
       description: "Fax"
-    Filter:
+    Filter: #TODO
       type: string
       maximum: 5 #NOTE: in Items Data could be 10
       description: "Filtering"
@@ -734,7 +731,7 @@ components:
       maximum: 100
       description: "Item name"
       example: "name item 33"
-    LastPurchDate:
+    LastPurchDate: #TODO
       type: string #TODO: maybe can validate here: mm/dd/yyyy
       description: "Last purchasing price date"
     LineNoForSorting:
@@ -915,7 +912,7 @@ components:
       maximum: 3
       description: "Transaction type code"
       example: "חל"
-    ValueDate:
+    ValueDate: #TODO
       type: string #TODO: maybe can validate here: mm/dd/yyyy
       description: "Date"
       example: "30/01/2018"
@@ -990,7 +987,7 @@ components:
           items:
             $ref: "#/components/schemas/journalTrans"
 
-    importIndexRecordsBody:
+    importIndexRecordsBody: #TODO
       type: object
       required: #TODO: make sure whats required
         - myindex
@@ -1015,7 +1012,7 @@ components:
               - $ref: "#/components/schemas/accountsTrans"
               - $ref: "#/components/schemas/itemsTrans"
 
-    createDocumentBody:
+    createDocumentBody: #TODO
       type: object
       required: #TODO: make sure whats required
         - issueStock
@@ -1033,21 +1030,56 @@ components:
           items:
             $ref: "#/components/schemas/stockTrans"
 
-    exportDataRecordsBody:
+    bankPageBody: #TODO
       type: object
       required: #TODO: make sure whats required
+        - AccountKey
+        - CreditDebit
+        - SuF
+      properties:
+        AccountKey:
+          $ref: "#/components/schemas/AccountKey"
+        Reference:
+          $ref: "#/components/schemas/Reference"
+        CreditDebit:
+          type: integer
+          description: "Debit - 1; Credit - 0"
+          enum:
+            - 0
+            - 1
+        SuF:
+          $ref: "#/components/schemas/SuF"
+        Details:
+          $ref: "#/components/schemas/Details"
+
+    exportDataRecordsBody:
+      type: object
+      required:
         - datafile
-        - parameters
       properties:
         parameters:
           type: array
           items:
             type: object
-            #TODO define the object and create schema
+            properties:
+              "p_name":
+                type: string
+              "id":
+                type: integer
+              "type":
+                type: string
+              "name":
+                type: string
+              "defVal":
+                type: string
+              "opName":
+                type: string
+              "opOrigin":
+                type: string
         datafile:
           type: string
 
-    journalTrans:
+    journalTrans: #TODO
       type: object
       required: #TODO: make sure whats required
         - SuF
@@ -1104,7 +1136,7 @@ components:
           items:
             $ref: "#/components/schemas/journalSubTrans"
 
-    journalSubTrans:
+    journalSubTrans: #TODO
       type: object
       required: #TODO: make sure whats required
         - AccountKey
@@ -1284,7 +1316,7 @@ components:
         WieghtItem:
           $ref: "#/components/schemas/WieghtItem"
 
-    stockTrans:
+    stockTrans: #TODO
       type: object
       required: #TODO: make sure whats required
         - AccountKey
@@ -1336,7 +1368,7 @@ components:
           items:
             $ref: "#/components/schemas/stockSubTrans"
 
-    stockSubTrans:
+    stockSubTrans: #TODO
       type: object
       required: #TODO: make sure whats required
         - ItemKey
@@ -1443,7 +1475,7 @@ components:
         TempDocumentDeleted:
           description: "Yes or No"
           type: string
-        # ErrorsOnDoc:
+        #not used key - "ErrorsOnDoc"
         DocumentDetails:
           description: "All document data"
           type: array
