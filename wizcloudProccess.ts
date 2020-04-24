@@ -24,11 +24,6 @@ async function getHashData() {
   errors != null ? console.log("ERROR: bad wizcloud request", errors) : null;
   // data != null ? console.log("Hashavshevet res Data:", data) : null;
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////
-  /* lunch demidata until fixing graphql hebrew data processing or renaming wizcloud keys to latin: */
-  // hashData = require("./demiHashData.json").repdata;
-  ////////////////////////////////////////////////////////////////////////////////////////////////////
-
   return await hashData;
 }
 

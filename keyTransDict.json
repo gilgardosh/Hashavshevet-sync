@@ -1,5 +1,6 @@
 {
-  "תאריך": "ValueDate",
+  "קוד תנועה": "transID",
+  "תאריך": "valueDate",
   "תיאור הפעולה": "Description",
   "חשבון": "Account",
   "אסמכתא": "Reference",
