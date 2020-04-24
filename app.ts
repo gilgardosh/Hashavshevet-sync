@@ -1,16 +1,12 @@
-import { getHashData } from "./wizcloudProccess";
-import { getBankData } from "./bankProccess";
-import { compareBankHashCata } from "./compareAlgorithm";
+import { getHashData } from "./utils/wizcloudProccess";
+import { getBankData } from "./utils/bankProccess";
+import { compareBankHashData } from "./utils/compareAlgorithm";
 
-let hashData: Array<Object>;
-let bankData: Array<Object> = (getBankData("./demiBankData.csv"));
+let hashData: object[];
+const bankData: object[] = (getBankData("./demiData/demiBankData.csv"));
 
 getHashData().then((res) => {
   hashData = res;
   // console.log(hashData);
-  compareBankHashCata(bankData, hashData);
+  console.log(compareBankHashData(bankData, hashData));
 });
-
-//delete next line after debuging:
-// hashData = require("./demiHashData.json").repdata
-//////////////////////
