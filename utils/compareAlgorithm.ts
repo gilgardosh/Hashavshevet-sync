@@ -4,11 +4,11 @@ function compareBankHashData(bankData, hashData) {
     bank: {},
     hashavshevet: {},
   };
-  
+
   outerloop: for (const bankTrans of bankData[0]) {
     const bankSuF = bankTrans.SuF;
     const bankDate = bankTrans.valueDate;
- 
+
     for (const hashTrans of hashData) {
       const hashSuF = parseFloat(hashTrans.suF);
       const hashDate =

@@ -5,7 +5,7 @@ config();
 
 const bankUserCode = process.env.BANK_USER_CODE;
 const bankPassword = process.env.BANK_PASSWORD;
-let accountsData = [];
+const accountsData = [];
 
 const bankCsvDict = {
   "קוד תנועה": "transID",
@@ -41,7 +41,7 @@ async function getBankData(startDate) {
   };
   const options = {
     companyId: "hapoalim",
-    startDate: startDate,
+    startDate,
     combineInstallments: false, // if set to true, all installment transactions will be combine into the first one
     showBrowser: true, // shows the browser while scraping, good for debugging (default false)
     verbose: false, // include more debug info about in the output
@@ -88,7 +88,7 @@ async function getBankData(startDate) {
 }
 
 function keysToHashFormat(data: object[], keyDict) {
-  
+
   function arrayKeysToLatin(allTransData: object[]) {
     for (let i = 0; i < allTransData.length; i++) {
       allTransData[i] = objectKeysToLatin(allTransData[i]);

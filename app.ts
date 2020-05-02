@@ -6,19 +6,21 @@ import { date } from "./utils/getDate";
 async function executeSync(months) {
   const promises = [
     getBankData(date.startDateISO(months)),
-    getHashData(date.startDateHash(months)),
+    // getHashData(date.startDateHash(months)),
   ];
   try {
     const results = await Promise.all(promises);
-    let bankData = results[0];
-    let hashData = results[1];
+    const bankData = results[0];
+    console.log(bankData);
     
-    let comparisonJson: object = compareBankHashData(bankData, hashData);
-    // TODO: function that creates log file of comparison
-    console.log("comparisonJson", comparisonJson);
+    // const hashData = results[1];
+
+    // const comparisonJson: object = compareBankHashData(bankData, hashData);
+    // // TODO: function that creates log file of comparison
+    // console.log("comparisonJson", comparisonJson);
   } catch (error) {
     console.log("ERROR:", error);
   }
 }
 
-executeSync(6);
+executeSync(2);

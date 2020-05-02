@@ -1,5 +1,5 @@
 import { getMesh, findAndParseConfig } from "@graphql-mesh/runtime";
-var fetch = require("node-fetch");
+let fetch = require("node-fetch");
 import { config } from "dotenv";
 
 config();
@@ -62,7 +62,7 @@ async function getHashData(
             }
           ]
         }
-        
+
       ) {
         repdata
       }
