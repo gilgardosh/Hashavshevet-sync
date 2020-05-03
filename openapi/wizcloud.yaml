@@ -477,7 +477,35 @@ paths:
                   repdata:
                     type: array
                     items:
-                      type: object
+                      oneOf:
+                        #TODO: create schemes for responses. Think about moving this to another file and referencing there.
+                        - allOf:
+                            - $ref: "#/components/schemas/journalTrans"
+                            - type: object
+                              properties:
+                                batchNo:
+                                  $ref: "#/components/schemas/batchNo"
+                                batchDesc:
+                                  type: string
+                                batchInitTime:
+                                  type: string
+                                batchInitDate:
+                                  type: string
+                                transID:
+                                  type: integer
+                        - allOf:
+                          - $ref: "#/components/schemas/accountsData"
+                          - type: object
+                            properties:
+                              zzaccountInitDate:
+                                type: string
+                              zzaccountNormal-Potential-InactivePotential:
+                                type: string
+                              zzactiveAccount:
+                                type: string
+                              zzcellPhone:
+                                type: string
+                        - type: object
 
   # "/crmActivitiesApi/createSchema":
   # "/crmActivitiesTest/createSchema":
@@ -985,7 +1013,13 @@ components:
         rows:
           type: array
           items:
-            $ref: "#/components/schemas/journalTrans"
+            allOf:
+              - type: object
+                required: #TODO: make sure whats required
+                  - SuF
+                  - TransCredID
+                  - TransDebID
+              - $ref: "#/components/schemas/journalTrans"
 
     importIndexRecordsBody: #TODO
       type: object
@@ -1009,7 +1043,7 @@ components:
           items:
             oneOf:
               - type: object #TODO: figure out why without this line pops an error
-              - $ref: "#/components/schemas/accountsTrans"
+              - $ref: "#/components/schemas/accountsData"
               - $ref: "#/components/schemas/itemsTrans"
 
     createDocumentBody: #TODO
@@ -1081,11 +1115,6 @@ components:
 
     journalTrans: #TODO
       type: object
-      required: #TODO: make sure whats required
-        - SuF
-        - TransCredID
-        - TransDebID
-        - moves
       properties:
         Branch:
           $ref: "#/components/schemas/Branch"
@@ -1152,7 +1181,7 @@ components:
         SuFDlr:
           $ref: "#/components/schemas/SuFDlr"
 
-    accountsTrans:
+    accountsData:
       type: object
       required:
         - AccountKey
