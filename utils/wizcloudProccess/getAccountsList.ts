@@ -30,8 +30,8 @@ async function getAccountsList() {
   const accountsList = {};
   await getWizcloudAccounts()
     .then((data) => {
-      for (const i in data) {
-        accountsList[data[i]["fullName"]] = data[i];
+      for (const account of data) {
+        accountsList[account["accountKey"]] = account;
       }
     })
     .catch((e) => {

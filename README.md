@@ -14,3 +14,14 @@ $ npm i
 
 # development:
 $ npm run dev
+
+# fixes awaiting:
+- bank transaction unique ID:
+  not given by israeli-bank-scrapers. for now, it's defined as string of valuedate+suF, but could happen that two transactions share these same details.
+
+- only one account:
+  needed to improve so can collect data from many accounts, and not only "hapoalim"
+
+- tests needed
+
+- local database creation (with in-app ID)
