@@ -25,3 +25,9 @@ $ npm run dev
 - tests needed
 
 - local database creation (with in-app ID)
+
+# technical issues:
+- how to define personal account for hashavshevet inputs (the "me" side from bank transactions)
+- how to manage temporary inputs to hashavshevet
+- differentiate handling temp and issued batches
+- what to do with hashavshevet transactions that doesn't appear in bank accounts?
