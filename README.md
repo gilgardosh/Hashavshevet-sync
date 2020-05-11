@@ -2,14 +2,18 @@
 
 # deploy:
 create .env file, and add the following:
-WIZ_KEY={wiz token here}
-WIZ_COMPANY={company code here}
+  WIZ_KEY={wiz token here}
+  WIZ_COMPANY={company code here}
 
-BANK_USER_CODE={bank user code here}
-BANK_PASSWORD={bank password here}
-
+  BANK_USER_CODE={bank user code here}
+  BANK_PASSWORD={bank password here}
 
 $ npm i
+
+on app.ts you can manage how far back (in months) data will sync.
+look for:
+  executeSync(2);
+and change the digit (2 by default) to whatever int you need.
 
 # development:
 $ npm run dev

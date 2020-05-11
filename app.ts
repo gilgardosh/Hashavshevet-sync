@@ -29,8 +29,6 @@ async function executeSync(months) {
   }
 }
 
-executeSync(2);
-
 function saveToFile(filename: string, jsonObj) {
   let jsonContent = JSON.stringify(jsonObj, null, 2);
 
@@ -41,3 +39,5 @@ function saveToFile(filename: string, jsonObj) {
     };
   });
 }
+
+executeSync(2);
