@@ -17,13 +17,13 @@ async function executeSync(months) {
     const hashData = results[1];
     const accountsList = results[2];
     saveToFile("./indexes/accountsList.json", accountsList);
-    console.log("accountsList.json Index updated");
+    console.log("accountsList.json Index updated in indexes lib");
     
 
     const comparisonJson: object = compareBankHashData(bankData, hashData);
     // TODO: function that creates log file of comparison
     saveToFile(`./logs/${new Date().getTime()}_comparison.json`, comparisonJson);
-    console.log("Comparison log created");
+    console.log("Comparison log created in logs lib");
   } catch (error) {
     console.log("ERROR:", error);
   }

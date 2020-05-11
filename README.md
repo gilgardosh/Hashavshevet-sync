@@ -2,13 +2,12 @@
 
 # deploy:
 create .env file, and add the following:
-WIZ_KEY={wiz key here}
+WIZ_KEY={wiz token here}
 WIZ_COMPANY={company code here}
 
 BANK_USER_CODE={bank user code here}
 BANK_PASSWORD={bank password here}
 
-CSV_LINK={link to csv bank data file}  //optional, not needed if reading live from bank
 
 $ npm i
 
@@ -25,6 +24,12 @@ $ npm run dev
 - tests needed
 
 - local database creation (with in-app ID)
+
+- handling "accountsList" update, instead of replace
+
+- handling issued and temporary hashavshevet batches differently
+
+- smart algorithm to compare transactions
 
 # technical issues:
 - how to define personal account for hashavshevet inputs (the "me" side from bank transactions)
