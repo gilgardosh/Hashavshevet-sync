@@ -1,13 +1,13 @@
 import * as fs from "fs";
 import { getHashData } from "./utils/wizcloudProccess/wizcloudProccess";
 import { getAccountsList } from "./utils/wizcloudProccess/getAccountsList";
-import { getBankDemiData } from "./utils/bankProccess/bankProccess";
+import { getBankDemiData,getBankData } from "./utils/bankProccess/bankProccess";
 import { compareBankHashData } from "./utils/compareAlgorithm";
 import { date } from "./utils/getDate";
 
 async function executeSync(months) {
   const promises = [
-    getBankDemiData(date.startDateISO(months)),
+    getBankData(date.startDateISO(months)),
     getHashData(date.startDateHash(months)),
     getAccountsList(),
   ];
