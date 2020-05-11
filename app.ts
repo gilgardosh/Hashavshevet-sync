@@ -7,7 +7,7 @@ import { date } from "./utils/getDate";
 
 async function executeSync(months) {
   const promises = [
-    getBankData(date.startDateISO(months)),
+    getBankDemiData(date.startDateISO(months)),
     getHashData(date.startDateHash(months)),
     getAccountsList(),
   ];
@@ -16,7 +16,7 @@ async function executeSync(months) {
     const bankData = results[0];
     const hashData = results[1];
     const accountsList = results[2];
-    saveToFile("./indexes/accountsList", accountsList);
+    saveToFile("./indexes/accountsList.json", accountsList);
     console.log("accountsList.json Index updated");
     
 
