@@ -7,7 +7,7 @@ import { date } from "./utils/getDate";
 
 async function executeSync(months) {
   const promises = [
-    getBankDemiData(date.startDateISO(months)),
+    getBankData(date.startDateISO(months)),
     getHashData(date.startDateHash(months)),
     getAccountsList(),
   ];
