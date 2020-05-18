@@ -95,19 +95,19 @@ const TransactionType = new GraphQLObjectType({
     title: {
       type: TitleType,
       resolve: (transaction) => {
-        return titles.find((title) => title.id === transaction.title_id);
+        return titlesList.find((title) => title.id === transaction.title_id);
       },
     },
     batch: {
       type: BatchType,
       resolve: (transaction) => {
-        return batches.find((batch) => batch.id === transaction.batch_id);
+        return batchesList.find((batch) => batch.id === transaction.batch_id);
       },
     },
     account: {
       type: AccountType,
       resolve: (transaction) => {
-        return accounts.find(
+        return accountsList.find(
           (account) => account.id === transaction.account_id
         );
       },
@@ -115,7 +115,7 @@ const TransactionType = new GraphQLObjectType({
     counter_account: {
       type: AccountType,
       resolve: (transaction) => {
-        return accounts.find(
+        return accountsList.find(
           (account) => account.id === transaction.counter_account_id
         );
       },
@@ -220,25 +220,25 @@ const TitleType = new GraphQLObjectType({
     batch: {
       type: BatchType,
       resolve: (title) => {
-        return batches.find((batch) => batch.id === title.batch_id);
+        return batchesList.find((batch) => batch.id === title.batch_id);
       },
     },
     debtor: {
       type: AccountType,
       resolve: (title) => {
-        return accounts.find((account) => account.id === title.debtor_id);
+        return accountsList.find((account) => account.id === title.debtor_id);
       },
     },
     creditor: {
       type: AccountType,
       resolve: (title) => {
-        return accounts.find((account) => account.id === title.creditor_id);
+        return accountsList.find((account) => account.id === title.creditor_id);
       },
     },
     transactions: {
       type: GraphQLList(TransactionType),
       resolve: (title) => {
-        return transactions.filter(
+        return transactionsList.filter(
           (transaction) => transaction.title_id === title.id
         );
       },
@@ -274,13 +274,13 @@ const BatchType = new GraphQLObjectType({
     titles: {
       type: GraphQLList(TitleType),
       resolve: (batch) => {
-        return titles.filter((title) => title.batch_id === batch.id);
+        return titlesList.filter((title) => title.batch_id === batch.id);
       },
     },
     transactions: {
       type: GraphQLList(TransactionType),
       resolve: (batch) => {
-        return transactions.filter(
+        return transactionsList.filter(
           (transaction) => transaction.batch_id === batch.id
         );
       },

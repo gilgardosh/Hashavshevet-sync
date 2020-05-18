@@ -6,53 +6,71 @@ import {
   GraphQLInt,
   GraphQLNonNull,
 } from "graphql";
-import { TransactionType } from "./types";
+import { TransactionType, TitleType, BatchType, AccountType } from "./types";
 
 const RootQueryType = new GraphQLObjectType({
   name: "Query",
   fields: () => ({
-    // book: {
-    //   type: BookType,
-    //   description: "A Single Book",
-    //   args: {
-    //     id: { type: GraphQLInt },
-    //   },
-    //   resolve: (_, args) => books.find((book) => book.id === args.id),
-    // },
-    // books: {
-    //   type: new GraphQLList(BookType),
-    //   description: "List of All Books",
-    //   resolve: () => books,
-    // },
-    // author: {
-    //   type: AuthorType,
-    //   description: "A Single Author",
-    //   args: {
-    //     id: { type: GraphQLInt },
-    //   },
-    //   resolve: (_, args) => authors.find((author) => author.id === args.id),
-    // },
-    // authors: {
-    //   type: new GraphQLList(AuthorType),
-    //   description: "List of All Authors",
-    //   resolve: () => authors,
-    // },
     transactionById: {
       type: TransactionType,
-      description: "A Single Transaction",
+      description: "A Single Transaction by its ID",
       args: {
         id: { type: GraphQLInt },
       },
-      resole: (_, args) => transactions.find((trans) => trans.id === args.id),
+      resole: (_, args) =>
+        transactionsList.find((trans) => trans.id === args.id),
     },
-
-    // transactions: {},
+    transactions: {
+      type: GraphQLList(TransactionType),
+      description: "List of All Transactions",
+      resolve: () => transactionsList,
+    },
+    titleById: {
+      type: TitleType,
+      description: "A Single Title by its ID",
+      args: {
+        id: { type: GraphQLInt },
+      },
+      resole: (_, args) => titlesList.find((title) => title.id === args.id),
+    },
+    titles: {
+      type: GraphQLList(TitleType),
+      description: "List of All Titles",
+      resolve: () => titlesList,
+    },
+    batchById: {
+      type: BatchType,
+      description: "A Single Batch by its ID",
+      args: {
+        id: { type: GraphQLInt },
+      },
+      resole: (_, args) => batchsList.find((batch) => batch.id === args.id),
+    },
+    batchs: {
+      type: GraphQLList(BatchType),
+      description: "List of All Batchs",
+      resolve: () => batchsList,
+    },
+    accountById: {
+      type: AccountType,
+      description: "A Single Account by its ID",
+      args: {
+        id: { type: GraphQLInt },
+      },
+      resole: (_, args) =>
+        accountsList.find((account) => account.id === args.id),
+    },
+    accounts: {
+      type: GraphQLList(AccountType),
+      description: "List of All Accounts",
+      resolve: () => accountsList,
+    },
   }),
 });
 
 const schema = new GraphQLSchema({
   query: RootQueryType,
-//   mutation: RootMutationType,
+  //   mutation: RootMutationType,
 });
 
 export { schema };
