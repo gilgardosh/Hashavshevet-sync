@@ -23,7 +23,7 @@ const TransactionType = new GraphQLObjectType({
     debit_or_credit_number: {
       type: GraphQLNonNull(GraphQLInt),
     },
-    transaction_id: {
+    id: {
       type: GraphQLNonNull(GraphQLInt),
     },
     account_id: {
@@ -92,6 +92,34 @@ const TransactionType = new GraphQLObjectType({
     batch_id: {
       type: GraphQLNonNull(GraphQLInt),
     },
+    title: {
+      type: TitleType,
+      resolve: (transaction) => {
+        return titles.find((title) => title.id === transaction.title_id);
+      },
+    },
+    batch: {
+      type: BatchType,
+      resolve: (transaction) => {
+        return batches.find((batch) => batch.id === transaction.batch_id);
+      },
+    },
+    account: {
+      type: AccountType,
+      resolve: (transaction) => {
+        return accounts.find(
+          (account) => account.id === transaction.account_id
+        );
+      },
+    },
+    counter_account: {
+      type: AccountType,
+      resolve: (transaction) => {
+        return accounts.find(
+          (account) => account.id === transaction.counter_account_id
+        );
+      },
+    },
   }),
 });
 
@@ -153,13 +181,13 @@ const TitleType = new GraphQLObjectType({
     cheque_id: {
       type: GraphQLInt,
     },
-    title_id: {
+    id: {
       type: GraphQLNonNull(GraphQLInt),
     },
     batch_id: {
       type: GraphQLNonNull(GraphQLInt),
     },
-    osek874: {
+    authorized_dealer_number: {
       type: GraphQLString,
     },
     register_number: {
@@ -189,6 +217,32 @@ const TitleType = new GraphQLObjectType({
     costing_code_name: {
       type: GraphQLString,
     },
+    batch: {
+      type: BatchType,
+      resolve: (title) => {
+        return batches.find((batch) => batch.id === title.batch_id);
+      },
+    },
+    debtor: {
+      type: AccountType,
+      resolve: (title) => {
+        return accounts.find((account) => account.id === title.debtor_id);
+      },
+    },
+    creditor: {
+      type: AccountType,
+      resolve: (title) => {
+        return accounts.find((account) => account.id === title.creditor_id);
+      },
+    },
+    transactions: {
+      type: GraphQLList(TransactionType),
+      resolve: (title) => {
+        return transactions.filter(
+          (transaction) => transaction.title_id === title.id
+        );
+      },
+    },
   }),
 });
 
@@ -196,7 +250,7 @@ const BatchType = new GraphQLObjectType({
   name: "Batch",
   description: "A Single Batch",
   fields: () => ({
-    batch_id: {
+    id: {
       type: GraphQLNonNull(GraphQLInt),
     },
     type: {
@@ -217,6 +271,20 @@ const BatchType = new GraphQLObjectType({
     init_date: {
       type: GraphQLString, // Date type
     },
+    titles: {
+      type: GraphQLList(TitleType),
+      resolve: (batch) => {
+        return titles.filter((title) => title.batch_id === batch.id);
+      },
+    },
+    transactions: {
+      type: GraphQLList(TransactionType),
+      resolve: (batch) => {
+        return transactions.filter(
+          (transaction) => transaction.batch_id === batch.id
+        );
+      },
+    },
   }),
 });
 
@@ -224,29 +292,29 @@ const AccountType = new GraphQLObjectType({
   name: "Account",
   description: "A Single Account",
   fields: () => ({
-    account_id: {
+    id: {
       type: GraphQLNonNull(GraphQLString),
     },
-    account_name: {
+    name: {
       type: GraphQLString,
     },
     sort_group: {
       type: GraphQLInt, // Enum type?
     },
     sector: {
-      type: GraphQLString,  // NonNull?
+      type: GraphQLString, // NonNull?
     },
     details: {
       type: GraphQLString,
     },
     init_date: {
-      type: GraphQLString,  // Date type
+      type: GraphQLString, // Date type
     },
     type: {
-      type: GraphQLString,  // Enum type? NonNull?
+      type: GraphQLString, // Enum type? NonNull?
     },
     is_active: {
-      type: GraphQLString,  // Enum type? NonNull?
+      type: GraphQLString, // Enum type? NonNull?
     },
     address: {
       type: GraphQLString,
@@ -273,13 +341,13 @@ const AccountType = new GraphQLObjectType({
       type: GraphQLString,
     },
     balance_code: {
-      type: GraphQLString,  // NonNull?
+      type: GraphQLString, // NonNull?
     },
     general_discount_percent: {
       type: GraphQLFloat,
     },
     vat_exempt: {
-      type: GraphQLString,  // Enum type, NonNull
+      type: GraphQLString, // Enum type, NonNull
     },
     occupation: {
       type: GraphQLString,
@@ -291,7 +359,7 @@ const AccountType = new GraphQLObjectType({
       type: GraphQLFloat,
     },
     withholding_validity: {
-      type: GraphQLString,  // Date type. NonNull?
+      type: GraphQLString, // Date type. NonNull?
     },
     bank_id: {
       type: GraphQLString,
@@ -306,19 +374,19 @@ const AccountType = new GraphQLObjectType({
       type: GraphQLString,
     },
     main_account: {
-      type: GraphQLString,  // NonNull?
+      type: GraphQLString, // NonNull?
     },
     max_credit: {
       type: GraphQLFloat,
     },
     max_credit_currency: {
-      type: GraphQLString,  // Enum type? NonNull?
+      type: GraphQLString, // Enum type? NonNull?
     },
     max_obligo: {
       type: GraphQLFloat,
     },
     max_obligo_currency: {
-      type: GraphQLString,  // Enum type? NonNull?
+      type: GraphQLString, // Enum type? NonNull?
     },
     income_file_number: {
       type: GraphQLString,
