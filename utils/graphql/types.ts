@@ -87,7 +87,7 @@ const TransactionType = new GraphQLObjectType({
     estimated_sum: {
       type: GraphQLFloat,
     },
-    transaction_title_id: {
+    title_id: {
       type: GraphQLNonNull(GraphQLInt),
     },
     batch_id: {
@@ -107,88 +107,116 @@ const TitleType = new GraphQLObjectType({
       type: GraphQLString,
     },
     type: {
-        type: GraphQLString,    // Enum?
+      type: GraphQLString, // Enum type?
     },
     currency_code: {
-        type: GraphQLString,    // Enum?
+      type: GraphQLString, // Enum type?
     },
     foreign_currency_sum: {
-        type: GraphQLFloat,
+      type: GraphQLFloat,
     },
     shekel_sum: {
-        type: GraphQLFloat,
+      type: GraphQLFloat,
     },
     reference1: {
-        type: GraphQLInt,
+      type: GraphQLInt,
     },
     reference2: {
-        type: GraphQLInt,
+      type: GraphQLInt,
     },
     reference3: {
-        type: GraphQLInt,
+      type: GraphQLInt,
     },
     value_date: {
-        type: GraphQLString,    // Date
+      type: GraphQLString, // Date type
     },
     due_date: {
-        type: GraphQLString,    // Date
+      type: GraphQLString, // Date type
     },
     details1: {
-        type: GraphQLString,
+      type: GraphQLString,
     },
     details2: {
-        type: GraphQLString,
+      type: GraphQLString,
     },
     exchange_rate_differences: {
-        type: GraphQLString,    // Enum, perhaps NonNull
+      type: GraphQLString, // Enum  type, perhaps NonNull
     },
     costing_code_slice: {
-        type: GraphQLString,
+      type: GraphQLString,
     },
     quantity: {
-        type: GraphQLFloat,
+      type: GraphQLFloat,
     },
     inventory_id: {
-        type: GraphQLInt,
+      type: GraphQLInt,
     },
     cheque_id: {
-        type: GraphQLInt,
+      type: GraphQLInt,
     },
     title_id: {
-        type: GraphQLNonNull(GraphQLInt),
+      type: GraphQLNonNull(GraphQLInt),
     },
     batch_id: {
-        type: GraphQLNonNull(GraphQLInt),
+      type: GraphQLNonNull(GraphQLInt),
     },
     osek874: {
-        type: GraphQLString,
+      type: GraphQLString,
     },
     register_number: {
-        type: GraphQLInt,
+      type: GraphQLInt,
     },
     storno_cancelled_transaction_id: {
-        type: GraphQLInt,
+      type: GraphQLInt,
     },
     branch: {
-        type: GraphQLInt,   // NonNull? Enum?
+      type: GraphQLInt, // NonNull? Enum  type?
     },
     description: {
-        type: GraphQLString,
+      type: GraphQLString,
     },
     linked_file: {
-        type: GraphQLString,
+      type: GraphQLString,
     },
     costing_code: {
-        type: GraphQLString,
+      type: GraphQLString,
     },
     username: {
-        type: GraphQLString,
+      type: GraphQLString,
     },
     branch_name: {
-        type: GraphQLString,
+      type: GraphQLString,
     },
     costing_code_name: {
-        type: GraphQLString,
+      type: GraphQLString,
+    },
+  }),
+});
+
+const BatchType = new GraphQLObjectType({
+  name: "Batch",
+  description: "A Single Batch",
+  fields: () => ({
+    batch_id: {
+      type: GraphQLNonNull(GraphQLInt),
+    },
+    type: {
+      type: GraphQLString,  // Enum type? NonNull?
+    },
+    status: {
+      type: GraphQLString,  // Enum type? NonNull?
+    },
+    issue_date: {
+      type: GraphQLString, // Date type
+    },
+    details: {
+      type: GraphQLString,
+    },
+    init_time: {
+      type: GraphQLString,
+    },
+    init_date: {
+      type: GraphQLString, // Date type
     },
   }),
 });
