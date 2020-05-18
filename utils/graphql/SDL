@@ -1,0 +1,151 @@
+type Query {
+  """A Single Transaction by its ID"""
+  transactionById(id: Int): Transaction
+
+  """List of All Transactions"""
+  transactions: [Transaction]
+
+  """A Single Title by its ID"""
+  titleById(id: Int): Transactions Title
+
+  """List of All Titles"""
+  titles: [Transactions Title]
+
+  """A Single Batch by its ID"""
+  batchById(id: Int): Batch
+
+  """List of All Batchs"""
+  batchs: [Batch]
+
+  """A Single Account by its ID"""
+  accountById(id: Int): Account
+
+  """List of All Accounts"""
+  accounts: [Account]
+}
+
+"""A Single Transaction"""
+type Transaction {
+  debit_or_credit: String!
+  counter_account_id: String
+  match_number_card_analysis: Int
+  debit_or_credit_number: Int!
+  id: Int!
+  account_id: String!
+  counter_account_name: String
+  shekel_credit: Float
+  shekel_debit: Float
+  shekel_sum: Float
+  shekel_sum_closed_in_transaction: Float
+  shekel_sum_open_in_transaction: Float
+  cumulative_balance: Float
+  foreign_currency_cumulative_balance_without_opening_balance: Float
+  cumulative_balance_without_opening_balance: Float
+  shekel_cumulative_balance_by_sector: Float
+  cumulative_balance_by_sort_key: Float
+  cumulative_balance_of_open_sum_in_transaction: Float
+  foreign_currency_credit: Float
+  foreign_currency_debit: Float
+  foreign_currency_cumulative_balance: Float
+  foreign_currency_sum: Float
+  foreign_currency_sum_closed_in_transaction: Float
+  foreign_currency_sun_open_in_transaction: Float
+  estimated_sum: Float
+  title_id: Int!
+  batch_id: Int!
+  title: Transactions Title
+  batch: Batch
+  account: Account
+  counter_account: Account
+}
+
+"""A Title of Some Transactions"""
+type Transactions Title {
+  debtor_id: String
+  creditor_id: String
+  type: String
+  currency_code: String
+  foreign_currency_sum: Float
+  shekel_sum: Float
+  reference1: Int
+  reference2: Int
+  reference3: Int
+  value_date: String
+  due_date: String
+  details1: String
+  details2: String
+  exchange_rate_differences: String
+  costing_code_sector: String
+  quantity: Float
+  inventory_id: Int
+  cheque_id: Int
+  id: Int!
+  batch_id: Int!
+  authorized_dealer_number: String
+  register_number: Int
+  storno_cancelled_transaction_id: Int
+  branch: Int
+  description: String
+  linked_file: String
+  costing_code: String
+  username: String
+  branch_name: String
+  costing_code_name: String
+  batch: Batch
+  debtor: Account
+  creditor: Account
+  transactions: [Transaction]
+}
+
+"""A Single Batch"""
+type Batch {
+  id: Int!
+  type: String
+  status: String
+  issue_date: String
+  details: String
+  init_time: String
+  init_date: String
+  titles: [Transactions Title]
+  transactions: [Transaction]
+}
+
+"""A Single Account"""
+type Account {
+  id: String!
+  name: String
+  sort_group: Int
+  sector: String
+  details: String
+  init_date: String
+  type: String
+  is_active: String
+  address: String
+  city: String
+  zipcode: String
+  country: String
+  phone: String
+  cellphone: String
+  fax: String
+  email: String
+  balance_code: String
+  general_discount_percent: Float
+  vat_exempt: String
+  occupation: String
+  agent: Int
+  withholding_percent: Float
+  withholding_validity: String
+  bank_id: String
+  bank_branch_id: String
+  bank_account_id: String
+  authorized_dealer_number: String
+  main_account: String
+  max_credit: Float
+  max_credit_currency: String
+  max_obligo: Float
+  max_obligo_currency: String
+  income_file_number: String
+  central_account: String
+  accountant_transfer: String
+  costing_code: String
+}
