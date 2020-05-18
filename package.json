@@ -19,8 +19,6 @@
     "@graphql-mesh/runtime": "^0.0.20",
     "csv-parser": "^2.3.2",
     "dotenv": "^8.2.0",
-    "express-graphql": "^0.9.0",
-    "graphql": "^15.0.0",
     "israeli-bank-scrapers": "^0.9.0",
     "node-fetch": "^2.6.0",
     "tslint": "^6.1.1",

@@ -46,20 +46,3 @@ function saveToFile(filename: string, jsonObj) {
 }
 
 executeSync(2);
-
-/////////////////////////////////////////////////////////////////////////////////
-
-import express from "express";
-import expressGraphQL from "express-graphql";
-import { schema } from "./utils/graphql/schema";
-
-const app = express();
-
-app.use(
-  "/graphql",
-  expressGraphQL({
-    graphiql: true,
-    schema: schema,
-  })
-);
-app.listen(5000, () => console.log("Server Running"));
