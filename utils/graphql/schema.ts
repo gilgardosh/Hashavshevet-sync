@@ -8,6 +8,11 @@ import {
 } from "graphql";
 import { TransactionType, TitleType, BatchType, AccountType } from "./types";
 
+const transactionsList = [];
+const titlesList = [];
+const batchesList = [];
+const accountsList = [];
+
 const RootQueryType = new GraphQLObjectType({
   name: "Query",
   fields: () => ({
@@ -44,12 +49,12 @@ const RootQueryType = new GraphQLObjectType({
       args: {
         id: { type: GraphQLInt },
       },
-      resole: (_, args) => batchsList.find((batch) => batch.id === args.id),
+      resole: (_, args) => batchesList.find((batch) => batch.id === args.id),
     },
     batchs: {
       type: GraphQLList(BatchType),
       description: "List of All Batchs",
-      resolve: () => batchsList,
+      resolve: () => batchesList,
     },
     accountById: {
       type: AccountType,

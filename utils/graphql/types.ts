@@ -7,6 +7,11 @@ import {
   GraphQLFloat,
 } from "graphql";
 
+const transactionsList = [];
+const titlesList = [];
+const batchesList = [];
+const accountsList = [];
+
 const TransactionType = new GraphQLObjectType({
   name: "Transaction",
   description: "A Single Transaction",
