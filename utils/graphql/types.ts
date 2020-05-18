@@ -1,5 +1,4 @@
 import {
-  GraphQLSchema,
   GraphQLObjectType,
   GraphQLString,
   GraphQLList,
@@ -31,7 +30,7 @@ const TransactionType = new GraphQLObjectType({
       type: GraphQLNonNull(GraphQLString),
     },
     counter_account_name: {
-      type: GraphQLString,
+      type: GraphQLString, // can be removed
     },
     shekel_credit: {
       type: GraphQLFloat,
@@ -57,7 +56,7 @@ const TransactionType = new GraphQLObjectType({
     cumulative_balance_without_opening_balance: {
       type: GraphQLFloat,
     },
-    shekel_cumulative_balance_by_sectionsum: {
+    shekel_cumulative_balance_by_sector: {
       type: GraphQLFloat,
     },
     cumulative_balance_by_sort_key: {
@@ -140,9 +139,9 @@ const TitleType = new GraphQLObjectType({
       type: GraphQLString,
     },
     exchange_rate_differences: {
-      type: GraphQLString, // Enum  type, perhaps NonNull
+      type: GraphQLString, // Enum type, perhaps NonNull
     },
-    costing_code_slice: {
+    costing_code_sector: {
       type: GraphQLString,
     },
     quantity: {
@@ -201,10 +200,10 @@ const BatchType = new GraphQLObjectType({
       type: GraphQLNonNull(GraphQLInt),
     },
     type: {
-      type: GraphQLString,  // Enum type? NonNull?
+      type: GraphQLString, // Enum type? NonNull?
     },
     status: {
-      type: GraphQLString,  // Enum type? NonNull?
+      type: GraphQLString, // Enum type? NonNull?
     },
     issue_date: {
       type: GraphQLString, // Date type
@@ -221,6 +220,119 @@ const BatchType = new GraphQLObjectType({
   }),
 });
 
-export { TransactionType };
+const AccountType = new GraphQLObjectType({
+  name: "Account",
+  description: "A Single Account",
+  fields: () => ({
+    account_id: {
+      type: GraphQLNonNull(GraphQLString),
+    },
+    account_name: {
+      type: GraphQLString,
+    },
+    sort_group: {
+      type: GraphQLInt, // Enum type?
+    },
+    sector: {
+      type: GraphQLString,  // NonNull?
+    },
+    details: {
+      type: GraphQLString,
+    },
+    init_date: {
+      type: GraphQLString,  // Date type
+    },
+    type: {
+      type: GraphQLString,  // Enum type? NonNull?
+    },
+    is_active: {
+      type: GraphQLString,  // Enum type? NonNull?
+    },
+    address: {
+      type: GraphQLString,
+    },
+    city: {
+      type: GraphQLString,
+    },
+    zipcode: {
+      type: GraphQLString,
+    },
+    country: {
+      type: GraphQLString,
+    },
+    phone: {
+      type: GraphQLString,
+    },
+    cellphone: {
+      type: GraphQLString,
+    },
+    fax: {
+      type: GraphQLString,
+    },
+    email: {
+      type: GraphQLString,
+    },
+    balance_code: {
+      type: GraphQLString,  // NonNull?
+    },
+    general_discount_percent: {
+      type: GraphQLFloat,
+    },
+    vat_exempt: {
+      type: GraphQLString,  // Enum type, NonNull
+    },
+    occupation: {
+      type: GraphQLString,
+    },
+    agent: {
+      type: GraphQLInt,
+    },
+    withholding_percent: {
+      type: GraphQLFloat,
+    },
+    withholding_validity: {
+      type: GraphQLString,  // Date type. NonNull?
+    },
+    bank_id: {
+      type: GraphQLString,
+    },
+    bank_branch_id: {
+      type: GraphQLString,
+    },
+    bank_account_id: {
+      type: GraphQLString,
+    },
+    authorized_dealer_number: {
+      type: GraphQLString,
+    },
+    main_account: {
+      type: GraphQLString,  // NonNull?
+    },
+    max_credit: {
+      type: GraphQLFloat,
+    },
+    max_credit_currency: {
+      type: GraphQLString,  // Enum type? NonNull?
+    },
+    max_obligo: {
+      type: GraphQLFloat,
+    },
+    max_obligo_currency: {
+      type: GraphQLString,  // Enum type? NonNull?
+    },
+    income_file_number: {
+      type: GraphQLString,
+    },
+    central_account: {
+      type: GraphQLString,
+    },
+    accountant_transfer: {
+      type: GraphQLString,
+    },
+    costing_code: {
+      type: GraphQLString,
+    },
+  }),
+});
 
-GraphQLFloat;
+export { TransactionType, TitleType, BatchType, AccountType };
