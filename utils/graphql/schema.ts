@@ -2,23 +2,41 @@ import * as fs from "fs";
 import {
   GraphQLSchema,
   GraphQLObjectType,
-  GraphQLString,
   GraphQLList,
   GraphQLInt,
-  GraphQLNonNull,
   printSchema,
 } from "graphql";
-import { TransactionType, TitleType, BatchType, AccountType } from "./types";
+import { RecordType, TransactionType, BatchType, AccountType } from "./types";
 import { getHashavshevetFormData } from "../wizcloudProccess/getFormData";
-
-const transactionsList = [];
-const titlesList = [];
-const batchesList = [];
-const accountsList = [];
 
 const RootQueryType = new GraphQLObjectType({
   name: "Query",
   fields: () => ({
+    recordById: {
+      type: RecordType,
+      description: "A Single Record by its ID",
+      args: {
+        id: { type: GraphQLInt },
+      },
+      resolve: async (_, args) => {
+        let recordsList;
+        await getHashavshevetFormData("records").then(
+          (data) => (recordsList = data)
+        );
+        return recordsList.find((record) => record.id === args.id);
+      },
+    },
+    records: {
+      type: GraphQLList(RecordType),
+      description: "List of All Records",
+      resolve: async () => {
+        let recordsList;
+        await getHashavshevetFormData("records").then(
+          (data) => (recordsList = data)
+        );
+        return recordsList;
+      },
+    },
     transactionById: {
       type: TransactionType,
       description: "A Single Transaction by its ID",
@@ -30,7 +48,7 @@ const RootQueryType = new GraphQLObjectType({
         await getHashavshevetFormData("transactions").then(
           (data) => (transactionsList = data)
         );
-        return transactionsList.find((trans) => trans.id === args.id);
+        return transactionsList.find((transaction) => transaction.id === args.id);
       },
     },
     transactions: {
@@ -42,31 +60,6 @@ const RootQueryType = new GraphQLObjectType({
           (data) => (transactionsList = data)
         );
         return transactionsList;
-      },
-    },
-    titleById: {
-      type: TitleType,
-      description: "A Single Title by its ID",
-      args: {
-        id: { type: GraphQLInt },
-      },
-      resolve: async (_, args) => {
-        let titlesList;
-        await getHashavshevetFormData("titles").then(
-          (data) => (titlesList = data)
-        );
-        return titlesList.find((title) => title.id === args.id);
-      },
-    },
-    titles: {
-      type: GraphQLList(TitleType),
-      description: "List of All Titles",
-      resolve: async () => {
-        let titlesList;
-        await getHashavshevetFormData("titles").then(
-          (data) => (titlesList = data)
-        );
-        return titlesList;
       },
     },
     batchById: {

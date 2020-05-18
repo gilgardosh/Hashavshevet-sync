@@ -1,15 +1,15 @@
 type Query {
+  """A Single Record by its ID"""
+  recordById(id: Int): Record
+
+  """List of All Records"""
+  records: [Record]
+
   """A Single Transaction by its ID"""
-  transactionById(id: Int): Transaction
+  transactionById(id: Int): Transactions
 
   """List of All Transactions"""
-  transactions: [Transaction]
-
-  """A Single Title by its ID"""
-  titleById(id: Int): Titles
-
-  """List of All Titles"""
-  titles: [Titles]
+  transactions: [Transactions]
 
   """A Single Batch by its ID"""
   batchById(id: Int): Batch
@@ -24,8 +24,8 @@ type Query {
   accounts: [Account]
 }
 
-"""A Single Transaction"""
-type Transaction {
+"""A Single Record"""
+type Record {
   debit_or_credit: String!
   counter_account_id: String
   match_number_card_analysis: Int
@@ -36,31 +36,31 @@ type Transaction {
   shekel_credit: Float
   shekel_debit: Float
   shekel_sum: Float
-  shekel_sum_closed_in_transaction: Float
-  shekel_sum_open_in_transaction: Float
+  shekel_sum_closed_in_record: Float
+  shekel_sum_open_in_record: Float
   cumulative_balance: Float
   foreign_currency_cumulative_balance_without_opening_balance: Float
   cumulative_balance_without_opening_balance: Float
   shekel_cumulative_balance_by_sector: Float
   cumulative_balance_by_sort_key: Float
-  cumulative_balance_of_open_sum_in_transaction: Float
+  cumulative_balance_of_open_sum_in_record: Float
   foreign_currency_credit: Float
   foreign_currency_debit: Float
   foreign_currency_cumulative_balance: Float
   foreign_currency_sum: Float
-  foreign_currency_sum_closed_in_transaction: Float
-  foreign_currency_sun_open_in_transaction: Float
+  foreign_currency_sum_closed_in_record: Float
+  foreign_currency_sun_open_in_record: Float
   estimated_sum: Float
-  title_id: Int!
+  transaction_id: Int!
   batch_id: Int!
-  title: Titles
+  transaction: Transactions
   batch: Batch
   account: Account
   counter_account: Account
 }
 
-"""A Title of Some Transactions"""
-type Titles {
+"""A Transaction of Some Records"""
+type Transactions {
   debtor_id: String
   creditor_id: String
   type: String
@@ -94,7 +94,7 @@ type Titles {
   batch: Batch
   debtor: Account
   creditor: Account
-  transactions: [Transaction]
+  records: [Record]
 }
 
 """A Single Batch"""
@@ -106,8 +106,8 @@ type Batch {
   details: String
   init_time: String
   init_date: String
-  titles: [Titles]
-  transactions: [Transaction]
+  transactions: [Transactions]
+  records: [Record]
 }
 
 """A Single Account"""
