@@ -51,7 +51,7 @@ function saveToFile(filename: string, jsonObj) {
 
 import express from "express";
 import expressGraphQL from "express-graphql";
-import { schema } from "./utils/graphql/schema";
+import { schema, createSDL } from "./utils/graphql/schema";
 
 const app = express();
 
@@ -62,4 +62,7 @@ app.use(
     schema: schema,
   })
 );
+
+createSDL();
+
 app.listen(5000, () => console.log("Server Running"));

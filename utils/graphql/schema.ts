@@ -1,3 +1,4 @@
+import * as fs from "fs";
 import {
   GraphQLSchema,
   GraphQLObjectType,
@@ -5,6 +6,7 @@ import {
   GraphQLList,
   GraphQLInt,
   GraphQLNonNull,
+  printSchema,
 } from "graphql";
 import { TransactionType, TitleType, BatchType, AccountType } from "./types";
 
@@ -78,4 +80,14 @@ const schema = new GraphQLSchema({
   //   mutation: RootMutationType,
 });
 
-export { schema };
+function createSDL() {
+  const dataForSDL = printSchema(schema);
+  fs.writeFile(`SDL.graphql`, dataForSDL, "utf8", function (err) {
+    if (err) {
+      console.log("An error occured while writing JSON Object to File.");
+      console.log(err);
+    }
+  });
+}
+
+export { schema, createSDL };
