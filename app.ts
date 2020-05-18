@@ -52,6 +52,7 @@ function saveToFile(filename: string, jsonObj) {
 import express from "express";
 import expressGraphQL from "express-graphql";
 import { schema, createSDL } from "./utils/graphql/schema";
+// import { getHashavshevetFormData } from "./utils/wizcloudProccess/getFormData";
 
 const app = express();
 
@@ -65,4 +66,6 @@ app.use(
 
 createSDL();
 
-app.listen(5000, () => console.log("Server Running"));
+app.listen(5000, () => console.log("Server Running on localhost:5000/graphql"));
+
+// getHashavshevetFormData("batches").then((data) => console.log(data));

@@ -6,11 +6,7 @@ import {
   GraphQLNonNull,
   GraphQLFloat,
 } from "graphql";
-
-const transactionsList = [];
-const titlesList = [];
-const batchesList = [];
-const accountsList = [];
+import { getHashavshevetFormData } from "../wizcloudProccess/getFormData";
 
 const TransactionType = new GraphQLObjectType({
   name: "Transaction",
@@ -99,19 +95,31 @@ const TransactionType = new GraphQLObjectType({
     },
     title: {
       type: TitleType,
-      resolve: (transaction) => {
+      resolve: async (transaction) => {
+        let titlesList;
+        await getHashavshevetFormData("titles").then(
+          (data) => (titlesList = data)
+        );
         return titlesList.find((title) => title.id === transaction.title_id);
       },
     },
     batch: {
       type: BatchType,
-      resolve: (transaction) => {
+      resolve: async (transaction) => {
+        let batchesList;
+        await getHashavshevetFormData("batches").then(
+          (data) => (batchesList = data)
+        );
         return batchesList.find((batch) => batch.id === transaction.batch_id);
       },
     },
     account: {
       type: AccountType,
-      resolve: (transaction) => {
+      resolve: async (transaction) => {
+        let accountsList;
+        await getHashavshevetFormData("accounts").then(
+          (data) => (accountsList = data)
+        );
         return accountsList.find(
           (account) => account.id === transaction.account_id
         );
@@ -119,7 +127,11 @@ const TransactionType = new GraphQLObjectType({
     },
     counter_account: {
       type: AccountType,
-      resolve: (transaction) => {
+      resolve: async (transaction) => {
+        let accountsList;
+        await getHashavshevetFormData("accounts").then(
+          (data) => (accountsList = data)
+        );
         return accountsList.find(
           (account) => account.id === transaction.counter_account_id
         );
@@ -129,7 +141,7 @@ const TransactionType = new GraphQLObjectType({
 });
 
 const TitleType = new GraphQLObjectType({
-  name: "Transactions Title",
+  name: "Titles",
   description: "A Title of Some Transactions",
   fields: () => ({
     debtor_id: {
@@ -224,25 +236,41 @@ const TitleType = new GraphQLObjectType({
     },
     batch: {
       type: BatchType,
-      resolve: (title) => {
+      resolve: async (title) => {
+        let batchesList;
+        await getHashavshevetFormData("batches").then(
+          (data) => (batchesList = data)
+        );
         return batchesList.find((batch) => batch.id === title.batch_id);
       },
     },
     debtor: {
       type: AccountType,
-      resolve: (title) => {
+      resolve: async (title) => {
+        let accountsList;
+        await getHashavshevetFormData("accounts").then(
+          (data) => (accountsList = data)
+        );
         return accountsList.find((account) => account.id === title.debtor_id);
       },
     },
     creditor: {
       type: AccountType,
-      resolve: (title) => {
+      resolve: async (title) => {
+        let accountsList;
+        await getHashavshevetFormData("accounts").then(
+          (data) => (accountsList = data)
+        );
         return accountsList.find((account) => account.id === title.creditor_id);
       },
     },
     transactions: {
       type: GraphQLList(TransactionType),
-      resolve: (title) => {
+      resolve: async (title) => {
+        let transactionsList;
+        await getHashavshevetFormData("transactions").then(
+          (data) => (transactionsList = data)
+        );
         return transactionsList.filter(
           (transaction) => transaction.title_id === title.id
         );
@@ -278,13 +306,21 @@ const BatchType = new GraphQLObjectType({
     },
     titles: {
       type: GraphQLList(TitleType),
-      resolve: (batch) => {
+      resolve: async (batch) => {
+        let titlesList;
+        await getHashavshevetFormData("titles").then(
+          (data) => (titlesList = data)
+        );
         return titlesList.filter((title) => title.batch_id === batch.id);
       },
     },
     transactions: {
       type: GraphQLList(TransactionType),
-      resolve: (batch) => {
+      resolve: async (batch) => {
+        let transactionsList;
+        await getHashavshevetFormData("transactions").then(
+          (data) => (transactionsList = data)
+        );
         return transactionsList.filter(
           (transaction) => transaction.batch_id === batch.id
         );
