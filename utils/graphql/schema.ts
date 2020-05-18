@@ -52,7 +52,7 @@ const RootQueryType = new GraphQLObjectType({
 
 const schema = new GraphQLSchema({
   query: RootQueryType,
-  mutation: "RootMutationType", //add real mutation
+//   mutation: RootMutationType,
 });
 
 export { schema };

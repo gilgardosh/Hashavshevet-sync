@@ -96,6 +96,103 @@ const TransactionType = new GraphQLObjectType({
   }),
 });
 
+const TitleType = new GraphQLObjectType({
+  name: "Transactions Title",
+  description: "A Title of Some Transactions",
+  fields: () => ({
+    debtor_id: {
+      type: GraphQLString,
+    },
+    creditor_id: {
+      type: GraphQLString,
+    },
+    type: {
+        type: GraphQLString,    // Enum?
+    },
+    currency_code: {
+        type: GraphQLString,    // Enum?
+    },
+    foreign_currency_sum: {
+        type: GraphQLFloat,
+    },
+    shekel_sum: {
+        type: GraphQLFloat,
+    },
+    reference1: {
+        type: GraphQLInt,
+    },
+    reference2: {
+        type: GraphQLInt,
+    },
+    reference3: {
+        type: GraphQLInt,
+    },
+    value_date: {
+        type: GraphQLString,    // Date
+    },
+    due_date: {
+        type: GraphQLString,    // Date
+    },
+    details1: {
+        type: GraphQLString,
+    },
+    details2: {
+        type: GraphQLString,
+    },
+    exchange_rate_differences: {
+        type: GraphQLString,    // Enum, perhaps NonNull
+    },
+    costing_code_slice: {
+        type: GraphQLString,
+    },
+    quantity: {
+        type: GraphQLFloat,
+    },
+    inventory_id: {
+        type: GraphQLInt,
+    },
+    cheque_id: {
+        type: GraphQLInt,
+    },
+    title_id: {
+        type: GraphQLNonNull(GraphQLInt),
+    },
+    batch_id: {
+        type: GraphQLNonNull(GraphQLInt),
+    },
+    osek874: {
+        type: GraphQLString,
+    },
+    register_number: {
+        type: GraphQLInt,
+    },
+    storno_cancelled_transaction_id: {
+        type: GraphQLInt,
+    },
+    branch: {
+        type: GraphQLInt,   // NonNull? Enum?
+    },
+    description: {
+        type: GraphQLString,
+    },
+    linked_file: {
+        type: GraphQLString,
+    },
+    costing_code: {
+        type: GraphQLString,
+    },
+    username: {
+        type: GraphQLString,
+    },
+    branch_name: {
+        type: GraphQLString,
+    },
+    costing_code_name: {
+        type: GraphQLString,
+    },
+  }),
+});
+
 export { TransactionType };
 
 GraphQLFloat;
