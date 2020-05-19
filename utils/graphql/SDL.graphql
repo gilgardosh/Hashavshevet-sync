@@ -14,8 +14,8 @@ type Query {
   """A Single Batch by its ID"""
   batchById(id: Int): Batch
 
-  """List of All Batchs"""
-  batchs: [Batch]
+  """List of All Batches"""
+  batches: [Batch]
 
   """A Single Account by its ID"""
   accountById(id: Int): Account

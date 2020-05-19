@@ -100,11 +100,14 @@ const RecordType = new GraphQLObjectType({
     },
     transaction: {
       type: TransactionType,
-      resolve: async (record) => {
-        let transactionsList = await getTransactions();
-        return transactionsList.find(
-          (transaction) => transaction.id === record.transaction_id
-        );
+      resolve: (record, args, context) => {
+        const { loaders } = context;
+        const { transactionsLoader } = loaders;
+        return transactionsLoader.load(record.transaction_id)
+        // let transactionsList = await getTransactions();
+        // return transactionsList.find(
+        //   (transaction) => transaction.id === record.transaction_id
+        // );
       },
     },
     batch: {

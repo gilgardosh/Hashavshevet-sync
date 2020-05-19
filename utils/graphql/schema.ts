@@ -66,9 +66,9 @@ const RootQueryType = new GraphQLObjectType({
         return batchesList.find((batch) => batch.id === args.id);
       },
     },
-    batchs: {
+    batches: {
       type: GraphQLList(BatchType),
-      description: "List of All Batchs",
+      description: "List of All Batches",
       resolve: async () => {
         return await getBatches();
       },
