@@ -7,7 +7,7 @@ import {
   printSchema,
 } from "graphql";
 import { RecordType, TransactionType, BatchType, AccountType } from "./types";
-import { getHashavshevetFormData } from "../wizcloudProccess/getFormData";
+import { getRecords, getTransactions, getBatches, getAccounts } from "../wizcloudProccess/getFormData";
 
 const RootQueryType = new GraphQLObjectType({
   name: "Query",
@@ -20,7 +20,7 @@ const RootQueryType = new GraphQLObjectType({
       },
       resolve: async (_, args) => {
         let recordsList;
-        await getHashavshevetFormData("records").then(
+        await getRecords().then(
           (data) => (recordsList = data)
         );
         return recordsList.find((record) => record.id === args.id);
@@ -31,7 +31,7 @@ const RootQueryType = new GraphQLObjectType({
       description: "List of All Records",
       resolve: async () => {
         let recordsList;
-        await getHashavshevetFormData("records").then(
+        await getRecords().then(
           (data) => (recordsList = data)
         );
         return recordsList;
@@ -45,7 +45,7 @@ const RootQueryType = new GraphQLObjectType({
       },
       resolve: async (_, args) => {
         let transactionsList;
-        await getHashavshevetFormData("transactions").then(
+        await getTransactions().then(
           (data) => (transactionsList = data)
         );
         return transactionsList.find((transaction) => transaction.id === args.id);
@@ -56,7 +56,7 @@ const RootQueryType = new GraphQLObjectType({
       description: "List of All Transactions",
       resolve: async () => {
         let transactionsList;
-        await getHashavshevetFormData("transactions").then(
+        await getTransactions().then(
           (data) => (transactionsList = data)
         );
         return transactionsList;
@@ -70,7 +70,7 @@ const RootQueryType = new GraphQLObjectType({
       },
       resolve: async (_, args) => {
         let batchesList;
-        await getHashavshevetFormData("batches").then(
+        await getBatches().then(
           (data) => (batchesList = data)
         );
         return batchesList.find((batch) => batch.id === args.id);
@@ -81,7 +81,7 @@ const RootQueryType = new GraphQLObjectType({
       description: "List of All Batchs",
       resolve: async () => {
         let batchesList;
-        await getHashavshevetFormData("batches").then(
+        await getBatches().then(
           (data) => (batchesList = data)
         );
         return batchesList;
@@ -95,7 +95,7 @@ const RootQueryType = new GraphQLObjectType({
       },
       resolve: async (_, args) => {
         let accountsList;
-        await getHashavshevetFormData("accounts").then(
+        await getAccounts().then(
           (data) => (accountsList = data)
         );
         return accountsList.find((account) => account.id === args.id);
@@ -106,7 +106,7 @@ const RootQueryType = new GraphQLObjectType({
       description: "List of All Accounts",
       resolve: async () => {
         let accountsList;
-        await getHashavshevetFormData("accounts").then(
+        await getAccounts().then(
           (data) => (accountsList = data)
         );
         return accountsList;
