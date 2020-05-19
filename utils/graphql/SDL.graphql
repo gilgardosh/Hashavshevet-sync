@@ -6,10 +6,10 @@ type Query {
   records: [Record]
 
   """A Single Transaction by its ID"""
-  transactionById(id: Int): Transactions
+  transactionById(id: Int): Transaction
 
   """List of All Transactions"""
-  transactions: [Transactions]
+  transactions: [Transaction]
 
   """A Single Batch by its ID"""
   batchById(id: Int): Batch
@@ -53,14 +53,14 @@ type Record {
   estimated_sum: Float
   transaction_id: Int!
   batch_id: Int!
-  transaction: Transactions
+  transaction: Transaction
   batch: Batch
   account: Account
   counter_account: Account
 }
 
 """A Transaction of Some Records"""
-type Transactions {
+type Transaction {
   debtor_id: String
   creditor_id: String
   type: String
@@ -106,7 +106,7 @@ type Batch {
   details: String
   init_time: String
   init_date: String
-  transactions: [Transactions]
+  transactions: [Transaction]
   records: [Record]
 }
 

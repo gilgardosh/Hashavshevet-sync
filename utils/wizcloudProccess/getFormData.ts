@@ -64,21 +64,63 @@ function getHashavshevetFormData(data) {
 
   return p;
 }
+const recordsLastUpdate = new Date("2000-01-01T00:00:01Z");
+const transactionsLastUpdate = new Date("2000-01-01T00:00:01Z");
+const batchesLastUpdate = new Date("2000-01-01T00:00:01Z");
+const accountsLastUpdate = new Date("2000-01-01T00:00:01Z");
 
-function getRecords() {
-    return getHashavshevetFormData(recordsParams)
+let recordsList;
+let transactionsList;
+let batchesList;
+let accountsList;
+
+function compareTime(time: Date) {
+  const now = new Date();
+  return now.getTime() - time.getTime() >= 1000;
 }
 
-function getTransactions() {
-    return getHashavshevetFormData(transactionsParams)
+async function getRecords() {
+  if (compareTime(recordsLastUpdate)) {
+    await getHashavshevetFormData(recordsParams).then(
+      (data) => (recordsList = data)
+    );
+    return recordsList;
+  } else {
+    return recordsList;
+  }
 }
 
-function getBatches() {
-    return getHashavshevetFormData(batchesParams)
+async function getTransactions() {
+  if (compareTime(transactionsLastUpdate)) {
+    await getHashavshevetFormData(transactionsParams).then(
+      (data) => (transactionsList = data)
+    );
+    return transactionsList;
+  } else {
+    return transactionsList;
+  }
 }
 
-function getAccounts() {
-    return getHashavshevetFormData(accountsParams)
+async function getBatches() {
+  if (compareTime(batchesLastUpdate)) {
+    await getHashavshevetFormData(batchesParams).then(
+      (data) => (batchesList = data)
+    );
+    return batchesList;
+  } else {
+    return batchesList;
+  }
+}
+
+async function getAccounts() {
+  if (compareTime(accountsLastUpdate)) {
+    await getHashavshevetFormData(accountsParams).then(
+      (data) => (accountsList = data)
+    );
+    return accountsList;
+  } else {
+    return accountsList;
+  }
 }
 
 export { getRecords, getTransactions, getBatches, getAccounts };

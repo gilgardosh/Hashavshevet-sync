@@ -6,7 +6,12 @@ import {
   GraphQLNonNull,
   GraphQLFloat,
 } from "graphql";
-import { getRecords, getTransactions, getBatches, getAccounts } from "../wizcloudProccess/getFormData";
+import {
+  getRecords,
+  getTransactions,
+  getBatches,
+  getAccounts,
+} from "../wizcloudProccess/getFormData";
 
 const RecordType = new GraphQLObjectType({
   name: "Record",
@@ -96,42 +101,30 @@ const RecordType = new GraphQLObjectType({
     transaction: {
       type: TransactionType,
       resolve: async (record) => {
-        let transactionsList;
-        await getTransactions().then(
-          (data) => (transactionsList = data)
+        let transactionsList = await getTransactions();
+        return transactionsList.find(
+          (transaction) => transaction.id === record.transaction_id
         );
-        return transactionsList.find((transaction) => transaction.id === record.transaction_id);
       },
     },
     batch: {
       type: BatchType,
       resolve: async (record) => {
-        let batchesList;
-        await getBatches().then(
-          (data) => (batchesList = data)
-        );
+        let batchesList = await getBatches();
         return batchesList.find((batch) => batch.id === record.batch_id);
       },
     },
     account: {
       type: AccountType,
       resolve: async (record) => {
-        let accountsList;
-        await getAccounts().then(
-          (data) => (accountsList = data)
-        );
-        return accountsList.find(
-          (account) => account.id === record.account_id
-        );
+        let accountsList = await getAccounts();
+        return accountsList.find((account) => account.id === record.account_id);
       },
     },
     counter_account: {
       type: AccountType,
       resolve: async (record) => {
-        let accountsList;
-        await getAccounts().then(
-          (data) => (accountsList = data)
-        );
+        let accountsList = await getAccounts();
         return accountsList.find(
           (account) => account.id === record.counter_account_id
         );
@@ -237,40 +230,32 @@ const TransactionType = new GraphQLObjectType({
     batch: {
       type: BatchType,
       resolve: async (transaction) => {
-        let batchesList;
-        await getBatches().then(
-          (data) => (batchesList = data)
-        );
+        let batchesList = await getBatches();
         return batchesList.find((batch) => batch.id === transaction.batch_id);
       },
     },
     debtor: {
       type: AccountType,
       resolve: async (transaction) => {
-        let accountsList;
-        await getAccounts().then(
-          (data) => (accountsList = data)
+        let accountsList = await getAccounts();
+        return accountsList.find(
+          (account) => account.id === transaction.debtor_id
         );
-        return accountsList.find((account) => account.id === transaction.debtor_id);
       },
     },
     creditor: {
       type: AccountType,
       resolve: async (transaction) => {
-        let accountsList;
-        await getAccounts().then(
-          (data) => (accountsList = data)
+        let accountsList = await getAccounts();
+        return accountsList.find(
+          (account) => account.id === transaction.creditor_id
         );
-        return accountsList.find((account) => account.id === transaction.creditor_id);
       },
     },
     records: {
       type: GraphQLList(RecordType),
       resolve: async (transaction) => {
-        let recordsList;
-        await getRecords().then(
-          (data) => (recordsList = data)
-        );
+        let recordsList = await getRecords();
         return recordsList.filter(
           (record) => record.transaction_id === transaction.id
         );
@@ -307,23 +292,17 @@ const BatchType = new GraphQLObjectType({
     transactions: {
       type: GraphQLList(TransactionType),
       resolve: async (batch) => {
-        let transactionsList;
-        await getTransactions().then(
-          (data) => (transactionsList = data)
+        let transactionsList = await getTransactions();
+        return transactionsList.filter(
+          (transaction) => transaction.batch_id === batch.id
         );
-        return transactionsList.filter((transaction) => transaction.batch_id === batch.id);
       },
     },
     records: {
       type: GraphQLList(RecordType),
       resolve: async (batch) => {
-        let recordsList;
-        await getRecords().then(
-          (data) => (recordsList = data)
-        );
-        return recordsList.filter(
-          (record) => record.batch_id === batch.id
-        );
+        let recordsList = await getRecords();
+        return recordsList.filter((record) => record.batch_id === batch.id);
       },
     },
   }),

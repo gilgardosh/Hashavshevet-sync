@@ -7,7 +7,12 @@ import {
   printSchema,
 } from "graphql";
 import { RecordType, TransactionType, BatchType, AccountType } from "./types";
-import { getRecords, getTransactions, getBatches, getAccounts } from "../wizcloudProccess/getFormData";
+import {
+  getRecords,
+  getTransactions,
+  getBatches,
+  getAccounts,
+} from "../wizcloudProccess/getFormData";
 
 const RootQueryType = new GraphQLObjectType({
   name: "Query",
@@ -19,10 +24,7 @@ const RootQueryType = new GraphQLObjectType({
         id: { type: GraphQLInt },
       },
       resolve: async (_, args) => {
-        let recordsList;
-        await getRecords().then(
-          (data) => (recordsList = data)
-        );
+        let recordsList = await getRecords();
         return recordsList.find((record) => record.id === args.id);
       },
     },
@@ -30,11 +32,7 @@ const RootQueryType = new GraphQLObjectType({
       type: GraphQLList(RecordType),
       description: "List of All Records",
       resolve: async () => {
-        let recordsList;
-        await getRecords().then(
-          (data) => (recordsList = data)
-        );
-        return recordsList;
+        return await getRecords();
       },
     },
     transactionById: {
@@ -44,22 +42,17 @@ const RootQueryType = new GraphQLObjectType({
         id: { type: GraphQLInt },
       },
       resolve: async (_, args) => {
-        let transactionsList;
-        await getTransactions().then(
-          (data) => (transactionsList = data)
+        let transactionsList = await getTransactions();
+        return transactionsList.find(
+          (transaction) => transaction.id === args.id
         );
-        return transactionsList.find((transaction) => transaction.id === args.id);
       },
     },
     transactions: {
       type: GraphQLList(TransactionType),
       description: "List of All Transactions",
       resolve: async () => {
-        let transactionsList;
-        await getTransactions().then(
-          (data) => (transactionsList = data)
-        );
-        return transactionsList;
+        return await getTransactions();
       },
     },
     batchById: {
@@ -69,10 +62,7 @@ const RootQueryType = new GraphQLObjectType({
         id: { type: GraphQLInt },
       },
       resolve: async (_, args) => {
-        let batchesList;
-        await getBatches().then(
-          (data) => (batchesList = data)
-        );
+        let batchesList = await getBatches();
         return batchesList.find((batch) => batch.id === args.id);
       },
     },
@@ -80,11 +70,7 @@ const RootQueryType = new GraphQLObjectType({
       type: GraphQLList(BatchType),
       description: "List of All Batchs",
       resolve: async () => {
-        let batchesList;
-        await getBatches().then(
-          (data) => (batchesList = data)
-        );
-        return batchesList;
+        return await getBatches();
       },
     },
     accountById: {
@@ -94,10 +80,7 @@ const RootQueryType = new GraphQLObjectType({
         id: { type: GraphQLInt },
       },
       resolve: async (_, args) => {
-        let accountsList;
-        await getAccounts().then(
-          (data) => (accountsList = data)
-        );
+        let accountsList = await getAccounts();
         return accountsList.find((account) => account.id === args.id);
       },
     },
@@ -105,11 +88,7 @@ const RootQueryType = new GraphQLObjectType({
       type: GraphQLList(AccountType),
       description: "List of All Accounts",
       resolve: async () => {
-        let accountsList;
-        await getAccounts().then(
-          (data) => (accountsList = data)
-        );
-        return accountsList;
+        return await getAccounts();
       },
     },
   }),
@@ -122,7 +101,9 @@ const schema = new GraphQLSchema({
 
 function createSDL() {
   const dataForSDL = printSchema(schema);
-  fs.writeFile(`./utils/graphql/SDL.graphql`, dataForSDL, "utf8", function (err) {
+  fs.writeFile(`./utils/graphql/SDL.graphql`, dataForSDL, "utf8", function (
+    err
+  ) {
     if (err) {
       console.log("An error occured while writing JSON Object to File.");
       console.log(err);
