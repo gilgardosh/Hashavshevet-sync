@@ -22,6 +22,16 @@ type Query {
 
   """List of All Accounts"""
   accounts: [Account]
+
+  """A Single Bank Page Record by its ID"""
+  bankPageRecordById(id: Int): BankPageRecord
+  bankPageRecords: [BankPageRecord]
+
+  """A Single Bank Page (Which Is A List Of Bank Page Records), by its ID"""
+  bankPageById(id: Int): BankPage
+
+  """List Of Bank Pages"""
+  bankPages: [BankPage]
 }
 
 """A Single Record"""
@@ -148,4 +158,31 @@ type Account {
   central_account: String
   accountant_transfer: String
   costing_code: String
+}
+
+"""A Single Bank Page Record"""
+type BankPageRecord {
+  id: Int!
+  bank_page_id: Int!
+  reference: Int
+  debit_or_credit: String!
+  cumulative_balance: Float
+  cumulative_balance_calculated: Float
+  match_number: Int
+  account_id: String
+  sum: Float
+  details: String
+  account_name: String
+  date: String
+  adjusted_record: String
+  bank_page: BankPage
+  account: Account
+}
+
+"""
+A Single BA Single Bank Page (Which Is A List Of Bank Page Records)atch
+"""
+type BankPage {
+  id: Int!
+  bankPageRecords: [BankPageRecord]
 }

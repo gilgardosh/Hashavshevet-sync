@@ -13,6 +13,8 @@ import {
   transactionsByBatcnIdLoader,
   batchByIdLoader,
   accountByIdLoader,
+  bankPageByIdLoader,
+  bankPageRecordsByBankPageIdLoader,
 } from "../wizcloudProccess/getFormData";
 
 const RecordType = new GraphQLObjectType({
@@ -403,4 +405,78 @@ const AccountType = new GraphQLObjectType({
   }),
 });
 
-export { RecordType, TransactionType, BatchType, AccountType };
+const BankPageRecordType = new GraphQLObjectType({
+  name: "BankPageRecord",
+  description: "A Single Bank Page Record",
+  fields: () => ({
+    id: {
+      type: GraphQLNonNull(GraphQLInt),
+    },
+    bank_page_id: {
+      type: GraphQLNonNull(GraphQLInt),
+    },
+    reference: {
+      type: GraphQLInt,
+    },
+    debit_or_credit: {
+      type: GraphQLNonNull(GraphQLString),
+    },
+    cumulative_balance: {
+      type: GraphQLFloat,
+    },
+    cumulative_balance_calculated: {
+      type: GraphQLFloat,
+    },
+    match_number: {
+      type: GraphQLInt,
+    },
+    account_id: {
+      type: GraphQLString,
+    },
+    sum: {
+      type: GraphQLFloat,
+    },
+    details: {
+      type: GraphQLString,
+    },
+    account_name: {
+      type: GraphQLString,  // remove?
+    },
+    date: {
+      type: GraphQLString,  // Date type
+    },
+    adjusted_record: {
+      type: GraphQLString,
+    },
+    bank_page: {
+      type: BankPageType,
+      resolve: async (record) => {
+        return bankPageByIdLoader.load(record.bank_page_id)
+      }
+    },
+    account: {
+      type: AccountType,
+      resolve: (record) => {
+        return accountByIdLoader.load(record.account_id);
+      },
+    },
+  }),
+});
+
+const BankPageType = new GraphQLObjectType({
+  name: "BankPage",
+  description: "A Single BA Single Bank Page (Which Is A List Of Bank Page Records)atch",
+  fields: () => ({
+    id: {
+      type: GraphQLNonNull(GraphQLInt),
+    },
+    bankPageRecords: {
+      type: GraphQLList(BankPageRecordType),
+      resolve: async (page) => {
+        return bankPageRecordsByBankPageIdLoader.load(page.id);
+      },
+    },
+  }),
+});
+
+export { RecordType, TransactionType, BatchType, AccountType, BankPageRecordType, BankPageType };

@@ -5,8 +5,16 @@ import {
   GraphQLList,
   GraphQLInt,
   printSchema,
+  graphql,
 } from "graphql";
-import { RecordType, TransactionType, BatchType, AccountType } from "./types";
+import {
+  RecordType,
+  TransactionType,
+  BatchType,
+  AccountType,
+  BankPageRecordType,
+  BankPageType,
+} from "./types";
 import {
   getAllRecords,
   recordByIdLoader,
@@ -16,6 +24,10 @@ import {
   batchByIdLoader,
   getAllAccounts,
   accountByIdLoader,
+  getAllBankPageRecords,
+  bankPageRecordByIdLoader,
+  getAllBankPages,
+  bankPageByIdLoader,
 } from "../wizcloudProccess/getFormData";
 
 const RootQueryType = new GraphQLObjectType({
@@ -87,6 +99,40 @@ const RootQueryType = new GraphQLObjectType({
       description: "List of All Accounts",
       resolve: async () => {
         return await getAllAccounts();
+      },
+    },
+    bankPageRecordById: {
+      type: BankPageRecordType,
+      description: "A Single Bank Page Record by its ID",
+      args: {
+        id: { type: GraphQLInt },
+      },
+      resolve: async (_, args) => {
+        return await bankPageRecordByIdLoader.load(args.id);
+      },
+    },
+    bankPageRecords: {
+      type: GraphQLList(BankPageRecordType),
+      resolve: async () => {
+        return await getAllBankPageRecords();
+      },
+    },
+    bankPageById: {
+      type: BankPageType,
+      description:
+        "A Single Bank Page (Which Is A List Of Bank Page Records), by its ID",
+      args: {
+        id: { type: GraphQLInt },
+      },
+      resolve: async (_, args) => {
+        return await bankPageByIdLoader.load(args.id);
+      },
+    },
+    bankPages: {
+      type: GraphQLList(BankPageType),
+      description: "List Of Bank Pages",
+      resolve: async () => {
+        return await getAllBankPages();
       },
     },
   }),
