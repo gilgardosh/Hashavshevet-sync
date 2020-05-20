@@ -52,7 +52,6 @@ function saveToFile(filename: string, jsonObj) {
 import express from "express";
 import expressGraphQL from "express-graphql";
 import { schema, createSDL } from "./utils/graphql/schema";
-import { transactionsDataLoader } from "./utils/wizcloudProccess/getFormData";
 
 const app = express();
 
@@ -61,11 +60,6 @@ app.use(
   expressGraphQL({
     graphiql: true,
     schema: schema,
-    context: () => ({
-      loaders: {
-        transactionsLoader: transactionsDataLoader(),
-      },
-    }),
   })
 );
 

@@ -7,10 +7,12 @@ import {
   GraphQLFloat,
 } from "graphql";
 import {
-  getRecords,
-  getTransactions,
-  getBatches,
-  getAccounts,
+  recordsByTransactionIdLoader,
+  recordsByBatcnIdLoader,
+  transactionByIdLoader,
+  transactionsByBatcnIdLoader,
+  batchByIdLoader,
+  accountByIdLoader,
 } from "../wizcloudProccess/getFormData";
 
 const RecordType = new GraphQLObjectType({
@@ -100,37 +102,26 @@ const RecordType = new GraphQLObjectType({
     },
     transaction: {
       type: TransactionType,
-      resolve: (record, args, context) => {
-        const { loaders } = context;
-        const { transactionsLoader } = loaders;
-        return transactionsLoader.load(record.transaction_id)
-        // let transactionsList = await getTransactions();
-        // return transactionsList.find(
-        //   (transaction) => transaction.id === record.transaction_id
-        // );
+      resolve: (record) => {
+        return transactionByIdLoader.load(record.transaction_id);
       },
     },
     batch: {
       type: BatchType,
-      resolve: async (record) => {
-        let batchesList = await getBatches();
-        return batchesList.find((batch) => batch.id === record.batch_id);
+      resolve: (record) => {
+        return batchByIdLoader.load(record.batch_id);
       },
     },
     account: {
       type: AccountType,
-      resolve: async (record) => {
-        let accountsList = await getAccounts();
-        return accountsList.find((account) => account.id === record.account_id);
+      resolve: (record) => {
+        return accountByIdLoader.load(record.account_id);
       },
     },
     counter_account: {
       type: AccountType,
-      resolve: async (record) => {
-        let accountsList = await getAccounts();
-        return accountsList.find(
-          (account) => account.id === record.counter_account_id
-        );
+      resolve: (record) => {
+        return accountByIdLoader.load(record.counter_account_id);
       },
     },
   }),
@@ -232,36 +223,26 @@ const TransactionType = new GraphQLObjectType({
     },
     batch: {
       type: BatchType,
-      resolve: async (transaction) => {
-        let batchesList = await getBatches();
-        return batchesList.find((batch) => batch.id === transaction.batch_id);
+      resolve: (transaction) => {
+        return batchByIdLoader.load(transaction.batch_id);
       },
     },
     debtor: {
       type: AccountType,
-      resolve: async (transaction) => {
-        let accountsList = await getAccounts();
-        return accountsList.find(
-          (account) => account.id === transaction.debtor_id
-        );
+      resolve: (transaction) => {
+        return accountByIdLoader.load(transaction.debtor_id);
       },
     },
     creditor: {
       type: AccountType,
-      resolve: async (transaction) => {
-        let accountsList = await getAccounts();
-        return accountsList.find(
-          (account) => account.id === transaction.creditor_id
-        );
+      resolve: (transaction) => {
+        return accountByIdLoader.load(transaction.creditor_id);
       },
     },
     records: {
       type: GraphQLList(RecordType),
-      resolve: async (transaction) => {
-        let recordsList = await getRecords();
-        return recordsList.filter(
-          (record) => record.transaction_id === transaction.id
-        );
+      resolve: (transaction) => {
+        return recordsByTransactionIdLoader.load(transaction.id);
       },
     },
   }),
@@ -295,17 +276,13 @@ const BatchType = new GraphQLObjectType({
     transactions: {
       type: GraphQLList(TransactionType),
       resolve: async (batch) => {
-        let transactionsList = await getTransactions();
-        return transactionsList.filter(
-          (transaction) => transaction.batch_id === batch.id
-        );
+        return transactionsByBatcnIdLoader.load(batch.id);
       },
     },
     records: {
       type: GraphQLList(RecordType),
       resolve: async (batch) => {
-        let recordsList = await getRecords();
-        return recordsList.filter((record) => record.batch_id === batch.id);
+        return recordsByBatcnIdLoader.load(batch.id);
       },
     },
   }),

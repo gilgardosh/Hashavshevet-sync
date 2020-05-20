@@ -8,10 +8,14 @@ import {
 } from "graphql";
 import { RecordType, TransactionType, BatchType, AccountType } from "./types";
 import {
-  getRecords,
-  getTransactions,
-  getBatches,
-  getAccounts,
+  getAllRecords,
+  recordByIdLoader,
+  getAllTransactions,
+  transactionByIdLoader,
+  getAllBatches,
+  batchByIdLoader,
+  getAllAccounts,
+  accountByIdLoader,
 } from "../wizcloudProccess/getFormData";
 
 const RootQueryType = new GraphQLObjectType({
@@ -24,15 +28,14 @@ const RootQueryType = new GraphQLObjectType({
         id: { type: GraphQLInt },
       },
       resolve: async (_, args) => {
-        let recordsList = await getRecords();
-        return recordsList.find((record) => record.id === args.id);
+        return await recordByIdLoader.load(args.id);
       },
     },
     records: {
       type: GraphQLList(RecordType),
       description: "List of All Records",
       resolve: async () => {
-        return await getRecords();
+        return await getAllRecords();
       },
     },
     transactionById: {
@@ -42,17 +45,14 @@ const RootQueryType = new GraphQLObjectType({
         id: { type: GraphQLInt },
       },
       resolve: async (_, args) => {
-        let transactionsList = await getTransactions();
-        return transactionsList.find(
-          (transaction) => transaction.id === args.id
-        );
+        return await transactionByIdLoader.load(args.id);
       },
     },
     transactions: {
       type: GraphQLList(TransactionType),
       description: "List of All Transactions",
       resolve: async () => {
-        return await getTransactions();
+        return await getAllTransactions();
       },
     },
     batchById: {
@@ -62,15 +62,14 @@ const RootQueryType = new GraphQLObjectType({
         id: { type: GraphQLInt },
       },
       resolve: async (_, args) => {
-        let batchesList = await getBatches();
-        return batchesList.find((batch) => batch.id === args.id);
+        return await batchByIdLoader.load(args.id);
       },
     },
     batches: {
       type: GraphQLList(BatchType),
       description: "List of All Batches",
       resolve: async () => {
-        return await getBatches();
+        return await getAllBatches();
       },
     },
     accountById: {
@@ -80,15 +79,14 @@ const RootQueryType = new GraphQLObjectType({
         id: { type: GraphQLInt },
       },
       resolve: async (_, args) => {
-        let accountsList = await getAccounts();
-        return accountsList.find((account) => account.id === args.id);
+        return await accountByIdLoader.load(args.id);
       },
     },
     accounts: {
       type: GraphQLList(AccountType),
       description: "List of All Accounts",
       resolve: async () => {
-        return await getAccounts();
+        return await getAllAccounts();
       },
     },
   }),

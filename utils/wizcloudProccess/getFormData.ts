@@ -1,10 +1,12 @@
 import { wizCloudAuth } from "./wizCloudAuth";
 const request = require("request");
-import { groupBy, map } from "ramda";
+import { groupBy } from "ramda";
 import DataLoader from "dataloader";
 
 // actual fetch from Hashavshevet. data is body of POST call
 function getHashavshevetFormData(data) {
+  console.log("ping");
+
   const p = new Promise((resolve, reject) => {
     wizCloudAuth()
       .then(
@@ -45,15 +47,39 @@ function getHashavshevetFormData(data) {
 }
 
 // specific get calls functions
-async function getRecords() {
+async function getAllRecords() {
   let recordsList;
   await getHashavshevetFormData(recordsParams).then(
     (data) => (recordsList = data)
   );
+  // let b = [1200, 1201, 1202, 1203, 1204]
+  // let a = recordsList.find({id: { $in: b }})
+  // console.log(a);
   return recordsList;
 }
 
-async function getTransactions() {
+const recordByIdLoader = new DataLoader(async (recordIds) => {
+  let recordsList = await getAllRecords();
+  return await recordIds.map((id) => {
+    return recordsList.find((record) => record.id === id);
+  });
+});
+
+const recordsByTransactionIdLoader = new DataLoader(async (transactionIds) => {
+  let recordsList = await getAllRecords();
+  return await transactionIds.map((id) => {
+    return recordsList.filter((record) => record.transaction_id === id);
+  });
+});
+
+const recordsByBatcnIdLoader = new DataLoader(async (batchIds) => {
+  let recordsList = await getAllRecords();
+  return await batchIds.map((id) => {
+    return recordsList.filter((record) => record.batch_id === id);
+  });
+});
+
+async function getAllTransactions() {
   let transactionsList;
   await getHashavshevetFormData(transactionsParams).then(
     (data) => (transactionsList = data)
@@ -61,24 +87,21 @@ async function getTransactions() {
   return transactionsList;
 }
 
-function transactionsDataLoader() {
-  return new DataLoader(transactionsByIds);
-}
+const transactionByIdLoader = new DataLoader(async (transacrionIds) => {
+  let transactionsList = await getAllTransactions();  
+  return await transacrionIds.map((id) => {
+    return transactionsList.find((transaction) => transaction.id === id);
+  });
+});
 
-async function transactionsByIds(transactionIds) {
-  console.log("ping");
+const transactionsByBatcnIdLoader = new DataLoader(async (batchIds) => {
+  let transactionsList = await getAllTransactions();
+  return await batchIds.map((id) => {
+    return transactionsList.filter((transaction) => transaction.batch_id === id);
+  });
+});
 
-  let transactionsList;
-  await getHashavshevetFormData(transactionsParams).then(
-    (data) => (transactionsList = data)
-  );
-  const groupById = groupBy((transaction) => transaction.id, transactionsList);
-  let a = map((id) => groupById[id], transactionIds);
-  console.log(a);
-  return a;
-}
-
-async function getBatches() {
+async function getAllBatches() {
   let batchesList;
   await getHashavshevetFormData(batchesParams).then(
     (data) => (batchesList = data)
@@ -86,13 +109,27 @@ async function getBatches() {
   return batchesList;
 }
 
-async function getAccounts() {
+const batchByIdLoader = new DataLoader(async (batchIds) => {
+  let batchesList = await getAllBatches();
+  return await batchIds.map((id) => {
+    return batchesList.find((batch) => batch.id === id);
+  });
+});
+
+async function getAllAccounts() {
   let accountsList;
   await getHashavshevetFormData(accountsParams).then(
     (data) => (accountsList = data)
   );
   return accountsList;
 }
+
+const accountByIdLoader = new DataLoader(async (accountIds) => {
+  let accountsList = await getAllAccounts();
+  return await accountIds.map((id) => {
+    return accountsList.find((account) => account.id === id);
+  });
+});
 
 // body types for each get call
 const recordsParams = {
@@ -120,9 +157,15 @@ const accountsParams = {
 };
 
 export {
-  getRecords,
-  getTransactions,
-  getBatches,
-  getAccounts,
-  transactionsDataLoader,
+  getAllRecords,
+  recordByIdLoader,
+  recordsByTransactionIdLoader,
+  recordsByBatcnIdLoader,
+  getAllTransactions,
+  transactionByIdLoader,
+  transactionsByBatcnIdLoader,
+  getAllBatches,
+  batchByIdLoader,
+  getAllAccounts,
+  accountByIdLoader,
 };
