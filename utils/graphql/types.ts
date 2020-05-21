@@ -277,13 +277,13 @@ const BatchType = new GraphQLObjectType({
     },
     transactions: {
       type: GraphQLList(TransactionType),
-      resolve: async (batch) => {
+      resolve: (batch) => {
         return transactionsByBatcnIdLoader.load(batch.id);
       },
     },
     records: {
       type: GraphQLList(RecordType),
-      resolve: async (batch) => {
+      resolve: (batch) => {
         return recordsByBatcnIdLoader.load(batch.id);
       },
     },
@@ -450,7 +450,7 @@ const BankPageRecordType = new GraphQLObjectType({
     },
     bank_page: {
       type: BankPageType,
-      resolve: async (record) => {
+      resolve: (record) => {
         return bankPageByIdLoader.load(record.bank_page_id)
       }
     },
@@ -472,7 +472,7 @@ const BankPageType = new GraphQLObjectType({
     },
     bankPageRecords: {
       type: GraphQLList(BankPageRecordType),
-      resolve: async (page) => {
+      resolve: (page) => {
         return bankPageRecordsByBankPageIdLoader.load(page.id);
       },
     },

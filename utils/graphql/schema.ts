@@ -5,7 +5,6 @@ import {
   GraphQLList,
   GraphQLInt,
   printSchema,
-  graphql,
 } from "graphql";
 import {
   RecordType,
@@ -39,15 +38,15 @@ const RootQueryType = new GraphQLObjectType({
       args: {
         id: { type: GraphQLInt },
       },
-      resolve: async (_, args) => {
-        return await recordByIdLoader.load(args.id);
+      resolve: (_, args) => {
+        return recordByIdLoader.load(args.id);
       },
     },
     records: {
       type: GraphQLList(RecordType),
       description: "List of All Records",
-      resolve: async () => {
-        return await getAllRecords();
+      resolve: () => {
+        return getAllRecords();
       },
     },
     transactionById: {
@@ -56,15 +55,15 @@ const RootQueryType = new GraphQLObjectType({
       args: {
         id: { type: GraphQLInt },
       },
-      resolve: async (_, args) => {
-        return await transactionByIdLoader.load(args.id);
+      resolve: (_, args) => {
+        return transactionByIdLoader.load(args.id);
       },
     },
     transactions: {
       type: GraphQLList(TransactionType),
       description: "List of All Transactions",
-      resolve: async () => {
-        return await getAllTransactions();
+      resolve: () => {
+        return getAllTransactions();
       },
     },
     batchById: {
@@ -73,15 +72,15 @@ const RootQueryType = new GraphQLObjectType({
       args: {
         id: { type: GraphQLInt },
       },
-      resolve: async (_, args) => {
-        return await batchByIdLoader.load(args.id);
+      resolve: (_, args) => {
+        return batchByIdLoader.load(args.id);
       },
     },
     batches: {
       type: GraphQLList(BatchType),
       description: "List of All Batches",
-      resolve: async () => {
-        return await getAllBatches();
+      resolve: () => {
+        return getAllBatches();
       },
     },
     accountById: {
@@ -90,15 +89,15 @@ const RootQueryType = new GraphQLObjectType({
       args: {
         id: { type: GraphQLInt },
       },
-      resolve: async (_, args) => {
-        return await accountByIdLoader.load(args.id);
+      resolve: (_, args) => {
+        return accountByIdLoader.load(args.id);
       },
     },
     accounts: {
       type: GraphQLList(AccountType),
       description: "List of All Accounts",
-      resolve: async () => {
-        return await getAllAccounts();
+      resolve: () => {
+        return getAllAccounts();
       },
     },
     bankPageRecordById: {
@@ -107,14 +106,14 @@ const RootQueryType = new GraphQLObjectType({
       args: {
         id: { type: GraphQLInt },
       },
-      resolve: async (_, args) => {
-        return await bankPageRecordByIdLoader.load(args.id);
+      resolve: (_, args) => {
+        return bankPageRecordByIdLoader.load(args.id);
       },
     },
     bankPageRecords: {
       type: GraphQLList(BankPageRecordType),
-      resolve: async () => {
-        return await getAllBankPageRecords();
+      resolve: () => {
+        return getAllBankPageRecords();
       },
     },
     bankPageById: {
@@ -124,15 +123,15 @@ const RootQueryType = new GraphQLObjectType({
       args: {
         id: { type: GraphQLInt },
       },
-      resolve: async (_, args) => {
-        return await bankPageByIdLoader.load(args.id);
+      resolve: (_, args) => {
+        return bankPageByIdLoader.load(args.id);
       },
     },
     bankPages: {
       type: GraphQLList(BankPageType),
       description: "List Of Bank Pages",
-      resolve: async () => {
-        return await getAllBankPages();
+      resolve: () => {
+        return getAllBankPages();
       },
     },
   }),
