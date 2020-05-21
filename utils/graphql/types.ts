@@ -9,13 +9,15 @@ import {
 import {
   recordsByTransactionIdLoader,
   recordsByBatcnIdLoader,
+} from "../wizcloudProccess/getRecords";
+import {
   transactionByIdLoader,
   transactionsByBatcnIdLoader,
-  batchByIdLoader,
-  accountByIdLoader,
-  bankPageByIdLoader,
-  bankPageRecordsByBankPageIdLoader,
-} from "../wizcloudProccess/getFormData";
+} from "../wizcloudProccess/getTransactions";
+import { batchByIdLoader } from "../wizcloudProccess/getBatches";
+import { accountByIdLoader } from "../wizcloudProccess/getAccounts";
+import { bankPageRecordsByBankPageIdLoader } from "../wizcloudProccess/getBankPageRecords";
+import { bankPageByIdLoader } from "../wizcloudProccess/getBankPages";
 
 const RecordType = new GraphQLObjectType({
   name: "Record",
@@ -440,10 +442,10 @@ const BankPageRecordType = new GraphQLObjectType({
       type: GraphQLString,
     },
     account_name: {
-      type: GraphQLString,  // remove?
+      type: GraphQLString, // remove?
     },
     date: {
-      type: GraphQLString,  // Date type
+      type: GraphQLString, // Date type
     },
     adjusted_record: {
       type: GraphQLString,
@@ -451,8 +453,8 @@ const BankPageRecordType = new GraphQLObjectType({
     bank_page: {
       type: BankPageType,
       resolve: (record) => {
-        return bankPageByIdLoader.load(record.bank_page_id)
-      }
+        return bankPageByIdLoader.load(record.bank_page_id);
+      },
     },
     account: {
       type: AccountType,
@@ -465,7 +467,8 @@ const BankPageRecordType = new GraphQLObjectType({
 
 const BankPageType = new GraphQLObjectType({
   name: "BankPage",
-  description: "A Single BA Single Bank Page (Which Is A List Of Bank Page Records)atch",
+  description:
+    "A Single BA Single Bank Page (Which Is A List Of Bank Page Records)atch",
   fields: () => ({
     id: {
       type: GraphQLNonNull(GraphQLInt),
@@ -479,4 +482,11 @@ const BankPageType = new GraphQLObjectType({
   }),
 });
 
-export { RecordType, TransactionType, BatchType, AccountType, BankPageRecordType, BankPageType };
+export {
+  RecordType,
+  TransactionType,
+  BatchType,
+  AccountType,
+  BankPageRecordType,
+  BankPageType,
+};

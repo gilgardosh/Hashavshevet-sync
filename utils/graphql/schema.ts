@@ -17,17 +17,24 @@ import {
 import {
   getAllRecords,
   recordByIdLoader,
+} from "../wizcloudProccess/getRecords";
+import {
   getAllTransactions,
   transactionByIdLoader,
-  getAllBatches,
-  batchByIdLoader,
+} from "../wizcloudProccess/getTransactions";
+import { getAllBatches, batchByIdLoader } from "../wizcloudProccess/getBatches";
+import {
   getAllAccounts,
   accountByIdLoader,
+} from "../wizcloudProccess/getAccounts";
+import {
   getAllBankPageRecords,
   bankPageRecordByIdLoader,
+} from "../wizcloudProccess/getBankPageRecords";
+import {
   getAllBankPages,
   bankPageByIdLoader,
-} from "../wizcloudProccess/getFormData";
+} from "../wizcloudProccess/getBankPages";
 
 const RootQueryType = new GraphQLObjectType({
   name: "Query",
@@ -137,9 +144,15 @@ const RootQueryType = new GraphQLObjectType({
   }),
 });
 
+const RootMutationType = new GraphQLObjectType({
+  name: "Mutation",
+  description: "Root Mutation",
+  fields: () => ({}),
+});
+
 const schema = new GraphQLSchema({
   query: RootQueryType,
-  //   mutation: RootMutationType,
+  // mutation: RootMutationType,
 });
 
 function createSDL() {
