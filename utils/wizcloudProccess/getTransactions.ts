@@ -1,9 +1,9 @@
 import DataLoader from "dataloader";
-import { getHashavshevetFormData } from "./getFormData";
+import { exportDataRecords } from "./wizCloudFetch";
 
 async function getAllTransactions() {
   let transactionsList;
-  await getHashavshevetFormData(transactionsParams).then(
+  await exportDataRecords(transactionsParams).then(
     (data) => (transactionsList = data)
   );
   return transactionsList;

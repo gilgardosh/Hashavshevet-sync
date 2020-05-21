@@ -1,9 +1,9 @@
 import DataLoader from "dataloader";
-import { getHashavshevetFormData } from "./getFormData";
+import { exportDataRecords } from "./wizCloudFetch";
 
 async function getAllBatches() {
   let batchesList;
-  await getHashavshevetFormData(batchesParams).then(
+  await exportDataRecords(batchesParams).then(
     (data) => (batchesList = data)
   );
   const uniqueBatchesList = [];
