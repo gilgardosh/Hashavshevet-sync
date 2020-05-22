@@ -25,6 +25,8 @@ type Query {
 
   """A Single Bank Page Record by its ID"""
   bankPageRecordById(id: Int): BankPageRecord
+
+  """List of All Bank Page Records"""
   bankPageRecords: [BankPageRecord]
 
   """A Single Bank Page (Which Is A List Of Bank Page Records), by its ID"""
@@ -185,4 +187,56 @@ A Single BA Single Bank Page (Which Is A List Of Bank Page Records)atch
 type BankPage {
   id: Int!
   bankPageRecords: [BankPageRecord]
+}
+
+"""Root Mutation"""
+type Mutation {
+  """
+  List of Companies for user token thats defined on: 'WizcloudApiPrivateKey'
+  """
+  userCompanies: [Company]
+
+  """Get User Details"""
+  userDetails: HashavshevetUser
+
+  """Checks if there are errors in the batch"""
+  checkBatch(batch_id: Int): BatchErrorReport
+}
+
+"""A Single Hashavshevet Company"""
+type Company {
+  Company_File_Name: String!
+  Company_Name: String!
+  Comp_Vatnum: String!
+}
+
+"""A Single User on Hashavshevet"""
+type HashavshevetUser {
+  cid: String!
+  user: String!
+  use_name: String!
+  wizcomp_no: String
+  company_name: String
+  user_id: Int!
+  company_id: Int
+  branch: Int
+}
+
+"""An Error Report of a Batch"""
+union BatchErrorReport = BatchCheckErrorMessage | BatchCheckErrorsList
+
+type BatchCheckErrorMessage {
+  batch_check: String
+}
+
+type BatchCheckErrorsList {
+  batch_check: [ARecordErrorDetails]
+}
+
+type ARecordErrorDetails {
+  headerID: String
+  err: Int
+  recId: Int
+  field: String
+  TxtMsg: String
 }

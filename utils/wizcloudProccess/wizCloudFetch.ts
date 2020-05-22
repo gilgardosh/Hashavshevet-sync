@@ -23,7 +23,7 @@ function wizCloudFetch(path, data = {}) {
               console.log(error);
               reject(error);
             } else {
-              resolve(JSON.parse(response.body)["repdata"]);
+              resolve(JSON.parse(response.body));
             }
           });
         },
@@ -41,36 +41,36 @@ function wizCloudFetch(path, data = {}) {
   return p;
 }
 
-export async function napi(data) {
-	return wizCloudFetch("api/napi", data);
+export async function napi() {
+	return wizCloudFetch("api/napi", "session");
 }
 //jurnal
 export async function tmpJurnalBatch(data){  
-    return wizCloudFetch('jtransApi/tmpBatch',data)
+    return wizCloudFetch('jtransApi/tmpBatch',data);
  }
  export async function chkJurnalBatch(data){  
-    return wizCloudFetch('jtransApi/chkBatch',data)
+    return wizCloudFetch('jtransApi/chkBatch', data);
  }
  export async function newJurnalBatch(data){  
-    return wizCloudFetch('jtransApi/newBatch',data)
+    return wizCloudFetch('jtransApi/newBatch',data);
  }
  export async function issueJurnalBatch(data){  
-    return wizCloudFetch('jtransApi/issueBatch',data)
+    return wizCloudFetch('jtransApi/issueBatch',data);
  }
  //index
  export async function importIndexRecords(data){ 
-    return wizCloudFetch('IndexApi/importIndex',data)
+    return wizCloudFetch('IndexApi/importIndex',data);
  }
  export async function deleteIndexRecords(data){ 
-    return wizCloudFetch('IndexApi/deleteIndex',data)
+    return wizCloudFetch('IndexApi/deleteIndex',data);
  }
  //bankpages
  export async function importBankPageRecords(data){ 
-    return wizCloudFetch('BankPagesApi/importBankPage',data)
+    return wizCloudFetch('BankPagesApi/importBankPage',data);
  }
  //data export
  export async function exportDataRecords(data){ 
-    return wizCloudFetch('ExportDataApi/exportData',data)
+    return wizCloudFetch('ExportDataApi/exportData', data); //"repdata"
  }
  //inv documents
 export async function createDocument(data) {
@@ -93,6 +93,6 @@ export async function crmActivitiesTest(data) {
 	return wizCloudFetch("crmActivitiesTest/createSchema", data);
 }
  //companies list
-export async function CompaniesForToken() {
-	return wizCloudFetch("CompanyListToTokenApi/TokenCompanies");
+export async function getCompanies() {
+	return await wizCloudFetch("CompanyListToTokenApi/TokenCompanies").then(data => {return data["repdata"]}); //"repdata"
 }

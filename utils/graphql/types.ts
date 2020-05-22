@@ -5,6 +5,7 @@ import {
   GraphQLInt,
   GraphQLNonNull,
   GraphQLFloat,
+  GraphQLUnionType,
 } from "graphql";
 import {
   recordsByTransactionIdLoader,
@@ -129,6 +130,46 @@ const RecordType = new GraphQLObjectType({
       },
     },
   }),
+});
+
+const batchErrorResolver = (data) => {
+  if (typeof data.batch_check === "string") {
+    return batchErrorResponseStatusType;
+  } else if (data.batch_check.err) {
+    return batchErrorResponseErrorsType;
+  }
+};
+
+const batchErrorResponseStatusType = new GraphQLObjectType({
+  name: "BatchCheckErrorMessage",
+  fields: {
+    batch_check: { type: GraphQLString },
+  },
+});
+
+const recordErrorType = new GraphQLObjectType({
+  name: "ARecordErrorDetails",
+  fields: () => ({
+    headerID: { type: GraphQLString },
+    err: { type: GraphQLInt },
+    recId: { type: GraphQLInt },
+    field: { type: GraphQLString },
+    TxtMsg: { type: GraphQLString },
+  }),
+});
+
+const batchErrorResponseErrorsType = new GraphQLObjectType({
+  name: "BatchCheckErrorsList",
+  fields: {
+    batch_check: { type: GraphQLList(recordErrorType) },
+  },
+});
+
+const BatchErrorType = new GraphQLUnionType({
+  name: "BatchErrorReport",
+  description: "An Error Report of a Batch",
+  types: [batchErrorResponseStatusType, batchErrorResponseErrorsType],
+  resolveType: batchErrorResolver,
 });
 
 const TransactionType = new GraphQLObjectType({
@@ -482,11 +523,61 @@ const BankPageType = new GraphQLObjectType({
   }),
 });
 
+const CompanyType = new GraphQLObjectType({
+  name: "Company",
+  description: "A Single Hashavshevet Company",
+  fields: () => ({
+    Company_File_Name: {
+      type: GraphQLNonNull(GraphQLString),
+    },
+    Company_Name: {
+      type: GraphQLNonNull(GraphQLString),
+    },
+    Comp_Vatnum: {
+      type: GraphQLNonNull(GraphQLString),
+    },
+  }),
+});
+
+const UserType = new GraphQLObjectType({
+  name: "HashavshevetUser",
+  description: "A Single User on Hashavshevet",
+  fields: () => ({
+    cid: {
+      type: GraphQLNonNull(GraphQLString),
+    },
+    user: {
+      type: GraphQLNonNull(GraphQLString),
+    },
+    use_name: {
+      type: GraphQLNonNull(GraphQLString),
+    },
+    wizcomp_no: {
+      type: GraphQLString,
+    },
+    company_name: {
+      type: GraphQLString,
+    },
+    user_id: {
+      type: GraphQLNonNull(GraphQLInt),
+    },
+    company_id: {
+      type: GraphQLInt,
+    },
+    branch: {
+      type: GraphQLInt,
+    },
+  }),
+});
+
 export {
   RecordType,
+  BatchErrorType,
   TransactionType,
   BatchType,
   AccountType,
   BankPageRecordType,
   BankPageType,
+  CompanyType,
+  UserType,
 };

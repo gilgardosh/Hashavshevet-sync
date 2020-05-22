@@ -10,9 +10,12 @@ import {
   RecordType,
   TransactionType,
   BatchType,
+  BatchErrorType,
   AccountType,
   BankPageRecordType,
   BankPageType,
+  CompanyType,
+  UserType,
 } from "./types";
 import {
   getAllRecords,
@@ -35,6 +38,11 @@ import {
   getAllBankPages,
   bankPageByIdLoader,
 } from "../wizcloudProccess/getBankPages";
+import {
+  getCompanies,
+  napi,
+  chkJurnalBatch,
+} from "../wizcloudProccess/wizCloudFetch";
 
 const RootQueryType = new GraphQLObjectType({
   name: "Query",
@@ -119,6 +127,7 @@ const RootQueryType = new GraphQLObjectType({
     },
     bankPageRecords: {
       type: GraphQLList(BankPageRecordType),
+      description: "List of All Bank Page Records",
       resolve: () => {
         return getAllBankPageRecords();
       },
@@ -147,12 +156,40 @@ const RootQueryType = new GraphQLObjectType({
 const RootMutationType = new GraphQLObjectType({
   name: "Mutation",
   description: "Root Mutation",
-  fields: () => ({}),
+  fields: () => ({
+    userCompanies: {
+      type: GraphQLList(CompanyType),
+      description:
+        "List of Companies for user token thats defined on: 'WizcloudApiPrivateKey'",
+      resolve: () => {
+        return getCompanies();
+      },
+    },
+    userDetails: {
+      type: UserType,
+      description: "Get User Details",
+      resolve: () => {
+        return napi();
+      },
+    },
+    checkBatch: {
+      type: BatchErrorType,
+      description: "Checks if there are errors in the batch",
+      args: {
+        batch_id: {type: GraphQLInt}
+      },
+      resolve: (_, args) => {
+        // https://medium.com/the-graphqlhub/graphql-tour-interfaces-and-unions-7dd5be35de0d
+        // handle keys in wizCloudFetch variations
+        return chkJurnalBatch({ batchNo: args.batch_id });
+      },
+    },
+  }),
 });
 
 const schema = new GraphQLSchema({
   query: RootQueryType,
-  // mutation: RootMutationType,
+  mutation: RootMutationType,
 });
 
 function createSDL() {
