@@ -234,8 +234,11 @@ type BatchCheckErrorsList {
 }
 
 type ARecordErrorDetails {
+  """AKA transaction_id"""
   headerID: String
   err: Int
+
+  """AKA record_id"""
   recId: Int
   field: String
   TxtMsg: String

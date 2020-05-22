@@ -42,57 +42,63 @@ function wizCloudFetch(path, data = {}) {
 }
 
 export async function napi() {
-	return wizCloudFetch("api/napi", "session");
+  return wizCloudFetch("api/napi").then((data) => {
+    return data["session"];
+  });
 }
 //jurnal
-export async function tmpJurnalBatch(data){  
-    return wizCloudFetch('jtransApi/tmpBatch',data);
- }
- export async function chkJurnalBatch(data){  
-    return wizCloudFetch('jtransApi/chkBatch', data);
- }
- export async function newJurnalBatch(data){  
-    return wizCloudFetch('jtransApi/newBatch',data);
- }
- export async function issueJurnalBatch(data){  
-    return wizCloudFetch('jtransApi/issueBatch',data);
- }
- //index
- export async function importIndexRecords(data){ 
-    return wizCloudFetch('IndexApi/importIndex',data);
- }
- export async function deleteIndexRecords(data){ 
-    return wizCloudFetch('IndexApi/deleteIndex',data);
- }
- //bankpages
- export async function importBankPageRecords(data){ 
-    return wizCloudFetch('BankPagesApi/importBankPage',data);
- }
- //data export
- export async function exportDataRecords(data){ 
-    return wizCloudFetch('ExportDataApi/exportData', data); //"repdata"
- }
- //inv documents
+export async function tmpJurnalBatch(data) {
+  return wizCloudFetch("jtransApi/tmpBatch", data);
+}
+export async function chkJurnalBatch(data) {
+  return wizCloudFetch("jtransApi/chkBatch", data);
+}
+export async function newJurnalBatch(data) {
+  return wizCloudFetch("jtransApi/newBatch", data);
+}
+export async function issueJurnalBatch(data) {
+  return wizCloudFetch("jtransApi/issueBatch", data);
+}
+//index
+export async function importIndexRecords(data) {
+  return wizCloudFetch("IndexApi/importIndex", data);
+}
+export async function deleteIndexRecords(data) {
+  return wizCloudFetch("IndexApi/deleteIndex", data);
+}
+//bankpages
+export async function importBankPageRecords(data) {
+  return wizCloudFetch("BankPagesApi/importBankPage", data);
+}
+//data export
+export async function exportDataRecords(data) {
+  return wizCloudFetch("ExportDataApi/exportData", data);
+}
+//inv documents
 export async function createDocument(data) {
-	return wizCloudFetch("invApi/createDoc", data);
+  return wizCloudFetch("invApi/createDoc", data);
 }
 export async function showDocument(data) {
-	return wizCloudFetch("invApi/getDoc", data);
+  return wizCloudFetch("invApi/getDoc", data);
 }
 export async function delDocument(data) {
-	return wizCloudFetch("invApi/delDocument", data);
+  return wizCloudFetch("invApi/delDocument", data);
 }
 export async function issueDoc(data) {
-	return wizCloudFetch("invApi/issueDocument", data);
+  return wizCloudFetch("invApi/issueDocument", data);
 }
 //crm
 export async function crmActivities(data) {
-	return wizCloudFetch("crmActivitiesApi/createSchema", data);
+  return wizCloudFetch("crmActivitiesApi/createSchema", data);
 }
 export async function crmActivitiesTest(data) {
-	return wizCloudFetch("crmActivitiesTest/createSchema", data);
+  return wizCloudFetch("crmActivitiesTest/createSchema", data);
 }
- //companies list
+//companies list
 export async function getCompanies() {
-	return await wizCloudFetch("CompanyListToTokenApi/TokenCompanies").then(data => {return data["repdata"]}); //"repdata"
+  return await wizCloudFetch("CompanyListToTokenApi/TokenCompanies").then(
+    (data) => {
+      return data["repdata"];
+    }
+  );
 }

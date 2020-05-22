@@ -7,18 +7,7 @@ import {
   GraphQLFloat,
   GraphQLUnionType,
 } from "graphql";
-import {
-  recordsByTransactionIdLoader,
-  recordsByBatcnIdLoader,
-} from "../wizcloudProccess/getRecords";
-import {
-  transactionByIdLoader,
-  transactionsByBatcnIdLoader,
-} from "../wizcloudProccess/getTransactions";
-import { batchByIdLoader } from "../wizcloudProccess/getBatches";
-import { accountByIdLoader } from "../wizcloudProccess/getAccounts";
-import { bankPageRecordsByBankPageIdLoader } from "../wizcloudProccess/getBankPageRecords";
-import { bankPageByIdLoader } from "../wizcloudProccess/getBankPages";
+import * as resolver from "./resolvers";
 
 const RecordType = new GraphQLObjectType({
   name: "Record",
@@ -108,34 +97,34 @@ const RecordType = new GraphQLObjectType({
     transaction: {
       type: TransactionType,
       resolve: (record) => {
-        return transactionByIdLoader.load(record.transaction_id);
+        return resolver.transactionById(record.transaction_id);
       },
     },
     batch: {
       type: BatchType,
       resolve: (record) => {
-        return batchByIdLoader.load(record.batch_id);
+        return resolver.batchById(record.batch_id);
       },
     },
     account: {
       type: AccountType,
       resolve: (record) => {
-        return accountByIdLoader.load(record.account_id);
+        return resolver.accountById(record.account_id);
       },
     },
     counter_account: {
       type: AccountType,
       resolve: (record) => {
-        return accountByIdLoader.load(record.counter_account_id);
+        return resolver.accountById(record.counter_account_id);
       },
     },
   }),
 });
 
-const batchErrorResolver = (data) => {
+const batchError = (data) => {
   if (typeof data.batch_check === "string") {
     return batchErrorResponseStatusType;
-  } else if (data.batch_check.err) {
+  } else {
     return batchErrorResponseErrorsType;
   }
 };
@@ -150,9 +139,9 @@ const batchErrorResponseStatusType = new GraphQLObjectType({
 const recordErrorType = new GraphQLObjectType({
   name: "ARecordErrorDetails",
   fields: () => ({
-    headerID: { type: GraphQLString },
+    headerID: { type: GraphQLString, description: "AKA transaction_id" },
     err: { type: GraphQLInt },
-    recId: { type: GraphQLInt },
+    recId: { type: GraphQLInt, description: "AKA record_id" },
     field: { type: GraphQLString },
     TxtMsg: { type: GraphQLString },
   }),
@@ -169,7 +158,7 @@ const BatchErrorType = new GraphQLUnionType({
   name: "BatchErrorReport",
   description: "An Error Report of a Batch",
   types: [batchErrorResponseStatusType, batchErrorResponseErrorsType],
-  resolveType: batchErrorResolver,
+  resolveType: batchError,
 });
 
 const TransactionType = new GraphQLObjectType({
@@ -269,25 +258,25 @@ const TransactionType = new GraphQLObjectType({
     batch: {
       type: BatchType,
       resolve: (transaction) => {
-        return batchByIdLoader.load(transaction.batch_id);
+        return resolver.batchById(transaction.batch_id);
       },
     },
     debtor: {
       type: AccountType,
       resolve: (transaction) => {
-        return accountByIdLoader.load(transaction.debtor_id);
+        return resolver.accountById(transaction.debtor_id);
       },
     },
     creditor: {
       type: AccountType,
       resolve: (transaction) => {
-        return accountByIdLoader.load(transaction.creditor_id);
+        return resolver.accountById(transaction.creditor_id);
       },
     },
     records: {
       type: GraphQLList(RecordType),
       resolve: (transaction) => {
-        return recordsByTransactionIdLoader.load(transaction.id);
+        return resolver.recordsByTransactionId(transaction.id);
       },
     },
   }),
@@ -321,13 +310,13 @@ const BatchType = new GraphQLObjectType({
     transactions: {
       type: GraphQLList(TransactionType),
       resolve: (batch) => {
-        return transactionsByBatcnIdLoader.load(batch.id);
+        return resolver.transactionsByBatcnId(batch.id);
       },
     },
     records: {
       type: GraphQLList(RecordType),
       resolve: (batch) => {
-        return recordsByBatcnIdLoader.load(batch.id);
+        return resolver.recordsByBatcnId(batch.id);
       },
     },
   }),
@@ -494,13 +483,13 @@ const BankPageRecordType = new GraphQLObjectType({
     bank_page: {
       type: BankPageType,
       resolve: (record) => {
-        return bankPageByIdLoader.load(record.bank_page_id);
+        return resolver.bankPageById(record.bank_page_id);
       },
     },
     account: {
       type: AccountType,
       resolve: (record) => {
-        return accountByIdLoader.load(record.account_id);
+        return resolver.accountById(record.account_id);
       },
     },
   }),
@@ -517,7 +506,7 @@ const BankPageType = new GraphQLObjectType({
     bankPageRecords: {
       type: GraphQLList(BankPageRecordType),
       resolve: (page) => {
-        return bankPageRecordsByBankPageIdLoader.load(page.id);
+        return resolver.bankPageRecordsByBankPageId(page.id);
       },
     },
   }),

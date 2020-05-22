@@ -17,27 +17,7 @@ import {
   CompanyType,
   UserType,
 } from "./types";
-import {
-  getAllRecords,
-  recordByIdLoader,
-} from "../wizcloudProccess/getRecords";
-import {
-  getAllTransactions,
-  transactionByIdLoader,
-} from "../wizcloudProccess/getTransactions";
-import { getAllBatches, batchByIdLoader } from "../wizcloudProccess/getBatches";
-import {
-  getAllAccounts,
-  accountByIdLoader,
-} from "../wizcloudProccess/getAccounts";
-import {
-  getAllBankPageRecords,
-  bankPageRecordByIdLoader,
-} from "../wizcloudProccess/getBankPageRecords";
-import {
-  getAllBankPages,
-  bankPageByIdLoader,
-} from "../wizcloudProccess/getBankPages";
+import * as resolver from "./resolvers";
 import {
   getCompanies,
   napi,
@@ -54,14 +34,14 @@ const RootQueryType = new GraphQLObjectType({
         id: { type: GraphQLInt },
       },
       resolve: (_, args) => {
-        return recordByIdLoader.load(args.id);
+        return resolver.recordById(args.id);
       },
     },
     records: {
       type: GraphQLList(RecordType),
       description: "List of All Records",
       resolve: () => {
-        return getAllRecords();
+        return resolver.allRecords();
       },
     },
     transactionById: {
@@ -71,14 +51,14 @@ const RootQueryType = new GraphQLObjectType({
         id: { type: GraphQLInt },
       },
       resolve: (_, args) => {
-        return transactionByIdLoader.load(args.id);
+        return resolver.transactionById(args.id);
       },
     },
     transactions: {
       type: GraphQLList(TransactionType),
       description: "List of All Transactions",
       resolve: () => {
-        return getAllTransactions();
+        return resolver.allTransactions();
       },
     },
     batchById: {
@@ -88,14 +68,14 @@ const RootQueryType = new GraphQLObjectType({
         id: { type: GraphQLInt },
       },
       resolve: (_, args) => {
-        return batchByIdLoader.load(args.id);
+        return resolver.batchById(args.id);
       },
     },
     batches: {
       type: GraphQLList(BatchType),
       description: "List of All Batches",
       resolve: () => {
-        return getAllBatches();
+        return resolver.allBatches();
       },
     },
     accountById: {
@@ -105,14 +85,14 @@ const RootQueryType = new GraphQLObjectType({
         id: { type: GraphQLInt },
       },
       resolve: (_, args) => {
-        return accountByIdLoader.load(args.id);
+        return resolver.accountById(args.id);
       },
     },
     accounts: {
       type: GraphQLList(AccountType),
       description: "List of All Accounts",
       resolve: () => {
-        return getAllAccounts();
+        return resolver.allAccounts();
       },
     },
     bankPageRecordById: {
@@ -122,14 +102,14 @@ const RootQueryType = new GraphQLObjectType({
         id: { type: GraphQLInt },
       },
       resolve: (_, args) => {
-        return bankPageRecordByIdLoader.load(args.id);
+        return resolver.bankPageRecordById(args.id);
       },
     },
     bankPageRecords: {
       type: GraphQLList(BankPageRecordType),
       description: "List of All Bank Page Records",
       resolve: () => {
-        return getAllBankPageRecords();
+        return resolver.allBankPageRecords();
       },
     },
     bankPageById: {
@@ -140,14 +120,14 @@ const RootQueryType = new GraphQLObjectType({
         id: { type: GraphQLInt },
       },
       resolve: (_, args) => {
-        return bankPageByIdLoader.load(args.id);
+        return resolver.bankPageById(args.id);
       },
     },
     bankPages: {
       type: GraphQLList(BankPageType),
       description: "List Of Bank Pages",
       resolve: () => {
-        return getAllBankPages();
+        return resolver.allBankPages();
       },
     },
   }),
@@ -176,11 +156,9 @@ const RootMutationType = new GraphQLObjectType({
       type: BatchErrorType,
       description: "Checks if there are errors in the batch",
       args: {
-        batch_id: {type: GraphQLInt}
+        batch_id: { type: GraphQLInt },
       },
       resolve: (_, args) => {
-        // https://medium.com/the-graphqlhub/graphql-tour-interfaces-and-unions-7dd5be35de0d
-        // handle keys in wizCloudFetch variations
         return chkJurnalBatch({ batchNo: args.batch_id });
       },
     },
