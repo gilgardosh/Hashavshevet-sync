@@ -201,6 +201,9 @@ type Mutation {
 
   """Checks if there are errors in the batch"""
   checkBatch(batch_id: Int): BatchErrorReport
+
+  """Opens a new batch and return the number"""
+  newBatch: NewBatch
 }
 
 """A Single Hashavshevet Company"""
@@ -242,4 +245,11 @@ type ARecordErrorDetails {
   recId: Int
   field: String
   TxtMsg: String
+  transaction: Batch
+  record: Batch
+}
+
+type NewBatch {
+  newbatch: Int
+  batch: Batch
 }

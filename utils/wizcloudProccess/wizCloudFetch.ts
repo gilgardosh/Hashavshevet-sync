@@ -50,13 +50,13 @@ export async function napi() {
 export async function tmpJurnalBatch(data) {
   return wizCloudFetch("jtransApi/tmpBatch", data);
 }
-export async function chkJurnalBatch(data) {
+export async function checkBatch(data) {
   return wizCloudFetch("jtransApi/chkBatch", data);
 }
-export async function newJurnalBatch(data) {
-  return wizCloudFetch("jtransApi/newBatch", data);
+export async function newBatch() {
+  return wizCloudFetch("jtransApi/newBatch");
 }
-export async function issueJurnalBatch(data) {
+export async function issueBatch(data) {
   return wizCloudFetch("jtransApi/issueBatch", data);
 }
 //index

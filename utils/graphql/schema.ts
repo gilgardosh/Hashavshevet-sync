@@ -11,6 +11,7 @@ import {
   TransactionType,
   BatchType,
   BatchErrorType,
+  NewBatchType,
   AccountType,
   BankPageRecordType,
   BankPageType,
@@ -18,11 +19,7 @@ import {
   UserType,
 } from "./types";
 import * as resolver from "./resolvers";
-import {
-  getCompanies,
-  napi,
-  chkJurnalBatch,
-} from "../wizcloudProccess/wizCloudFetch";
+import * as hashavshevet from "../wizcloudProccess/wizCloudFetch";
 
 const RootQueryType = new GraphQLObjectType({
   name: "Query",
@@ -142,14 +139,14 @@ const RootMutationType = new GraphQLObjectType({
       description:
         "List of Companies for user token thats defined on: 'WizcloudApiPrivateKey'",
       resolve: () => {
-        return getCompanies();
+        return hashavshevet.getCompanies();
       },
     },
     userDetails: {
       type: UserType,
       description: "Get User Details",
       resolve: () => {
-        return napi();
+        return hashavshevet.napi();
       },
     },
     checkBatch: {
@@ -159,7 +156,14 @@ const RootMutationType = new GraphQLObjectType({
         batch_id: { type: GraphQLInt },
       },
       resolve: (_, args) => {
-        return chkJurnalBatch({ batchNo: args.batch_id });
+        return hashavshevet.checkBatch({ batchNo: args.batch_id });
+      },
+    },
+    newBatch: {
+      type: NewBatchType,
+      description: "Opens a new batch and return the number",
+      resolve: () => {
+        return hashavshevet.newBatch();
       },
     },
   }),

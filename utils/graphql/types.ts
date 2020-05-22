@@ -121,46 +121,6 @@ const RecordType = new GraphQLObjectType({
   }),
 });
 
-const batchError = (data) => {
-  if (typeof data.batch_check === "string") {
-    return batchErrorResponseStatusType;
-  } else {
-    return batchErrorResponseErrorsType;
-  }
-};
-
-const batchErrorResponseStatusType = new GraphQLObjectType({
-  name: "BatchCheckErrorMessage",
-  fields: {
-    batch_check: { type: GraphQLString },
-  },
-});
-
-const recordErrorType = new GraphQLObjectType({
-  name: "ARecordErrorDetails",
-  fields: () => ({
-    headerID: { type: GraphQLString, description: "AKA transaction_id" },
-    err: { type: GraphQLInt },
-    recId: { type: GraphQLInt, description: "AKA record_id" },
-    field: { type: GraphQLString },
-    TxtMsg: { type: GraphQLString },
-  }),
-});
-
-const batchErrorResponseErrorsType = new GraphQLObjectType({
-  name: "BatchCheckErrorsList",
-  fields: {
-    batch_check: { type: GraphQLList(recordErrorType) },
-  },
-});
-
-const BatchErrorType = new GraphQLUnionType({
-  name: "BatchErrorReport",
-  description: "An Error Report of a Batch",
-  types: [batchErrorResponseStatusType, batchErrorResponseErrorsType],
-  resolveType: batchError,
-});
-
 const TransactionType = new GraphQLObjectType({
   name: "Transaction",
   description: "A Transaction of Some Records",
@@ -317,6 +277,71 @@ const BatchType = new GraphQLObjectType({
       type: GraphQLList(RecordType),
       resolve: (batch) => {
         return resolver.recordsByBatcnId(batch.id);
+      },
+    },
+  }),
+});
+
+const batchError = (data) => {
+  if (typeof data.batch_check === "string") {
+    return batchErrorResponseStatusType;
+  } else {
+    return BatchErrorResponseErrorsType;
+  }
+};
+
+const batchErrorResponseStatusType = new GraphQLObjectType({
+  name: "BatchCheckErrorMessage",
+  fields: {
+    batch_check: { type: GraphQLString },
+  },
+});
+
+const recordErrorType = new GraphQLObjectType({
+  name: "ARecordErrorDetails",
+  fields: () => ({
+    headerID: { type: GraphQLString, description: "AKA transaction_id" },
+    err: { type: GraphQLInt },
+    recId: { type: GraphQLInt, description: "AKA record_id" },
+    field: { type: GraphQLString },
+    TxtMsg: { type: GraphQLString },
+    transaction: {
+      type: BatchType,
+      resolve: (recordError) => {
+        return resolver.transactionById(recordError.headerID);
+      },
+    },
+    record: {
+      type: BatchType,
+      resolve: (recordError) => {
+        return resolver.recordById(recordError.recId);
+      },
+    },
+  }),
+});
+
+const BatchErrorResponseErrorsType = new GraphQLObjectType({
+  name: "BatchCheckErrorsList",
+  fields: {
+    batch_check: { type: GraphQLList(recordErrorType) },
+  },
+});
+
+const BatchErrorType = new GraphQLUnionType({
+  name: "BatchErrorReport",
+  description: "An Error Report of a Batch",
+  types: [batchErrorResponseStatusType, BatchErrorResponseErrorsType],
+  resolveType: batchError,
+});
+
+const NewBatchType = new GraphQLObjectType({
+  name: "NewBatch",
+  fields: () => ({
+    newbatch: { type: GraphQLInt },
+    batch: {
+      type: BatchType,
+      resolve: (item) => {
+        return resolver.batchById(item.newbatch);
       },
     },
   }),
@@ -561,9 +586,10 @@ const UserType = new GraphQLObjectType({
 
 export {
   RecordType,
-  BatchErrorType,
   TransactionType,
   BatchType,
+  BatchErrorType,
+  NewBatchType,
   AccountType,
   BankPageRecordType,
   BankPageType,
