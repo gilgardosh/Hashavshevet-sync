@@ -84,4 +84,28 @@ const BankPageType = new GraphQLObjectType({
   }),
 });
 
-export { BankPageRecordType, BankPageType };
+const BankErrorType = new GraphQLObjectType({
+  name: "BankError",
+  fields: () => ({
+    index: {
+      type: GraphQLInt,
+    },
+    err: {
+      type: GraphQLString,
+    },
+  }),
+});
+
+const AddBankPageResponseType = new GraphQLObjectType({
+  name: "AddBankPageResponse",
+  fields: () => ({
+    status: {
+      type: GraphQLString,
+    },
+    errors: {
+      type: GraphQLList(BankErrorType),
+    },
+  }),
+});
+
+export { BankPageRecordType, BankPageType, AddBankPageResponseType };

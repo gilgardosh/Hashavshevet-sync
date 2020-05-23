@@ -185,6 +185,9 @@ type Mutation {
   Import transactions to a new or already existing temporary batch. You may check for errors or input the batch into the permanent storage (if no errors were found).
   """
   addTransactionsToBatch(batch_id: Int, insert_to_last_batch: Boolean, check_batch: Boolean, issue_batch: Boolean): AddTransactionsResponse
+
+  """Import  or update records to chosen index"""
+  addBankPage: AddBankPageResponse
 }
 
 """A Single Hashavshevet Company"""
@@ -242,10 +245,10 @@ type IssueBatchStatus {
 }
 
 """Response for Adding Transactions to a Batch"""
-union AddTransactionsResponse = addTransactionsResponsWithoutErrors | addTransactionsResponsWithErrors
+union AddTransactionsResponse = AddTransactionsResponsWithoutErrors | AddTransactionsResponsWithErrors
 
 """Response for Adding Transactions to a Batch"""
-type addTransactionsResponsWithoutErrors {
+type AddTransactionsResponsWithoutErrors {
   status: String
   batch_issue: String
   batch_check: String
@@ -257,7 +260,7 @@ type addTransactionsResponsWithoutErrors {
 }
 
 """Response for Adding Transactions to a Batch"""
-type addTransactionsResponsWithErrors {
+type AddTransactionsResponsWithErrors {
   status: String
   batch_issue: String
   batch_check: String
@@ -266,4 +269,14 @@ type addTransactionsResponsWithErrors {
   batch_id: Int
   errors: [ARecordErrorDetails]
   batch: Batch
+}
+
+type AddBankPageResponse {
+  status: String
+  errors: [BankError]
+}
+
+type BankError {
+  index: Int
+  err: String
 }

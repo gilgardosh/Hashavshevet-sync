@@ -150,8 +150,8 @@ const TransactionType = new GraphQLObjectType({
   }),
 });
 
-const addTransactionsResponsWithoutErrors = new GraphQLObjectType({
-  name: "addTransactionsResponsWithoutErrors",
+const AddTransactionsResponsWithoutErrors = new GraphQLObjectType({
+  name: "AddTransactionsResponsWithoutErrors",
   description: "Response for Adding Transactions to a Batch",
   fields: () => ({
     status: {
@@ -187,8 +187,8 @@ const addTransactionsResponsWithoutErrors = new GraphQLObjectType({
   }),
 });
 
-const addTransactionsResponsWithErrors = new GraphQLObjectType({
-  name: "addTransactionsResponsWithErrors",
+const AddTransactionsResponsWithErrors = new GraphQLObjectType({
+  name: "AddTransactionsResponsWithErrors",
   description: "Response for Adding Transactions to a Batch",
   fields: () => ({
     status: {
@@ -224,20 +224,20 @@ const addTransactionsResponsWithErrors = new GraphQLObjectType({
   }),
 });
 
-const addTransactionsResponsType = new GraphQLUnionType({
+const AddTransactionsResponsType = new GraphQLUnionType({
   name: "AddTransactionsResponse",
   description: "Response for Adding Transactions to a Batch",
   types: [
-    addTransactionsResponsWithoutErrors,
-    addTransactionsResponsWithErrors,
+    AddTransactionsResponsWithoutErrors,
+    AddTransactionsResponsWithErrors,
   ],
   resolveType: (data) => {
     if (typeof data.errors === "string" || typeof data.errors === "undefined") {
-      return addTransactionsResponsWithoutErrors;
+      return AddTransactionsResponsWithoutErrors;
     } else if (typeof data.errors === "object") {
-      return addTransactionsResponsWithErrors;
+      return AddTransactionsResponsWithErrors;
     }
   },
 });
 
-export { RecordType, TransactionType, addTransactionsResponsType };
+export { RecordType, TransactionType, AddTransactionsResponsType };

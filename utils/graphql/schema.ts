@@ -7,20 +7,22 @@ import {
   printSchema,
   GraphQLBoolean,
 } from "graphql";
-import {
-  RecordType,
-  TransactionType,
-  addTransactionsResponsType,
-  BatchType,
-  CheckBatchType,
-  NewBatchType,
-  IssueBatchType,
-  AccountType,
-  BankPageRecordType,
-  BankPageType,
-  CompanyType,
-  UserType,
-} from "./types";
+// import {
+//   RecordType,
+//   TransactionType,
+//   AddTransactionsResponsType,
+//   BatchType,
+//   CheckBatchType,
+//   NewBatchType,
+//   IssueBatchType,
+//   AccountType,
+//   BankPageRecordType,
+//   BankPageType,
+//   AddBankPageResponseType,
+//   CompanyType,
+//   UserType,
+// } from "./types";
+import * as type from "./types";
 import * as resolver from "./resolvers";
 import * as hashavshevet from "../wizcloudProccess/wizCloudFetch";
 
@@ -28,7 +30,7 @@ const RootQueryType = new GraphQLObjectType({
   name: "Query",
   fields: () => ({
     recordById: {
-      type: RecordType,
+      type: type.RecordType,
       description: "A Single Record by its ID",
       args: {
         id: { type: GraphQLInt },
@@ -38,14 +40,14 @@ const RootQueryType = new GraphQLObjectType({
       },
     },
     records: {
-      type: GraphQLList(RecordType),
+      type: GraphQLList(type.RecordType),
       description: "List of All Records",
       resolve: () => {
         return resolver.allRecords();
       },
     },
     transactionById: {
-      type: TransactionType,
+      type: type.TransactionType,
       description: "A Single Transaction by its ID",
       args: {
         id: { type: GraphQLInt },
@@ -55,14 +57,14 @@ const RootQueryType = new GraphQLObjectType({
       },
     },
     transactions: {
-      type: GraphQLList(TransactionType),
+      type: GraphQLList(type.TransactionType),
       description: "List of All Transactions",
       resolve: () => {
         return resolver.allTransactions();
       },
     },
     batchById: {
-      type: BatchType,
+      type: type.BatchType,
       description: "A Single Batch by its ID",
       args: {
         id: { type: GraphQLInt },
@@ -72,14 +74,14 @@ const RootQueryType = new GraphQLObjectType({
       },
     },
     batches: {
-      type: GraphQLList(BatchType),
+      type: GraphQLList(type.BatchType),
       description: "List of All Batches",
       resolve: () => {
         return resolver.allBatches();
       },
     },
     accountById: {
-      type: AccountType,
+      type: type.AccountType,
       description: "A Single Account by its ID",
       args: {
         id: { type: GraphQLInt },
@@ -89,14 +91,14 @@ const RootQueryType = new GraphQLObjectType({
       },
     },
     accounts: {
-      type: GraphQLList(AccountType),
+      type: GraphQLList(type.AccountType),
       description: "List of All Accounts",
       resolve: () => {
         return resolver.allAccounts();
       },
     },
     bankPageRecordById: {
-      type: BankPageRecordType,
+      type: type.BankPageRecordType,
       description: "A Single Bank Page Record by its ID",
       args: {
         id: { type: GraphQLInt },
@@ -106,14 +108,14 @@ const RootQueryType = new GraphQLObjectType({
       },
     },
     bankPageRecords: {
-      type: GraphQLList(BankPageRecordType),
+      type: GraphQLList(type.BankPageRecordType),
       description: "List of All Bank Page Records",
       resolve: () => {
         return resolver.allBankPageRecords();
       },
     },
     bankPageById: {
-      type: BankPageType,
+      type: type.BankPageType,
       description:
         "A Single Bank Page (Which Is A List Of Bank Page Records), by its ID",
       args: {
@@ -124,7 +126,7 @@ const RootQueryType = new GraphQLObjectType({
       },
     },
     bankPages: {
-      type: GraphQLList(BankPageType),
+      type: GraphQLList(type.BankPageType),
       description: "List Of Bank Pages",
       resolve: () => {
         return resolver.allBankPages();
@@ -138,7 +140,7 @@ const RootMutationType = new GraphQLObjectType({
   description: "Root Mutation",
   fields: () => ({
     userCompanies: {
-      type: GraphQLList(CompanyType),
+      type: GraphQLList(type.CompanyType),
       description:
         "List of Companies for user token thats defined on: 'WizcloudApiPrivateKey'",
       resolve: () => {
@@ -146,14 +148,14 @@ const RootMutationType = new GraphQLObjectType({
       },
     },
     userDetails: {
-      type: UserType,
+      type: type.UserType,
       description: "Get User Details",
       resolve: () => {
         return hashavshevet.napi();
       },
     },
     checkBatch: {
-      type: CheckBatchType,
+      type: type.CheckBatchType,
       description: "Checks if there are errors in the batch",
       args: {
         batch_id: { type: GraphQLInt },
@@ -163,14 +165,14 @@ const RootMutationType = new GraphQLObjectType({
       },
     },
     newBatch: {
-      type: NewBatchType,
+      type: type.NewBatchType,
       description: "Opens a new batch and return the number",
       resolve: () => {
         return hashavshevet.newBatch();
       },
     },
     issueBatch: {
-      type: IssueBatchType,
+      type: type.IssueBatchType,
       description:
         "Checks and inputs the temporary batch into the permanent storage",
       args: {
@@ -181,7 +183,7 @@ const RootMutationType = new GraphQLObjectType({
       },
     },
     addTransactionsToBatch: {
-      type: addTransactionsResponsType,
+      type: type.AddTransactionsResponsType,
       description:
         "Import transactions to a new or already existing temporary batch. You may check for errors or input the batch into the permanent storage (if no errors were found).",
       args: {
@@ -198,6 +200,13 @@ const RootMutationType = new GraphQLObjectType({
           issue: args.issue_batch,
           rows: addTransactionsData,
         });
+      },
+    },
+    addBankPage: {
+      type: type.AddBankPageResponseType,
+      description: "Import  or update records to chosen index",
+      resolve: () => {
+        return hashavshevet.importBankPageRecords({ rows: addBankPageData });
       },
     },
   }),
@@ -237,6 +246,26 @@ const addTransactionsData = [
         SuFDlr: "0",
       },
     ],
+  },
+];
+
+const addBankPageData = [
+  // TODO replace with function that recieves data
+  {
+    AccountKey: "50001",
+    CreditDebit: "0",
+    DatF: "31/10/2019",
+    Details: "trans details",
+    Reference: "123",
+    SuF: "-5445",
+  },
+  {
+    AccountKey: "40001",
+    CreditDebit: "1",
+    DatF: "28/10/2019",
+    Details: "trans details 111",
+    Reference: "125",
+    SuF: "55123",
   },
 ];
 
