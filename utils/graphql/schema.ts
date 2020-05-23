@@ -12,6 +12,7 @@ import {
   BatchType,
   BatchErrorType,
   NewBatchType,
+  IssueBatchType,
   AccountType,
   BankPageRecordType,
   BankPageType,
@@ -164,6 +165,16 @@ const RootMutationType = new GraphQLObjectType({
       description: "Opens a new batch and return the number",
       resolve: () => {
         return hashavshevet.newBatch();
+      },
+    },
+    issueBatch: {
+      type: IssueBatchType,
+      description: "Checks and inputs the temporary batch into the permanent storage",
+      args: {
+        batch_id: { type: GraphQLInt },
+      },
+      resolve: (_, args) => {
+        return hashavshevet.issueBatch({ batchNo: args.batch_id });
       },
     },
   }),

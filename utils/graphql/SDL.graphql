@@ -204,6 +204,9 @@ type Mutation {
 
   """Opens a new batch and return the number"""
   newBatch: NewBatch
+
+  """Checks and inputs the temporary batch into the permanent storage"""
+  issueBatch(batch_id: Int): IsuueBatch
 }
 
 """A Single Hashavshevet Company"""
@@ -252,4 +255,10 @@ type ARecordErrorDetails {
 type NewBatch {
   newbatch: Int
   batch: Batch
+}
+
+union IsuueBatch = IssueBatchStatus | BatchCheckErrorMessage | BatchCheckErrorsList
+
+type IssueBatchStatus {
+  batch_issue: String
 }

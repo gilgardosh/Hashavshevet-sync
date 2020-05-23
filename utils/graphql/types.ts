@@ -347,6 +347,33 @@ const NewBatchType = new GraphQLObjectType({
   }),
 });
 
+const IssueBatchStatusType = new GraphQLObjectType({
+  name: "IssueBatchStatus",
+  fields: {
+    batch_issue: { type: GraphQLString },
+  },
+});
+
+const batchIssue = (data) => {
+  if (data.batch_issue) {
+    return IssueBatchStatusType;
+  } else if (typeof data.batch_check === "string") {
+    return batchErrorResponseStatusType;
+  } else {
+    return BatchErrorResponseErrorsType;
+  }
+};
+
+const IssueBatchType = new GraphQLUnionType({
+  name: "IsuueBatch",
+  types: [
+    IssueBatchStatusType,
+    batchErrorResponseStatusType,
+    BatchErrorResponseErrorsType,
+  ],
+  resolveType: batchIssue,
+});
+
 const AccountType = new GraphQLObjectType({
   name: "Account",
   description: "A Single Account",
@@ -589,6 +616,7 @@ export {
   TransactionType,
   BatchType,
   BatchErrorType,
+  IssueBatchType,
   NewBatchType,
   AccountType,
   BankPageRecordType,
