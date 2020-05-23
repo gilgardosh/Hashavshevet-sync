@@ -47,7 +47,7 @@ export async function napi() {
   });
 }
 //jurnal
-export async function tmpJurnalBatch(data) {
+export async function addTransactionsToBatch(data) {
   return wizCloudFetch("jtransApi/tmpBatch", data);
 }
 export async function checkBatch(data) {

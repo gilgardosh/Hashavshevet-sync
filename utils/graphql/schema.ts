@@ -5,12 +5,14 @@ import {
   GraphQLList,
   GraphQLInt,
   printSchema,
+  GraphQLBoolean,
 } from "graphql";
 import {
   RecordType,
   TransactionType,
+  addTransactionsResponsType,
   BatchType,
-  BatchErrorType,
+  CheckBatchType,
   NewBatchType,
   IssueBatchType,
   AccountType,
@@ -151,7 +153,7 @@ const RootMutationType = new GraphQLObjectType({
       },
     },
     checkBatch: {
-      type: BatchErrorType,
+      type: CheckBatchType,
       description: "Checks if there are errors in the batch",
       args: {
         batch_id: { type: GraphQLInt },
@@ -169,7 +171,8 @@ const RootMutationType = new GraphQLObjectType({
     },
     issueBatch: {
       type: IssueBatchType,
-      description: "Checks and inputs the temporary batch into the permanent storage",
+      description:
+        "Checks and inputs the temporary batch into the permanent storage",
       args: {
         batch_id: { type: GraphQLInt },
       },
@@ -177,8 +180,65 @@ const RootMutationType = new GraphQLObjectType({
         return hashavshevet.issueBatch({ batchNo: args.batch_id });
       },
     },
+    addTransactionsToBatch: {
+      type: addTransactionsResponsType,
+      description:
+        "Import transactions to a new or already existing temporary batch. You may check for errors or input the batch into the permanent storage (if no errors were found).",
+      args: {
+        batch_id: { type: GraphQLInt },
+        insert_to_last_batch: { type: GraphQLBoolean },
+        check_batch: { type: GraphQLBoolean },
+        issue_batch: { type: GraphQLBoolean },
+      },
+      resolve: (_, args) => {
+        return hashavshevet.addTransactionsToBatch({
+          batchNo: args.batch_id,
+          insertolastb: args.insert_to_last_batch,
+          check: args.check_batch,
+          issue: args.issue_batch,
+          rows: addTransactionsData,
+        });
+      },
+    },
   }),
 });
+const addTransactionsData = [
+  // TODO replace with function that recieves data
+  {
+    TransType: "חל",
+    TransDebID: "30002",
+    DebName: "סימפטיה שופ",
+    TransCredID: "40001",
+    CredName: "הכנסות ממכירה בארץ - כולל מעמ",
+    Referance: "100",
+    Description: "חשבונית",
+    DueDate: "29/03/2018",
+    ValueDate: "30/03/2018",
+    suF: 1000,
+    suFDlr: 0,
+    CurrencyCode: "$",
+    moves: [
+      {
+        AccountKey: "111",
+        DebitCredit: "1",
+        SuF: 1000,
+        SuFDlr: "0",
+      },
+      {
+        AccountKey: "40001",
+        DebitCredit: "0",
+        SuF: 847.46,
+        SuFDlr: "0",
+      },
+      {
+        AccountKey: "60001",
+        DebitCredit: "0",
+        SuF: 152.54,
+        SuFDlr: "0",
+      },
+    ],
+  },
+];
 
 const schema = new GraphQLSchema({
   query: RootQueryType,
