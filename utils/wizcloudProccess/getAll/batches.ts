@@ -8,8 +8,8 @@ async function getAllBatches() {
   const uniqueBatchesList = [];
   const map = new Map();
   for (const batch of batchesList) {
-    if (!map.has(batch["id"])) {
-      map.set(batch["id"], true);
+    if (!map.has(batch.id)) {
+      map.set(batch.id, true);
       uniqueBatchesList.push(batch);
     }
   }

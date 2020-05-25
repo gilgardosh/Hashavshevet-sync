@@ -7,21 +7,6 @@ import {
   printSchema,
   GraphQLBoolean,
 } from "graphql";
-// import {
-//   RecordType,
-//   TransactionType,
-//   AddTransactionsResponsType,
-//   BatchType,
-//   CheckBatchType,
-//   NewBatchType,
-//   IssueBatchType,
-//   AccountType,
-//   BankPageRecordType,
-//   BankPageType,
-//   AddBankPageResponseType,
-//   CompanyType,
-//   UserType,
-// } from "./types";
 import * as type from "./types";
 import * as resolver from "./resolvers";
 import * as hashavshevet from "../wizcloudProccess/wizCloudFetch";
@@ -132,13 +117,6 @@ const RootQueryType = new GraphQLObjectType({
         return resolver.allBankPages();
       },
     },
-  }),
-});
-
-const RootMutationType = new GraphQLObjectType({
-  name: "Mutation",
-  description: "Root Mutation",
-  fields: () => ({
     userCompanies: {
       type: GraphQLList(type.CompanyType),
       description:
@@ -164,6 +142,13 @@ const RootMutationType = new GraphQLObjectType({
         return hashavshevet.checkBatch({ batchNo: args.batch_id });
       },
     },
+  }),
+});
+
+const RootMutationType = new GraphQLObjectType({
+  name: "Mutation",
+  description: "Root Mutation",
+  fields: () => ({
     newBatch: {
       type: type.NewBatchType,
       description: "Opens a new batch and return the number",
@@ -211,6 +196,7 @@ const RootMutationType = new GraphQLObjectType({
     },
   }),
 });
+
 const addTransactionsData = [
   // TODO replace with function that recieves data
   {
@@ -276,9 +262,7 @@ const schema = new GraphQLSchema({
 
 function createSDL() {
   const dataForSDL = printSchema(schema);
-  fs.writeFile(`./utils/graphql/SDL.graphql`, dataForSDL, "utf8", function (
-    err
-  ) {
+  fs.writeFile(`./utils/graphql/SDL.graphql`, dataForSDL, "utf8", (err) => {
     if (err) {
       console.log("An error occured while writing JSON Object to File.");
       console.log(err);

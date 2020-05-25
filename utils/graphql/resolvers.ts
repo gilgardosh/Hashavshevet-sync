@@ -10,64 +10,64 @@ function allRecords() {
   return getAllRecords();
 }
 
-function recordById(record_id) {
-  return loader.recordById.load(record_id);
+function recordById(recordId) {
+  return loader.recordById.load(recordId);
 }
 
-function recordsByTransactionId(transaction_id) {
-  return loader.recordsByTransactionId.load(transaction_id);
+function recordsByTransactionId(transactionId) {
+  return loader.recordsByTransactionId.load(transactionId);
 }
 
-function recordsByBatcnId(batch_id) {
-  return loader.recordsByBatcnId.load(batch_id);
+function recordsByBatcnId(batchId) {
+  return loader.recordsByBatcnId.load(batchId);
 }
 
 function allTransactions() {
   return getAllTransactions();
 }
 
-function transactionById(transaction_id) {
-  return loader.transactionById.load(transaction_id);
+function transactionById(transactionId) {
+  return loader.transactionById.load(transactionId);
 }
 
-function transactionsByBatcnId(batch_id) {
-  return loader.transactionsByBatcnId.load(batch_id);
+function transactionsByBatcnId(batchId) {
+  return loader.transactionsByBatcnId.load(batchId);
 }
 
 function allBatches() {
   return getAllBatches();
 }
 
-function batchById(batch_id) {
-  return loader.batchById.load(batch_id);
+function batchById(batchId) {
+  return loader.batchById.load(batchId);
 }
 
 function allAccounts() {
   return getAllAccounts();
 }
 
-function accountById(account_id) {
-  return loader.accountById.load(account_id);
+function accountById(accountId) {
+  return loader.accountById.load(accountId);
 }
 
 function allBankPageRecords() {
   return getAllBankPageRecords();
 }
 
-function bankPageRecordById(bank_page_record_id) {
-  return loader.bankPageRecordById.load(bank_page_record_id);
+function bankPageRecordById(bankPageRecordId) {
+  return loader.bankPageRecordById.load(bankPageRecordId);
 }
 
-function bankPageRecordsByBankPageId(bank_page_id) {
-  return loader.bankPageRecordsByBankPageId.load(bank_page_id);
+function bankPageRecordsByBankPageId(bankPageId) {
+  return loader.bankPageRecordsByBankPageId.load(bankPageId);
 }
 
 function allBankPages() {
   return getAllBankPages();
 }
 
-function bankPageById(bank_page_id) {
-  return loader.bankPageById.load(bank_page_id);
+function bankPageById(bankPageId) {
+  return loader.bankPageById.load(bankPageId);
 }
 
 export {

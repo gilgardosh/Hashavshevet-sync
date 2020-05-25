@@ -1,5 +1,5 @@
 import { config } from "dotenv";
-let fetch = require("node-fetch");
+import fetch from "node-fetch";
 
 config();
 

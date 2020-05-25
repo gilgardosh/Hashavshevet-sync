@@ -1,5 +1,5 @@
 import { wizCloudAuth } from "./wizCloudAuth";
-const request = require("request");
+import request from "request";
 
 function wizCloudFetch(path, data = {}) {
   console.log("ping");
@@ -46,7 +46,7 @@ export async function napi() {
     return data["session"];
   });
 }
-//jurnal
+// jurnal
 export async function addTransactionsToBatch(data) {
   return wizCloudFetch("jtransApi/tmpBatch", data);
 }
@@ -59,22 +59,22 @@ export async function newBatch() {
 export async function issueBatch(data) {
   return wizCloudFetch("jtransApi/issueBatch", data);
 }
-//index
+// index
 export async function importIndexRecords(data) {
   return wizCloudFetch("IndexApi/importIndex", data);
 }
 export async function deleteIndexRecords(data) {
   return wizCloudFetch("IndexApi/deleteIndex", data);
 }
-//bankpages
+// bankpages
 export async function importBankPageRecords(data) {
   return wizCloudFetch("BankPagesApi/importBankPage", data);
 }
-//data export
+// data export
 export async function exportDataRecords(data) {
   return wizCloudFetch("ExportDataApi/exportData", data);
 }
-//inv documents
+// inv documents
 export async function createDocument(data) {
   return wizCloudFetch("invApi/createDoc", data);
 }
@@ -87,14 +87,14 @@ export async function delDocument(data) {
 export async function issueDoc(data) {
   return wizCloudFetch("invApi/issueDocument", data);
 }
-//crm
+// crm
 export async function crmActivities(data) {
   return wizCloudFetch("crmActivitiesApi/createSchema", data);
 }
 export async function crmActivitiesTest(data) {
   return wizCloudFetch("crmActivitiesTest/createSchema", data);
 }
-//companies list
+// companies list
 export async function getCompanies() {
   return await wizCloudFetch("CompanyListToTokenApi/TokenCompanies").then(
     (data) => {

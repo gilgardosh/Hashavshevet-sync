@@ -7,17 +7,17 @@ const bankPassword = process.env.BANK_PASSWORD;
 const accountsData = [];
 
 const bankApiDict = {
-  "type": "TransType",
-  "identifier": "bankIdentifier",
-  "date": "DueDate",
-  "processedDate": "valueDate",
-  "originalAmount": "OriginalSuF",
-  "originalCurrency": "CurrencyCode",
-  "chargedAmount": "SuF",
-  "description": "Details",
-  "status": 'completed',
-  "memo": "Reference"
-}
+  type: "TransType",
+  identifier: "bankIdentifier",
+  date: "DueDate",
+  processedDate: "valueDate",
+  originalAmount: "OriginalSuF",
+  originalCurrency: "CurrencyCode",
+  chargedAmount: "SuF",
+  description: "Details",
+  status: "completed",
+  memo: "Reference",
+};
 
 async function getBankData(startDate) {
   const { createScraper } = require("israeli-bank-scrapers");
@@ -34,7 +34,7 @@ async function getBankData(startDate) {
     verbose: false, // include more debug info about in the output
   };
 
-  return await (async function () {
+  return await (async () => {
     try {
       const scraper = createScraper(options);
       const scrapeResult = await scraper.scrape(credentials);
@@ -53,22 +53,23 @@ async function getBankData(startDate) {
       console.error(`scraping failed for the following reason: ${e.message}`);
     }
   })();
-};
+}
 
 async function getBankDemiData(startDate) {
   const bankData = require("../../demiData/demiBankData.json");
-  let translatedBankData = [];
+  const translatedBankData = [];
   translatedBankData.push(keysToHashFormat(bankData, bankApiDict));
-  return(new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     resolve(translatedBankData);
-  }));
-};
+  });
+}
 
 function keysToHashFormat(data: object[], keyDict) {
-
   function arrayKeysToLatin(allTransData: object[]) {
-    for (let i in allTransData) {
-      allTransData[i] = transKeysToFormat(allTransData[i]);
+    for (const i in allTransData) {
+      if (i) {
+        allTransData[i] = transKeysToFormat(allTransData[i]);
+      }
     }
     return allTransData;
   }
@@ -83,7 +84,9 @@ function keysToHashFormat(data: object[], keyDict) {
         }
         if (singleTransData[key] != null) {
           if (keyDict[trimKey]) {
-            if (typeof(keyDict[trimKey])=="string") {keyDict[trimKey].trim()};
+            if (typeof keyDict[trimKey] === "string") {
+              keyDict[trimKey].trim();
+            }
             newData[keyDict[trimKey]] = singleTransData[key];
           } else {
             console.log("ERROR: missing key in dictionary", trimKey);
@@ -91,8 +94,8 @@ function keysToHashFormat(data: object[], keyDict) {
             newData["unknown_'" + trimKey + "'"] = singleTransData[key];
           }
         }
-      };
-    newData["transID"] = `${newData["valueDate"]+newData["SuF"]}`
+      }
+    newData["transID"] = `${newData["valueDate"] + newData["SuF"]}`;
     return newData;
   }
   return arrayKeysToLatin(data);
