@@ -34,14 +34,52 @@ type Query {
 
   """List Of Bank Pages"""
   bankPages: [BankPage]
+
+  """
+  List of Companies for user token thats defined on: 'WizcloudApiPrivateKey'
+  """
+  userCompanies: [Company]
+
+  """Get User Details"""
+  userDetails: HashavshevetUser
+
+  """Checks if there are errors in the batch"""
+  checkBatch(batch_id: Int): BatchErrorReport
 }
 
 """A Single Record"""
 type Record {
-  AccountKey: String!
-  DebitCredit: String!
-  SuF: Float!
-  SuFDlr: Float
+  debit_or_credit: String!
+  counter_account_id: String
+  match_number_card_analysis: Int
+  debit_or_credit_number: Int!
+  id: Int!
+  account_id: String!
+  counter_account_name: String
+  shekel_credit: Float
+  shekel_debit: Float
+  shekel_sum: Float
+  shekel_sum_closed_in_record: Float
+  shekel_sum_open_in_record: Float
+  cumulative_balance: Float
+  foreign_currency_cumulative_balance_without_opening_balance: Float
+  cumulative_balance_without_opening_balance: Float
+  shekel_cumulative_balance_by_sector: Float
+  cumulative_balance_by_sort_key: Float
+  cumulative_balance_of_open_sum_in_record: Float
+  foreign_currency_credit: Float
+  foreign_currency_debit: Float
+  foreign_currency_cumulative_balance: Float
+  foreign_currency_sum: Float
+  foreign_currency_sum_closed_in_record: Float
+  foreign_currency_sun_open_in_record: Float
+  estimated_sum: Float
+  transaction_id: Int!
+  batch_id: Int!
+  transaction: Transaction
+  batch: Batch
+  account: Account
+  counter_account: Account
 }
 
 """A Transaction of Some Records"""
@@ -162,34 +200,6 @@ type BankPage {
   bankPageRecords: [BankPageRecord]
 }
 
-"""Root Mutation"""
-type Mutation {
-  """
-  List of Companies for user token thats defined on: 'WizcloudApiPrivateKey'
-  """
-  userCompanies: [Company]
-
-  """Get User Details"""
-  userDetails: HashavshevetUser
-
-  """Checks if there are errors in the batch"""
-  checkBatch(batch_id: Int): BatchErrorReport
-
-  """Opens a new batch and return the number"""
-  newBatch: NewBatch
-
-  """Checks and inputs the temporary batch into the permanent storage"""
-  issueBatch(batch_id: Int): IsuueBatch
-
-  """
-  Import transactions to a new or already existing temporary batch. You may check for errors or input the batch into the permanent storage (if no errors were found).
-  """
-  addTransactionsToBatch(batch_id: Int, insert_to_last_batch: Boolean, check_batch: Boolean, issue_batch: Boolean): AddTransactionsResponse
-
-  """Import  or update records to chosen index"""
-  addBankPage: AddBankPageResponse
-}
-
 """A Single Hashavshevet Company"""
 type Company {
   Company_File_Name: String!
@@ -231,6 +241,23 @@ type ARecordErrorDetails {
   TxtMsg: String
   transaction: Batch
   record: Batch
+}
+
+"""Root Mutation"""
+type Mutation {
+  """Opens a new batch and return the number"""
+  newBatch: NewBatch
+
+  """Checks and inputs the temporary batch into the permanent storage"""
+  issueBatch(batch_id: Int): IsuueBatch
+
+  """
+  Import transactions to a new or already existing temporary batch. You may check for errors or input the batch into the permanent storage (if no errors were found).
+  """
+  addTransactionsToBatch(batch_id: Int, insert_to_last_batch: Boolean, check_batch: Boolean, issue_batch: Boolean): AddTransactionsResponse
+
+  """Import  or update records to chosen index"""
+  addBankPage: AddBankPageResponse
 }
 
 type NewBatch {

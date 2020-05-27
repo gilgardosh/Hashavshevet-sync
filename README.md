@@ -40,3 +40,4 @@ $ npm run dev
 - differentiate handling temp and issued batches
 - what to do with hashavshevet transactions that doesn't appear in bank accounts?
 - response keys with different types handling (examp. ./graphql/types/recordsTransactions => addTransactionsResponsType function)
+- add record and transaction errors (from checkBatch) as data in original type

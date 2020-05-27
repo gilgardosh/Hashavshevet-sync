@@ -14,17 +14,110 @@ const RecordType = new GraphQLObjectType({
   name: "Record",
   description: "A Single Record",
   fields: () => ({
-    AccountKey: {
+    debit_or_credit: {
       type: GraphQLNonNull(GraphQLString),
     },
-    DebitCredit: {
+    counter_account_id: {
+      type: GraphQLString,
+    },
+    match_number_card_analysis: {
+      type: GraphQLInt,
+    },
+    debit_or_credit_number: {
+      type: GraphQLNonNull(GraphQLInt),
+    },
+    id: {
+      type: GraphQLNonNull(GraphQLInt),
+    },
+    account_id: {
       type: GraphQLNonNull(GraphQLString),
     },
-    SuF: {
-      type: GraphQLNonNull(GraphQLFloat),
+    counter_account_name: {
+      type: GraphQLString, // can be removed
     },
-    SuFDlr: {
+    shekel_credit: {
       type: GraphQLFloat,
+    },
+    shekel_debit: {
+      type: GraphQLFloat,
+    },
+    shekel_sum: {
+      type: GraphQLFloat,
+    },
+    shekel_sum_closed_in_record: {
+      type: GraphQLFloat,
+    },
+    shekel_sum_open_in_record: {
+      type: GraphQLFloat,
+    },
+    cumulative_balance: {
+      type: GraphQLFloat,
+    },
+    foreign_currency_cumulative_balance_without_opening_balance: {
+      type: GraphQLFloat,
+    },
+    cumulative_balance_without_opening_balance: {
+      type: GraphQLFloat,
+    },
+    shekel_cumulative_balance_by_sector: {
+      type: GraphQLFloat,
+    },
+    cumulative_balance_by_sort_key: {
+      type: GraphQLFloat,
+    },
+    cumulative_balance_of_open_sum_in_record: {
+      type: GraphQLFloat,
+    },
+    foreign_currency_credit: {
+      type: GraphQLFloat,
+    },
+    foreign_currency_debit: {
+      type: GraphQLFloat,
+    },
+    foreign_currency_cumulative_balance: {
+      type: GraphQLFloat,
+    },
+    foreign_currency_sum: {
+      type: GraphQLFloat,
+    },
+    foreign_currency_sum_closed_in_record: {
+      type: GraphQLFloat,
+    },
+    foreign_currency_sun_open_in_record: {
+      type: GraphQLFloat,
+    },
+    estimated_sum: {
+      type: GraphQLFloat,
+    },
+    transaction_id: {
+      type: GraphQLNonNull(GraphQLInt),
+    },
+    batch_id: {
+      type: GraphQLNonNull(GraphQLInt),
+    },
+    transaction: {
+      type: TransactionType,
+      resolve: (record) => {
+        return resolver.transactionById(record.transaction_id);
+      },
+    },
+    batch: {
+      type: type.BatchType,
+      resolve: (record) => {
+        return resolver.batchById(record.batch_id);
+      },
+    },
+    account: {
+      type: type.AccountType,
+      resolve: (record) => {
+        return resolver.accountById(record.account_id);
+      },
+    },
+    counter_account: {
+      type: type.AccountType,
+      resolve: (record) => {
+        return resolver.accountById(record.counter_account_id);
+      },
     },
   }),
 });

@@ -1,10 +1,12 @@
 import * as loader from "./loaders";
-import { getAllRecords } from "../wizcloudProccess/getAll/records";
-import { getAllTransactions } from "../wizcloudProccess/getAll/transactions";
-import { getAllBatches } from "../wizcloudProccess/getAll/batches";
-import { getAllAccounts } from "../wizcloudProccess/getAll/accounts";
-import { getAllBankPageRecords } from "../wizcloudProccess/getAll/bankPageRecords";
-import { getAllBankPages } from "../wizcloudProccess/getAll/bankPages";
+import {
+  getAllRecords,
+  getAllTransactions,
+  getAllBatches,
+  getAllAccounts,
+  getAllBankPageRecords,
+  getAllBankPages,
+} from "../wizcloudProccess/getAll/getAllFunctions";
 
 function allRecords() {
   return getAllRecords();
