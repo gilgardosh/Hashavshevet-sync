@@ -1,16 +1,18 @@
-import { exportDataRecords } from "../wizCloudFetch";
+import { exportDataRecords } from "../../wizcloudProccess/wizCloudFetch";
 import * as dataFile from "./dataFiles";
+import * as type from "../types/types";
 
-function getAll(dataFile, parameters = []) {
+function getAll(datafile: string, parameters = []) {
   const data = {
-    datafile: dataFile,
+    datafile,
+    parameters: [],
   };
-  parameters.length ? (data["parameters"] = parameters) : "";
+  if (parameters.length) data.parameters = parameters;
   return exportDataRecords(data);
 }
 
 async function getAllRecords() {
-  let recordsList;
+  let recordsList: type.Record[];
   await getAll(dataFile.records).then((data) => {
     recordsList = data["repdata"];
   });
@@ -18,7 +20,7 @@ async function getAllRecords() {
 }
 
 async function getAllTransactions() {
-  let transactionsList;
+  let transactionsList: type.Transaction[];
   await getAll(dataFile.transactions).then((data) => {
     transactionsList = data["repdata"];
   });
@@ -26,7 +28,7 @@ async function getAllTransactions() {
 }
 
 async function getAllBatches() {
-  let batchesList;
+  let batchesList: type.Batch[];
   await getAll(dataFile.batches).then((data) => {
     batchesList = data["repdata"];
   });
@@ -42,7 +44,7 @@ async function getAllBatches() {
 }
 
 async function getAllAccounts() {
-  let accountsList;
+  let accountsList: type.Account[];
   await getAll(dataFile.accounts).then((data) => {
     accountsList = data["repdata"];
   });
@@ -50,7 +52,7 @@ async function getAllAccounts() {
 }
 
 async function getAllBankPageRecords() {
-  let bankPageRecordsList;
+  let bankPageRecordsList: type.BankPageRecord[];
   await getAll(dataFile.bankPageRecords).then((data) => {
     bankPageRecordsList = data["repdata"];
   });
@@ -58,7 +60,7 @@ async function getAllBankPageRecords() {
 }
 
 async function getAllBankPages() {
-  const uniqueBankPagesList = [];
+  const uniqueBankPagesList: type.BankPage[] = [];
   const map = new Map();
   for (const bankPage of await getAllBankPageRecords()) {
     if (!map.has(bankPage.bank_page_id)) {

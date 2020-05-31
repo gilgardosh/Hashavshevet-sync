@@ -9,7 +9,7 @@ export default function graphqlCall(query, variables = {}) {
     },
     body: JSON.stringify({
       query,
-      variables: variables,
+      variables,
     }),
   })
     .then((res) => res.json())

@@ -6,7 +6,7 @@ import {
   getAllAccounts,
   getAllBankPageRecords,
   getAllBankPages,
-} from "../wizcloudProccess/getAll/getAllFunctions";
+} from "./hashavshevetGetAll/getAllFunctions";
 
 const recordById = new DataLoader(async (recordIds) => {
   const recordsList = await getAllRecords();
