@@ -5,6 +5,7 @@ import {
   GraphQLInt,
   GraphQLFloat,
   GraphQLNonNull,
+  GraphQLInputObjectType,
 } from "graphql";
 import * as resolver from "../resolvers";
 import * as type from "../types";
@@ -96,8 +97,30 @@ const BankErrorType = new GraphQLObjectType({
   }),
 });
 
-const AddBankPageResponseType = new GraphQLObjectType({
-  name: "AddBankPageResponse",
+const PostBankPageRecord = new GraphQLInputObjectType({
+  name: "PostBankPageRecord",
+  description: "Interface for posting new Bank Page Record",
+  fields: () => ({
+    AccountKey: {
+      type: GraphQLNonNull(GraphQLString),
+    },
+    Reference: {
+      type: GraphQLInt,
+    },
+    CreditDebit: {
+      type: GraphQLNonNull(GraphQLInt),
+    },
+    SuF: {
+      type: GraphQLNonNull(GraphQLInt),
+    },
+    Details: {
+      type: GraphQLString,
+    },
+  })
+})
+
+const PostBankPageResponseType = new GraphQLObjectType({
+  name: "PostBankPageResponse",
   fields: () => ({
     status: {
       type: GraphQLString,
@@ -108,4 +131,4 @@ const AddBankPageResponseType = new GraphQLObjectType({
   }),
 });
 
-export { BankPageRecordType, BankPageType, AddBankPageResponseType };
+export { BankPageRecordType, BankPageType, PostBankPageRecord, PostBankPageResponseType };

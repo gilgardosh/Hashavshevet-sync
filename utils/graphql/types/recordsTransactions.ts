@@ -244,9 +244,9 @@ const TransactionType = new GraphQLObjectType({
   }),
 });
 
-const AddTransactionsResponseWithoutErrors = new GraphQLObjectType({
-  name: "AddTransactionsResponsWithoutErrors",
-  description: "Response for Adding Transactions to a Batch",
+const PostTransactionsResponseWithoutErrors = new GraphQLObjectType({
+  name: "PostTransactionsResponsWithoutErrors",
+  description: "Response for Posting Transactions to a Batch",
   fields: () => ({
     status: {
       type: GraphQLString,
@@ -281,9 +281,9 @@ const AddTransactionsResponseWithoutErrors = new GraphQLObjectType({
   }),
 });
 
-const AddTransactionsResponseWithErrors = new GraphQLObjectType({
-  name: "AddTransactionsResponsWithErrors",
-  description: "Response for Adding Transactions to a Batch",
+const PostTransactionsResponseWithErrors = new GraphQLObjectType({
+  name: "PostTransactionsResponsWithErrors",
+  description: "Response for Posting Transactions to a Batch",
   fields: () => ({
     status: {
       type: GraphQLString,
@@ -318,18 +318,18 @@ const AddTransactionsResponseWithErrors = new GraphQLObjectType({
   }),
 });
 
-const AddTransactionsResponseType = new GraphQLUnionType({
-  name: "AddTransactionsResponse",
-  description: "Response for Adding Transactions to a Batch",
+const PostTransactionsResponseType = new GraphQLUnionType({
+  name: "PostTransactionsResponse",
+  description: "Response for Posting Transactions to a Batch",
   types: [
-    AddTransactionsResponseWithoutErrors,
-    AddTransactionsResponseWithErrors,
+    PostTransactionsResponseWithoutErrors,
+    PostTransactionsResponseWithErrors,
   ],
   resolveType: (data) => {
     if (typeof data.errors === "string" || typeof data.errors === "undefined") {
-      return AddTransactionsResponseWithoutErrors;
+      return PostTransactionsResponseWithoutErrors;
     } else if (typeof data.errors === "object") {
-      return AddTransactionsResponseWithErrors;
+      return PostTransactionsResponseWithErrors;
     }
   },
 });
@@ -429,6 +429,6 @@ const PostRecord = new GraphQLInputObjectType({
 export {
   RecordType,
   TransactionType,
-  AddTransactionsResponseType,
+  PostTransactionsResponseType,
   PostTransaction,
 };

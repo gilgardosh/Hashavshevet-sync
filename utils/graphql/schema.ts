@@ -10,6 +10,7 @@ import {
 import * as type from "./types";
 import * as resolver from "./resolvers";
 import * as hashavshevet from "../wizcloudProccess/wizCloudFetch";
+import { PostBankPageRecord } from "./types/bankPages";
 
 const RootQueryType = new GraphQLObjectType({
   name: "Query",
@@ -167,8 +168,8 @@ const RootMutationType = new GraphQLObjectType({
         return hashavshevet.issueBatch({ batchNo: args.batch_id });
       },
     },
-    addTransactionsToBatch: {
-      type: type.AddTransactionsResponseType,
+    postTransactionsToBatch: {
+      type: type.PostTransactionsResponseType,
       description:
         "Import transactions to a new or already existing temporary batch. You may check for errors or input the batch into the permanent storage (if no errors were found).",
       args: {
@@ -188,53 +189,18 @@ const RootMutationType = new GraphQLObjectType({
         });
       },
     },
-    addBankPage: {
-      type: type.AddBankPageResponseType,
+    postBankPage: {
+      type: type.PostBankPageResponseType,
       description: "Import  or update records to chosen index",
-      resolve: () => {
-        return hashavshevet.importBankPageRecords({ rows: addBankPageData });
+      args: {
+        bank_page_records: { type: GraphQLList(PostBankPageRecord) },
+      },
+      resolve: (_, args) => {
+        return hashavshevet.importBankPageRecords({ rows: args.bank_page_records });
       },
     },
   }),
 });
-
-const addTransactionsData = [
-  // TODO replace with function that recieves data
-  {
-    TransType: "חל",
-    TransDebID: "30002",
-    DebName: "סימפטיה שופ",
-    TransCredID: "40001",
-    CredName: "הכנסות ממכירה בארץ - כולל מעמ",
-    Referance: "100",
-    Description: "חשבונית",
-    DueDate: "29/03/2018",
-    ValueDate: "30/03/2018",
-    suF: 1000,
-    suFDlr: 0,
-    CurrencyCode: "$",
-    moves: [
-      {
-        AccountKey: "111",
-        DebitCredit: "1",
-        SuF: 1000,
-        SuFDlr: "0",
-      },
-      {
-        AccountKey: "40001",
-        DebitCredit: "0",
-        SuF: 847.46,
-        SuFDlr: "0",
-      },
-      {
-        AccountKey: "60001",
-        DebitCredit: "0",
-        SuF: 152.54,
-        SuFDlr: "0",
-      },
-    ],
-  },
-];
 
 const addBankPageData = [
   // TODO replace with function that recieves data
