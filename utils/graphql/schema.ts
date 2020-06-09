@@ -168,7 +168,7 @@ const RootMutationType = new GraphQLObjectType({
       },
     },
     addTransactionsToBatch: {
-      type: type.AddTransactionsResponsType,
+      type: type.AddTransactionsResponseType,
       description:
         "Import transactions to a new or already existing temporary batch. You may check for errors or input the batch into the permanent storage (if no errors were found).",
       args: {
@@ -176,6 +176,7 @@ const RootMutationType = new GraphQLObjectType({
         insert_to_last_batch: { type: GraphQLBoolean },
         check_batch: { type: GraphQLBoolean },
         issue_batch: { type: GraphQLBoolean },
+        transactions_list: { type: GraphQLList(type.PostTransaction) },
       },
       resolve: (_, args) => {
         return hashavshevet.addTransactionsToBatch({
@@ -183,7 +184,7 @@ const RootMutationType = new GraphQLObjectType({
           insertolastb: args.insert_to_last_batch,
           check: args.check_batch,
           issue: args.issue_batch,
-          rows: addTransactionsData,
+          rows: args.transactions_list,
         });
       },
     },

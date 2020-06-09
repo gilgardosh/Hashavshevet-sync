@@ -20,4 +20,4 @@ app.listen(5000, () => {
   console.log("http://localhost:5000/graphql");
 });
 
-executeSync(2);
+// executeSync(2);

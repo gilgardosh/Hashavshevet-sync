@@ -6,6 +6,7 @@ import {
   GraphQLNonNull,
   GraphQLFloat,
   GraphQLUnionType,
+  GraphQLInputObjectType,
 } from "graphql";
 import * as resolver from "../resolvers";
 import * as type from "../types";
@@ -243,7 +244,7 @@ const TransactionType = new GraphQLObjectType({
   }),
 });
 
-const AddTransactionsResponsWithoutErrors = new GraphQLObjectType({
+const AddTransactionsResponseWithoutErrors = new GraphQLObjectType({
   name: "AddTransactionsResponsWithoutErrors",
   description: "Response for Adding Transactions to a Batch",
   fields: () => ({
@@ -280,7 +281,7 @@ const AddTransactionsResponsWithoutErrors = new GraphQLObjectType({
   }),
 });
 
-const AddTransactionsResponsWithErrors = new GraphQLObjectType({
+const AddTransactionsResponseWithErrors = new GraphQLObjectType({
   name: "AddTransactionsResponsWithErrors",
   description: "Response for Adding Transactions to a Batch",
   fields: () => ({
@@ -317,20 +318,117 @@ const AddTransactionsResponsWithErrors = new GraphQLObjectType({
   }),
 });
 
-const AddTransactionsResponsType = new GraphQLUnionType({
+const AddTransactionsResponseType = new GraphQLUnionType({
   name: "AddTransactionsResponse",
   description: "Response for Adding Transactions to a Batch",
   types: [
-    AddTransactionsResponsWithoutErrors,
-    AddTransactionsResponsWithErrors,
+    AddTransactionsResponseWithoutErrors,
+    AddTransactionsResponseWithErrors,
   ],
   resolveType: (data) => {
     if (typeof data.errors === "string" || typeof data.errors === "undefined") {
-      return AddTransactionsResponsWithoutErrors;
+      return AddTransactionsResponseWithoutErrors;
     } else if (typeof data.errors === "object") {
-      return AddTransactionsResponsWithErrors;
+      return AddTransactionsResponseWithErrors;
     }
   },
 });
 
-export { RecordType, TransactionType, AddTransactionsResponsType };
+const PostTransaction = new GraphQLInputObjectType({
+  name: "PostTransaction",
+  description: "Interface for posting new Transaction",
+  fields: () => ({
+    Branch: {
+      type: GraphQLInt,
+    },
+    CostCode: {
+      type: GraphQLInt,
+    },
+    CredName: {
+      type: GraphQLString,
+    },
+    CurrencyCode: {
+      type: GraphQLString,
+    },
+    DatF3: {
+      type: GraphQLString,
+    },
+    DebName: {
+      type: GraphQLString,
+    },
+    Description: {
+      type: GraphQLString,
+    },
+    Det2: {
+      type: GraphQLString,
+    },
+    Details: {
+      type: GraphQLString,
+    },
+    DueDate: {
+      type: GraphQLString,
+    },
+    Osek874: {
+      type: GraphQLString,
+    },
+    Quant: {
+      type: GraphQLFloat,
+    },
+    Ref2: {
+      type: GraphQLInt,
+    },
+    Ref3: {
+      type: GraphQLInt,
+    },
+    Reference: {
+      type: GraphQLInt,
+    },
+    SuF: {
+      type: GraphQLNonNull(GraphQLFloat),
+    },
+    SuFDlr: {
+      type: GraphQLFloat,
+    },
+    TransCredID: {
+      type: GraphQLNonNull(GraphQLString),
+    },
+    TransDebID: {
+      type: GraphQLNonNull(GraphQLString),
+    },
+    TransType: {
+      type: GraphQLString,
+    },
+    ValueDate: {
+      type: GraphQLString,
+    },
+    moves: {
+      type: GraphQLList(PostRecord),
+    },
+  }),
+});
+
+const PostRecord = new GraphQLInputObjectType({
+  name: "PostRecord",
+  description: "Interface for posting new Record",
+  fields: () => ({
+    AccountKey: {
+      type: GraphQLNonNull(GraphQLString),
+    },
+    Description: {
+      type: GraphQLNonNull(GraphQLString),
+    },
+    SuF: {
+      type: GraphQLNonNull(GraphQLFloat),
+    },
+    SuFDlr: {
+      type: GraphQLFloat,
+    },
+  })
+})
+
+export {
+  RecordType,
+  TransactionType,
+  AddTransactionsResponseType,
+  PostTransaction,
+};

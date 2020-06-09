@@ -254,7 +254,7 @@ type Mutation {
   """
   Import transactions to a new or already existing temporary batch. You may check for errors or input the batch into the permanent storage (if no errors were found).
   """
-  addTransactionsToBatch(batch_id: Int, insert_to_last_batch: Boolean, check_batch: Boolean, issue_batch: Boolean): AddTransactionsResponse
+  addTransactionsToBatch(batch_id: Int, insert_to_last_batch: Boolean, check_batch: Boolean, issue_batch: Boolean, transactions_list: [PostTransaction]): AddTransactionsResponse
 
   """Import  or update records to chosen index"""
   addBankPage: AddBankPageResponse
@@ -296,6 +296,40 @@ type AddTransactionsResponsWithErrors {
   batch_id: Int
   errors: [ARecordErrorDetails]
   batch: Batch
+}
+
+"""Interface for posting new Transaction"""
+input PostTransaction {
+  Branch: Int
+  CostCode: Int
+  CredName: String
+  CurrencyCode: String
+  DatF3: String
+  DebName: String
+  Description: String
+  Det2: String
+  Details: String
+  DueDate: String
+  Osek874: String
+  Quant: Float
+  Ref2: Int
+  Ref3: Int
+  Reference: Int
+  SuF: Float!
+  SuFDlr: Float
+  TransCredID: String!
+  TransDebID: String!
+  TransType: String
+  ValueDate: String
+  moves: [PostRecord]
+}
+
+"""Interface for posting new Record"""
+input PostRecord {
+  AccountKey: String!
+  Description: String!
+  SuF: Float!
+  SuFDlr: Float
 }
 
 type AddBankPageResponse {
