@@ -338,70 +338,70 @@ const PostTransaction = new GraphQLInputObjectType({
   name: "PostTransaction",
   description: "Interface for posting new Transaction",
   fields: () => ({
-    Branch: {
+    branch: {
       type: GraphQLInt,
     },
-    CostCode: {
-      type: GraphQLInt,
-    },
-    CredName: {
+    costing_code: {
       type: GraphQLString,
     },
-    CurrencyCode: {
+    creditor_name: {
       type: GraphQLString,
     },
-    DatF3: {
+    currency_code: {
       type: GraphQLString,
     },
-    DebName: {
+    date3: {
       type: GraphQLString,
     },
-    Description: {
+    debtor_name: {
       type: GraphQLString,
     },
-    Det2: {
+    description: {
       type: GraphQLString,
     },
-    Details: {
+    details2: {
       type: GraphQLString,
     },
-    DueDate: {
+    details1: {
       type: GraphQLString,
     },
-    Osek874: {
+    due_date: {
       type: GraphQLString,
     },
-    Quant: {
+    authorized_dealer_number: {
+      type: GraphQLString,
+    },
+    quantity: {
       type: GraphQLFloat,
     },
-    Ref2: {
+    reference1: {
       type: GraphQLInt,
     },
-    Ref3: {
+    reference2: {
       type: GraphQLInt,
     },
-    Reference: {
+    reference3: {
       type: GraphQLInt,
     },
-    SuF: {
+    shekel_sum: {
       type: GraphQLNonNull(GraphQLFloat),
     },
-    SuFDlr: {
+    foreign_currency_sum: {
       type: GraphQLFloat,
     },
-    TransCredID: {
+    creditor_id: {
       type: GraphQLNonNull(GraphQLString),
     },
-    TransDebID: {
+    debtor_id: {
       type: GraphQLNonNull(GraphQLString),
     },
-    TransType: {
+    type: {
       type: GraphQLString,
     },
-    ValueDate: {
+    value_date: {
       type: GraphQLString,
     },
-    moves: {
+    records: {
       type: GraphQLList(PostRecord),
     },
   }),
@@ -411,20 +411,20 @@ const PostRecord = new GraphQLInputObjectType({
   name: "PostRecord",
   description: "Interface for posting new Record",
   fields: () => ({
-    AccountKey: {
+    account_id: {
       type: GraphQLNonNull(GraphQLString),
     },
-    Description: {
+    debit_or_credit_number: {
       type: GraphQLNonNull(GraphQLString),
     },
-    SuF: {
+    shekel_sum: {
       type: GraphQLNonNull(GraphQLFloat),
     },
-    SuFDlr: {
+    foreign_currency_sum: {
       type: GraphQLFloat,
     },
-  })
-})
+  }),
+});
 
 export {
   RecordType,

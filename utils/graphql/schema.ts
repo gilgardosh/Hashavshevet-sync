@@ -180,12 +180,44 @@ const RootMutationType = new GraphQLObjectType({
         transactions_list: { type: GraphQLList(type.PostTransaction) },
       },
       resolve: (_, args) => {
+        const rows = args.transactions_list.map((t) => {
+          const moves = t.records.map((r) => ({
+            AccountKey: r.account_id,
+            DebitCredit: r.debit_or_credit_number,
+            SuF: r.shekel_sum,
+            SuFDlr: r.foreign_currency_sum,
+          }));
+          return {
+            Branch: t.branch,
+            CostCode: t.costing_code,
+            CredName: t.creditor_name,
+            CurrencyCode: t.currency_code,
+            DatF3: t.date3,
+            DebName: t.debtor_name,
+            Description: t.description,
+            Det2: t.details2,
+            Details: t.details1,
+            DueDate: t.due_date,
+            Osek874: t.authorized_dealer_number,
+            Quant: t.quantity,
+            Ref2: t.reference2,
+            Ref3: t.reference3,
+            Referance: t.reference1,
+            SuF: t.shekel_sum,
+            SuFDlr: t.foreign_currency_sum,
+            TransCredID: t.creditor_id,
+            TransDebID: t.debtor_id,
+            TransType: t.type,
+            ValueDate: t.value_date,
+            moves: moves,
+          };
+        });
         return hashavshevet.addTransactionsToBatch({
           batchNo: args.batch_id,
           insertolastb: args.insert_to_last_batch,
           check: args.check_batch,
           issue: args.issue_batch,
-          rows: args.transactions_list,
+          rows: rows,
         });
       },
     },
@@ -196,31 +228,13 @@ const RootMutationType = new GraphQLObjectType({
         bank_page_records: { type: GraphQLList(PostBankPageRecord) },
       },
       resolve: (_, args) => {
-        return hashavshevet.importBankPageRecords({ rows: args.bank_page_records });
+        return hashavshevet.importBankPageRecords({
+          rows: args.bank_page_records,
+        });
       },
     },
   }),
 });
-
-const addBankPageData = [
-  // TODO replace with function that recieves data
-  {
-    AccountKey: "50001",
-    CreditDebit: "0",
-    DatF: "31/10/2019",
-    Details: "trans details",
-    Reference: "123",
-    SuF: "-5445",
-  },
-  {
-    AccountKey: "40001",
-    CreditDebit: "1",
-    DatF: "28/10/2019",
-    Details: "trans details 111",
-    Reference: "125",
-    SuF: "55123",
-  },
-];
 
 const schema = new GraphQLSchema({
   query: RootQueryType,

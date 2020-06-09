@@ -254,10 +254,10 @@ type Mutation {
   """
   Import transactions to a new or already existing temporary batch. You may check for errors or input the batch into the permanent storage (if no errors were found).
   """
-  addTransactionsToBatch(batch_id: Int, insert_to_last_batch: Boolean, check_batch: Boolean, issue_batch: Boolean, transactions_list: [PostTransaction]): AddTransactionsResponse
+  postTransactionsToBatch(batch_id: Int, insert_to_last_batch: Boolean, check_batch: Boolean, issue_batch: Boolean, transactions_list: [PostTransaction]): PostTransactionsResponse
 
   """Import  or update records to chosen index"""
-  addBankPage: AddBankPageResponse
+  postBankPage(bank_page_records: [PostBankPageRecord]): PostBankPageResponse
 }
 
 type NewBatch {
@@ -271,11 +271,11 @@ type IssueBatchStatus {
   batch_issue: String
 }
 
-"""Response for Adding Transactions to a Batch"""
-union AddTransactionsResponse = AddTransactionsResponsWithoutErrors | AddTransactionsResponsWithErrors
+"""Response for Posting Transactions to a Batch"""
+union PostTransactionsResponse = PostTransactionsResponsWithoutErrors | PostTransactionsResponsWithErrors
 
-"""Response for Adding Transactions to a Batch"""
-type AddTransactionsResponsWithoutErrors {
+"""Response for Posting Transactions to a Batch"""
+type PostTransactionsResponsWithoutErrors {
   status: String
   batch_issue: String
   batch_check: String
@@ -286,8 +286,8 @@ type AddTransactionsResponsWithoutErrors {
   batch: Batch
 }
 
-"""Response for Adding Transactions to a Batch"""
-type AddTransactionsResponsWithErrors {
+"""Response for Posting Transactions to a Batch"""
+type PostTransactionsResponsWithErrors {
   status: String
   batch_issue: String
   batch_check: String
@@ -300,39 +300,39 @@ type AddTransactionsResponsWithErrors {
 
 """Interface for posting new Transaction"""
 input PostTransaction {
-  Branch: Int
-  CostCode: Int
-  CredName: String
-  CurrencyCode: String
-  DatF3: String
-  DebName: String
-  Description: String
-  Det2: String
-  Details: String
-  DueDate: String
-  Osek874: String
-  Quant: Float
-  Ref2: Int
-  Ref3: Int
-  Reference: Int
-  SuF: Float!
-  SuFDlr: Float
-  TransCredID: String!
-  TransDebID: String!
-  TransType: String
-  ValueDate: String
-  moves: [PostRecord]
+  branch: Int
+  costing_code: String
+  creditor_name: String
+  currency_code: String
+  date3: String
+  debtor_name: String
+  description: String
+  details2: String
+  details1: String
+  due_date: String
+  authorized_dealer_number: String
+  quantity: Float
+  reference1: Int
+  reference2: Int
+  reference3: Int
+  shekel_sum: Float!
+  foreign_currency_sum: Float
+  creditor_id: String!
+  debtor_id: String!
+  type: String
+  value_date: String
+  records: [PostRecord]
 }
 
 """Interface for posting new Record"""
 input PostRecord {
-  AccountKey: String!
-  Description: String!
-  SuF: Float!
-  SuFDlr: Float
+  account_id: String!
+  debit_or_credit_number: String!
+  shekel_sum: Float!
+  foreign_currency_sum: Float
 }
 
-type AddBankPageResponse {
+type PostBankPageResponse {
   status: String
   errors: [BankError]
 }
@@ -340,4 +340,13 @@ type AddBankPageResponse {
 type BankError {
   index: Int
   err: String
+}
+
+"""Interface for posting new Bank Page Record"""
+input PostBankPageRecord {
+  AccountKey: String!
+  Reference: Int
+  CreditDebit: Int!
+  SuF: Int!
+  Details: String
 }
