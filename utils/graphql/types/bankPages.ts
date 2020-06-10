@@ -17,25 +17,25 @@ const BankPageRecordType = new GraphQLObjectType({
     id: {
       type: GraphQLNonNull(GraphQLInt),
     },
-    bank_page_id: {
+    bankPageId: {
       type: GraphQLNonNull(GraphQLInt),
     },
     reference: {
       type: GraphQLInt,
     },
-    debit_or_credit: {
+    debitOrCredit: {
       type: GraphQLNonNull(GraphQLString),
     },
-    cumulative_balance: {
+    cumulativeBalance: {
       type: GraphQLFloat,
     },
-    cumulative_balance_calculated: {
+    cumulativeBalanceCalculated: {
       type: GraphQLFloat,
     },
-    match_number: {
+    matchNumber: {
       type: GraphQLInt,
     },
-    account_id: {
+    accountId: {
       type: GraphQLString,
     },
     sum: {
@@ -44,16 +44,16 @@ const BankPageRecordType = new GraphQLObjectType({
     details: {
       type: GraphQLString,
     },
-    account_name: {
+    accountName: {
       type: GraphQLString, // remove?
     },
     date: {
       type: GraphQLString, // Date type
     },
-    adjusted_record: {
+    adjustedRecord: {
       type: GraphQLString,
     },
-    bank_page: {
+    bankPage: {
       type: BankPageType,
       resolve: (record) => {
         return resolver.bankPageById(record.bank_page_id);

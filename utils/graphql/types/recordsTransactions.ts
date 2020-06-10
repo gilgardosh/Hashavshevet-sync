@@ -15,109 +15,109 @@ const RecordType = new GraphQLObjectType({
   name: "Record",
   description: "A Single Record",
   fields: () => ({
-    debit_or_credit: {
+    debitOrCredit: {
       type: GraphQLNonNull(GraphQLString),
     },
-    counter_account_id: {
+    counterAccountId: {
       type: GraphQLString,
     },
-    match_number_card_analysis: {
+    matchNumberCardAnalysis: {
       type: GraphQLInt,
     },
-    debit_or_credit_number: {
+    debitOrCreditNumber: {
       type: GraphQLNonNull(GraphQLInt),
     },
     id: {
       type: GraphQLNonNull(GraphQLInt),
     },
-    account_id: {
+    accountId: {
       type: GraphQLNonNull(GraphQLString),
     },
-    counter_account_name: {
+    counterAccountName: {
       type: GraphQLString, // can be removed
     },
-    shekel_credit: {
+    shekelCredit: {
       type: GraphQLFloat,
     },
-    shekel_debit: {
+    shekelDebit: {
       type: GraphQLFloat,
     },
-    shekel_sum: {
+    shekelSum: {
       type: GraphQLFloat,
     },
-    shekel_sum_closed_in_record: {
+    shekelSumClosedInRecord: {
       type: GraphQLFloat,
     },
-    shekel_sum_open_in_record: {
+    shekelSumOpenInRecord: {
       type: GraphQLFloat,
     },
-    cumulative_balance: {
+    cumulativeBalance: {
       type: GraphQLFloat,
     },
-    foreign_currency_cumulative_balance_without_opening_balance: {
+    foreignCurrencyCumulativeBalanceWithoutOpeningBalance: {
       type: GraphQLFloat,
     },
-    cumulative_balance_without_opening_balance: {
+    cumulativeBalanceWithoutOpeningBalance: {
       type: GraphQLFloat,
     },
-    shekel_cumulative_balance_by_sector: {
+    shekelCumulativeBalanceBySector: {
       type: GraphQLFloat,
     },
-    cumulative_balance_by_sort_key: {
+    cumulativeBalanceBySortKey: {
       type: GraphQLFloat,
     },
-    cumulative_balance_of_open_sum_in_record: {
+    cumulativeBalanceOfOpenSumInRecord: {
       type: GraphQLFloat,
     },
-    foreign_currency_credit: {
+    foreignCurrencyCredit: {
       type: GraphQLFloat,
     },
-    foreign_currency_debit: {
+    foreignCurrencyDebit: {
       type: GraphQLFloat,
     },
-    foreign_currency_cumulative_balance: {
+    foreignCurrencyCumulativeBalance: {
       type: GraphQLFloat,
     },
-    foreign_currency_sum: {
+    foreignCurrencySum: {
       type: GraphQLFloat,
     },
-    foreign_currency_sum_closed_in_record: {
+    foreignCurrencySumClosedInRecord: {
       type: GraphQLFloat,
     },
-    foreign_currency_sun_open_in_record: {
+    foreignCurrencySunOpenInRecord: {
       type: GraphQLFloat,
     },
-    estimated_sum: {
+    estimatedSum: {
       type: GraphQLFloat,
     },
-    transaction_id: {
+    transactionId: {
       type: GraphQLNonNull(GraphQLInt),
     },
-    batch_id: {
+    batchId: {
       type: GraphQLNonNull(GraphQLInt),
     },
     transaction: {
       type: TransactionType,
       resolve: (record) => {
-        return resolver.transactionById(record.transaction_id);
+        return resolver.transactionById(record.transactionId);
       },
     },
     batch: {
       type: type.BatchType,
       resolve: (record) => {
-        return resolver.batchById(record.batch_id);
+        return resolver.batchById(record.batchId);
       },
     },
     account: {
       type: type.AccountType,
       resolve: (record) => {
-        return resolver.accountById(record.account_id);
+        return resolver.accountById(record.accountId);
       },
     },
-    counter_account: {
+    counterAccount: {
       type: type.AccountType,
       resolve: (record) => {
-        return resolver.accountById(record.counter_account_id);
+        return resolver.accountById(record.counterAccountId);
       },
     },
   }),
@@ -127,22 +127,22 @@ const TransactionType = new GraphQLObjectType({
   name: "Transaction",
   description: "A Transaction of Some Records",
   fields: () => ({
-    debtor_id: {
+    debtorId: {
       type: GraphQLString,
     },
-    creditor_id: {
+    creditorId: {
       type: GraphQLString,
     },
     type: {
       type: GraphQLString, // Enum type?
     },
-    currency_code: {
+    currencyCode: {
       type: GraphQLString, // Enum type?
     },
-    foreign_currency_sum: {
+    foreignCurrencySum: {
       type: GraphQLFloat,
     },
-    shekel_sum: {
+    shekelSum: {
       type: GraphQLFloat,
     },
     reference1: {
@@ -154,10 +154,10 @@ const TransactionType = new GraphQLObjectType({
     reference3: {
       type: GraphQLInt,
     },
-    value_date: {
+    valueDate: {
       type: GraphQLString, // Date type
     },
-    due_date: {
+    dueDate: {
       type: GraphQLString, // Date type
     },
     details1: {
@@ -166,34 +166,34 @@ const TransactionType = new GraphQLObjectType({
     details2: {
       type: GraphQLString,
     },
-    exchange_rate_differences: {
+    exchangeRateDifferences: {
       type: GraphQLString, // Enum type, perhaps NonNull
     },
-    costing_code_sector: {
+    costingCodeSector: {
       type: GraphQLString,
     },
     quantity: {
       type: GraphQLFloat,
     },
-    inventory_id: {
+    inventoryId: {
       type: GraphQLInt,
     },
-    cheque_id: {
+    chequeId: {
       type: GraphQLInt,
     },
     id: {
       type: GraphQLNonNull(GraphQLInt),
     },
-    batch_id: {
+    batchId: {
       type: GraphQLNonNull(GraphQLInt),
     },
-    authorized_dealer_number: {
+    authorizedDealerNumber: {
       type: GraphQLString,
     },
-    register_number: {
+    registerNumber: {
       type: GraphQLInt,
     },
-    storno_cancelled_transaction_id: {
+    stornoCancelledTransactionId: {
       type: GraphQLInt,
     },
     branch: {
@@ -202,37 +202,37 @@ const TransactionType = new GraphQLObjectType({
     description: {
       type: GraphQLString,
     },
-    linked_file: {
+    linkedFile: {
       type: GraphQLString,
     },
-    costing_code: {
+    costingCode: {
       type: GraphQLString,
     },
     username: {
       type: GraphQLString,
     },
-    branch_name: {
+    branchName: {
       type: GraphQLString,
     },
-    costing_code_name: {
+    costingCodeName: {
       type: GraphQLString,
     },
     batch: {
       type: type.BatchType,
       resolve: (transaction) => {
-        return resolver.batchById(transaction.batch_id);
+        return resolver.batchById(transaction.batchId);
       },
     },
     debtor: {
       type: type.AccountType,
       resolve: (transaction) => {
-        return resolver.accountById(transaction.debtor_id);
+        return resolver.accountById(transaction.debtorId);
       },
     },
     creditor: {
       type: type.AccountType,
       resolve: (transaction) => {
-        return resolver.accountById(transaction.creditor_id);
+        return resolver.accountById(transaction.creditorId);
       },
     },
     records: {
@@ -341,19 +341,19 @@ const PostTransaction = new GraphQLInputObjectType({
     branch: {
       type: GraphQLInt,
     },
-    costing_code: {
+    costingCode: {
       type: GraphQLString,
     },
-    creditor_name: {
+    creditorName: {
       type: GraphQLString,
     },
-    currency_code: {
+    currencyCode: {
       type: GraphQLString,
     },
     date3: {
       type: GraphQLString,
     },
-    debtor_name: {
+    debtorName: {
       type: GraphQLString,
     },
     description: {
@@ -365,10 +365,10 @@ const PostTransaction = new GraphQLInputObjectType({
     details1: {
       type: GraphQLString,
     },
-    due_date: {
+    dueDate: {
       type: GraphQLString,
     },
-    authorized_dealer_number: {
+    authorizedDealerNumber: {
       type: GraphQLString,
     },
     quantity: {
@@ -383,22 +383,22 @@ const PostTransaction = new GraphQLInputObjectType({
     reference3: {
       type: GraphQLInt,
     },
-    shekel_sum: {
+    shekelSum: {
       type: GraphQLNonNull(GraphQLFloat),
     },
-    foreign_currency_sum: {
+    foreignCurrencySum: {
       type: GraphQLFloat,
     },
-    creditor_id: {
+    creditorId: {
       type: GraphQLNonNull(GraphQLString),
     },
-    debtor_id: {
+    debtorId: {
       type: GraphQLNonNull(GraphQLString),
     },
     type: {
       type: GraphQLString,
     },
-    value_date: {
+    valueDate: {
       type: GraphQLString,
     },
     records: {
@@ -411,16 +411,16 @@ const PostRecord = new GraphQLInputObjectType({
   name: "PostRecord",
   description: "Interface for posting new Record",
   fields: () => ({
-    account_id: {
+    accountId: {
       type: GraphQLNonNull(GraphQLString),
     },
-    debit_or_credit_number: {
+    debit_orCreditNumber: {
       type: GraphQLNonNull(GraphQLString),
     },
-    shekel_sum: {
+    shekelSum: {
       type: GraphQLNonNull(GraphQLFloat),
     },
-    foreign_currency_sum: {
+    foreignCurrencySum: {
       type: GraphQLFloat,
     },
   }),

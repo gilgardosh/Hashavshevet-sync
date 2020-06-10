@@ -16,7 +16,7 @@ const AccountType = new GraphQLObjectType({
     name: {
       type: GraphQLString,
     },
-    sort_group: {
+    sortGroup: {
       type: GraphQLInt, // Enum type?
     },
     sector: {
@@ -25,13 +25,13 @@ const AccountType = new GraphQLObjectType({
     details: {
       type: GraphQLString,
     },
-    init_date: {
+    initDate: {
       type: GraphQLString, // Date type
     },
     type: {
       type: GraphQLString, // Enum type? NonNull?
     },
-    is_active: {
+    isActive: {
       type: GraphQLString, // Enum type? NonNull?
     },
     address: {
@@ -58,13 +58,13 @@ const AccountType = new GraphQLObjectType({
     email: {
       type: GraphQLString,
     },
-    balance_code: {
+    balanceCode: {
       type: GraphQLString, // NonNull?
     },
-    general_discount_percent: {
+    generalDiscountPercent: {
       type: GraphQLFloat,
     },
-    vat_exempt: {
+    vatExempt: {
       type: GraphQLString, // Enum type, NonNull
     },
     occupation: {
@@ -73,49 +73,49 @@ const AccountType = new GraphQLObjectType({
     agent: {
       type: GraphQLInt,
     },
-    withholding_percent: {
+    withholdingPercent: {
       type: GraphQLFloat,
     },
-    withholding_validity: {
+    withholdingValidity: {
       type: GraphQLString, // Date type. NonNull?
     },
-    bank_id: {
+    bankId: {
       type: GraphQLString,
     },
-    bank_branch_id: {
+    bankBranchId: {
       type: GraphQLString,
     },
-    bank_account_id: {
+    bankAccountId: {
       type: GraphQLString,
     },
-    authorized_dealer_number: {
+    authorizedDealerNumber: {
       type: GraphQLString,
     },
-    main_account: {
+    mainAccount: {
       type: GraphQLString, // NonNull?
     },
-    max_credit: {
+    maxCredit: {
       type: GraphQLFloat,
     },
-    max_credit_currency: {
+    maxCreditCurrency: {
       type: GraphQLString, // Enum type? NonNull?
     },
-    max_obligo: {
+    maxObligo: {
       type: GraphQLFloat,
     },
-    max_obligo_currency: {
+    maxObligoCurrency: {
       type: GraphQLString, // Enum type? NonNull?
     },
-    income_file_number: {
+    incomeFileNumber: {
       type: GraphQLString,
     },
-    central_account: {
+    centralAccount: {
       type: GraphQLString,
     },
-    accountant_transfer: {
+    accountantTransfer: {
       type: GraphQLString,
     },
-    costing_code: {
+    costingCode: {
       type: GraphQLString,
     },
   }),

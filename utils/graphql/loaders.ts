@@ -18,14 +18,14 @@ const recordById = new DataLoader(async (recordIds) => {
 const recordsByTransactionId = new DataLoader(async (transactionIds) => {
   const recordsList = await getAllRecords();
   return transactionIds.map((id) => {
-    return recordsList.filter((record) => record.transaction_id === id);
+    return recordsList.filter((record) => record.transactionId === id);
   });
 });
 
 const recordsByBatcnId = new DataLoader(async (batchIds) => {
   const recordsList = await getAllRecords();
   return batchIds.map((id) => {
-    return recordsList.filter((record) => record.batch_id === id);
+    return recordsList.filter((record) => record.batchId === id);
   });
 });
 
@@ -40,7 +40,7 @@ const transactionsByBatcnId = new DataLoader(async (batchIds) => {
   const transactionsList = await getAllTransactions();
   return await batchIds.map((id) => {
     return transactionsList.filter(
-      (transaction) => transaction.batch_id === id
+      (transaction) => transaction.batchId === id
     );
   });
 });
@@ -70,7 +70,7 @@ const bankPageRecordsByBankPageId = new DataLoader(async (bankPageIds) => {
   const bankPageRecordsList = await getAllBankPageRecords();
   return bankPageIds.map((id) => {
     return bankPageRecordsList.filter(
-      (bankPageRecord) => bankPageRecord.bank_page_id === id
+      (bankPageRecord) => bankPageRecord.bankPageId === id
     );
   });
 });

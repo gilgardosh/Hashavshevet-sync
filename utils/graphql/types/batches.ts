@@ -22,16 +22,16 @@ const BatchType = new GraphQLObjectType({
     status: {
       type: GraphQLString, // Enum type? NonNull?
     },
-    issue_date: {
+    issueDate: {
       type: GraphQLString, // Date type
     },
     details: {
       type: GraphQLString,
     },
-    init_time: {
+    initTime: {
       type: GraphQLString,
     },
-    init_date: {
+    initDate: {
       type: GraphQLString, // Date type
     },
     transactions: {
@@ -52,9 +52,9 @@ const BatchType = new GraphQLObjectType({
 const recordErrorType = new GraphQLObjectType({
   name: "ARecordErrorDetails",
   fields: () => ({
-    headerID: { type: GraphQLString, description: "AKA transaction_id" },
+    headerID: { type: GraphQLString, description: "AKA transactionId" },
     err: { type: GraphQLInt },
-    recId: { type: GraphQLInt, description: "AKA record_id" },
+    recId: { type: GraphQLInt, description: "AKA recordId" },
     field: { type: GraphQLString },
     TxtMsg: { type: GraphQLString },
     transaction: {

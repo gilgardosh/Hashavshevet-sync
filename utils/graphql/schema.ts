@@ -137,10 +137,10 @@ const RootQueryType = new GraphQLObjectType({
       type: type.CheckBatchType,
       description: "Checks if there are errors in the batch",
       args: {
-        batch_id: { type: GraphQLInt },
+        batchId: { type: GraphQLInt },
       },
       resolve: (_, args) => {
-        return hashavshevet.checkBatch({ batchNo: args.batch_id });
+        return hashavshevet.checkBatch({ batchNo: args.batchId });
       },
     },
   }),
@@ -162,10 +162,10 @@ const RootMutationType = new GraphQLObjectType({
       description:
         "Checks and inputs the temporary batch into the permanent storage",
       args: {
-        batch_id: { type: GraphQLInt },
+        batchId: { type: GraphQLInt },
       },
       resolve: (_, args) => {
-        return hashavshevet.issueBatch({ batchNo: args.batch_id });
+        return hashavshevet.issueBatch({ batchNo: args.batchId });
       },
     },
     postTransactionsToBatch: {
@@ -173,50 +173,50 @@ const RootMutationType = new GraphQLObjectType({
       description:
         "Import transactions to a new or already existing temporary batch. You may check for errors or input the batch into the permanent storage (if no errors were found).",
       args: {
-        batch_id: { type: GraphQLInt },
-        insert_to_last_batch: { type: GraphQLBoolean },
-        check_batch: { type: GraphQLBoolean },
-        issue_batch: { type: GraphQLBoolean },
-        transactions_list: { type: GraphQLList(type.PostTransaction) },
+        batchId: { type: GraphQLInt },
+        insertToLastBatch: { type: GraphQLBoolean },
+        checkBatch: { type: GraphQLBoolean },
+        issueBatch: { type: GraphQLBoolean },
+        transactionsList: { type: GraphQLList(type.PostTransaction) },
       },
       resolve: (_, args) => {
-        const rows = args.transactions_list.map((t) => {
+        const rows = args.transactionsList.map((t) => {
           const moves = t.records.map((r) => ({
-            AccountKey: r.account_id,
-            DebitCredit: r.debit_or_credit_number,
-            SuF: r.shekel_sum,
-            SuFDlr: r.foreign_currency_sum,
+            AccountKey: r.accountId,
+            DebitCredit: r.debitOrCreditNumber,
+            SuF: r.shekelSum,
+            SuFDlr: r.foreignCurrencySum,
           }));
           return {
             Branch: t.branch,
-            CostCode: t.costing_code,
-            CredName: t.creditor_name,
-            CurrencyCode: t.currency_code,
+            CostCode: t.costingCode,
+            CredName: t.creditorName,
+            CurrencyCode: t.currencyCode,
             DatF3: t.date3,
-            DebName: t.debtor_name,
+            DebName: t.debtorName,
             Description: t.description,
             Det2: t.details2,
             Details: t.details1,
-            DueDate: t.due_date,
-            Osek874: t.authorized_dealer_number,
+            DueDate: t.dueDate,
+            Osek874: t.authorizedDealerNumber,
             Quant: t.quantity,
             Ref2: t.reference2,
             Ref3: t.reference3,
             Referance: t.reference1,
-            SuF: t.shekel_sum,
-            SuFDlr: t.foreign_currency_sum,
-            TransCredID: t.creditor_id,
-            TransDebID: t.debtor_id,
+            SuF: t.shekelSum,
+            SuFDlr: t.foreignCurrencySum,
+            TransCredID: t.creditorId,
+            TransDebID: t.debtorId,
             TransType: t.type,
-            ValueDate: t.value_date,
+            ValueDate: t.valueDate,
             moves: moves,
           };
         });
         return hashavshevet.addTransactionsToBatch({
-          batchNo: args.batch_id,
-          insertolastb: args.insert_to_last_batch,
-          check: args.check_batch,
-          issue: args.issue_batch,
+          batchNo: args.batchId,
+          insertolastb: args.insertToLastBatch,
+          check: args.checkBatch,
+          issue: args.issueBatch,
           rows: rows,
         });
       },
@@ -225,11 +225,11 @@ const RootMutationType = new GraphQLObjectType({
       type: type.PostBankPageResponseType,
       description: "Import  or update records to chosen index",
       args: {
-        bank_page_records: { type: GraphQLList(PostBankPageRecord) },
+        bankPageRecords: { type: GraphQLList(PostBankPageRecord) },
       },
       resolve: (_, args) => {
         return hashavshevet.importBankPageRecords({
-          rows: args.bank_page_records,
+          rows: args.bankPageRecords,
         });
       },
     },
