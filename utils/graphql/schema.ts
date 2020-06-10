@@ -15,7 +15,7 @@ import { PostBankPageRecord } from "./types/bankPages";
 const RootQueryType = new GraphQLObjectType({
   name: "Query",
   fields: () => ({
-    recordById: {
+    getRecordById: {
       type: type.RecordType,
       description: "A Single Record by its ID",
       args: {
@@ -25,14 +25,14 @@ const RootQueryType = new GraphQLObjectType({
         return resolver.recordById(args.id);
       },
     },
-    records: {
+    getRecords: {
       type: GraphQLList(type.RecordType),
       description: "List of All Records",
       resolve: () => {
         return resolver.allRecords();
       },
     },
-    transactionById: {
+    getTransactionById: {
       type: type.TransactionType,
       description: "A Single Transaction by its ID",
       args: {
@@ -42,14 +42,14 @@ const RootQueryType = new GraphQLObjectType({
         return resolver.transactionById(args.id);
       },
     },
-    transactions: {
+    getTransactions: {
       type: GraphQLList(type.TransactionType),
       description: "List of All Transactions",
       resolve: () => {
         return resolver.allTransactions();
       },
     },
-    batchById: {
+    getBatchById: {
       type: type.BatchType,
       description: "A Single Batch by its ID",
       args: {
@@ -59,14 +59,14 @@ const RootQueryType = new GraphQLObjectType({
         return resolver.batchById(args.id);
       },
     },
-    batches: {
+    getBatches: {
       type: GraphQLList(type.BatchType),
       description: "List of All Batches",
       resolve: () => {
         return resolver.allBatches();
       },
     },
-    accountById: {
+    getAccountById: {
       type: type.AccountType,
       description: "A Single Account by its ID",
       args: {
@@ -76,14 +76,14 @@ const RootQueryType = new GraphQLObjectType({
         return resolver.accountById(args.id);
       },
     },
-    accounts: {
+    getAccounts: {
       type: GraphQLList(type.AccountType),
       description: "List of All Accounts",
       resolve: () => {
         return resolver.allAccounts();
       },
     },
-    bankPageRecordById: {
+    getBankPageRecordById: {
       type: type.BankPageRecordType,
       description: "A Single Bank Page Record by its ID",
       args: {
@@ -93,14 +93,14 @@ const RootQueryType = new GraphQLObjectType({
         return resolver.bankPageRecordById(args.id);
       },
     },
-    bankPageRecords: {
+    getBankPageRecords: {
       type: GraphQLList(type.BankPageRecordType),
       description: "List of All Bank Page Records",
       resolve: () => {
         return resolver.allBankPageRecords();
       },
     },
-    bankPageById: {
+    getBankPageById: {
       type: type.BankPageType,
       description:
         "A Single Bank Page (Which Is A List Of Bank Page Records), by its ID",
@@ -111,14 +111,14 @@ const RootQueryType = new GraphQLObjectType({
         return resolver.bankPageById(args.id);
       },
     },
-    bankPages: {
+    getBankPages: {
       type: GraphQLList(type.BankPageType),
       description: "List Of Bank Pages",
       resolve: () => {
         return resolver.allBankPages();
       },
     },
-    userCompanies: {
+    getUserCompanies: {
       type: GraphQLList(type.CompanyType),
       description:
         "List of Companies for user token thats defined on: 'WizcloudApiPrivateKey'",
@@ -126,7 +126,7 @@ const RootQueryType = new GraphQLObjectType({
         return hashavshevet.getCompanies();
       },
     },
-    userDetails: {
+    getUserDetails: {
       type: type.UserType,
       description: "Get User Details",
       resolve: () => {
