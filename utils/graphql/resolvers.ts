@@ -25,11 +25,27 @@ function recordsByBatcnId(batchId) {
 }
 
 function allTransactions() {
-  return getAllTransactions();
+  return getAllTransactions()
+  // remove "then" after updating transaction datafile
+  .then((transactionsList) =>
+    transactionsList.map((t) => {
+      const creditor_id = t.debtor_id;
+      t.debtor_id = t.creditor_id;
+      t.creditor_id = creditor_id;
+      return t;
+    })
+  );
 }
 
 function transactionById(transactionId) {
-  return loader.transactionById.load(transactionId);
+  return loader.transactionById.load(transactionId)
+  // remove "then" after 
+  .then((t) => {
+    const creditor_id = t.debtor_id;
+    t.debtor_id = t.creditor_id;
+    t.creditor_id = creditor_id;
+    return t;
+  });
 }
 
 function transactionsByBatcnId(batchId) {
