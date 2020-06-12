@@ -178,91 +178,91 @@ type Account {
   """Filtering (5 characters)"""
   filter: String
 
-  """"""
+  """Remarks (max 50 characters)"""
   details: String
 
-  """"""
+  """Initiate date"""
   initDate: String
 
-  """"""
+  """Type of account"""
   type: String
 
-  """"""
+  """Active/inactive account"""
   isActive: String
 
-  """"""
+  """Address (max 50 characters)"""
   address: String
 
-  """"""
+  """City (max 20 characters)"""
   city: String
 
-  """"""
+  """Zip code (max 10 characters)"""
   zipcode: String
 
-  """"""
+  """Country (max 20 characters)"""
   country: String
 
-  """"""
+  """Phone (max 30 characters)"""
   phone: String
 
-  """"""
+  """Callphone"""
   cellphone: String
 
-  """"""
+  """Fax (max 30 characters)"""
   fax: String
 
-  """"""
+  """Email"""
   email: String
 
-  """"""
+  """Code for the balance and profit and loss report"""
   balanceCode: String
 
-  """"""
+  """% customer discount"""
   generalDiscountPercent: Float
 
-  """"""
+  """VAT exempt, 1/0"""
   vatExempt: String
 
-  """"""
+  """Occupation (max 15 characters)"""
   occupation: String
 
-  """"""
+  """Salesperson"""
   agent: Int
 
-  """"""
+  """% withholding tax"""
   withholdingPercent: Float
 
-  """"""
+  """Validity date of the % withholding tax"""
   withholdingValidity: String
 
-  """"""
+  """Bank code (max 3 characters)"""
   bankId: String
 
-  """"""
+  """Bank branch code (max 5 characters)"""
   bankBranchId: String
 
-  """"""
+  """Bank account # (max 20 characters)"""
   bankAccountId: String
 
-  """"""
+  """VAT registration number (max [20 or 9?] characters)"""
   authorizedDealerNumber: String
 
-  """"""
+  """Code of the main account"""
   mainAccount: String
 
-  """"""
+  """Credit limit"""
   maxCredit: Float
 
-  """"""
+  """Credit currency (max 5 characters)"""
   maxCreditCurrency: String
 
-  """"""
+  """Credit risk limit"""
   maxObligo: Float
 
-  """"""
+  """Credit risk currency (max 5 characters)"""
   maxObligoCurrency: String
 
-  """"""
+  """Income file number (max 20 characters)"""
   incomeFileNumber: String
 
   """"""
@@ -271,43 +271,43 @@ type Account {
   """"""
   accountantTransfer: String
 
-  """"""
+  """Code of cost center (existing code)"""
   costingCode: String
 }
 
 """A Single Batch"""
 type Batch {
+  """Remarks"""
+  details: String
+
   """Batch identifier"""
   id: Int!
 
-  """Type"""
-  type: String
+  """Initiate date"""
+  initDate: String
+
+  """Initiate time"""
+  initTime: String
+
+  """Issue date"""
+  issueDate: String
+
+  """Batch's records details list"""
+  records: [Record]
 
   """Status"""
   status: String
 
-  """Issue date of the batch"""
-  issueDate: String
-
-  """Remarks"""
-  details: String
-
-  """Initiate time of the batch"""
-  initTime: String
-
-  """Initiate date of the batch"""
-  initDate: String
-
   """Batch's transactions details list"""
   transactions: [Transaction]
 
-  """Batch's records details list"""
-  records: [Record]
+  """Type"""
+  type: String
 }
 
 """A Transaction of Some Records"""
 type Transaction {
-  """VAT registration number"""
+  """VAT registration number (max [20 or 9?] characters)"""
   authorizedDealerNumber: String
 
   """Batch details"""
@@ -325,7 +325,7 @@ type Transaction {
   """Cheque Identifier"""
   chequeId: Int
 
-  """Cost-center code"""
+  """Code of cost center (existing code)"""
   costingCode: String
 
   """Cost-center code name"""
@@ -337,10 +337,10 @@ type Transaction {
   """Main credit account details"""
   creditor: Account
 
-  """Main credit account Identifier"""
+  """Main credit account identifier (max 15 charactes)"""
   creditorId: String
 
-  """Currency"""
+  """Currency (max 5 characters)"""
   currencyCode: String
 
   """Additional date"""
@@ -349,16 +349,16 @@ type Transaction {
   """Main debit account details"""
   debtor: Account
 
-  """Main debit account identifier"""
+  """Main debit account identifier (max 15 charactes)"""
   debtorId: String
 
-  """Description"""
+  """Description (max 250 characters)"""
   description: String
 
-  """Remarks"""
+  """Remarks (max 50 characters)"""
   details1: String
 
-  """Additional remarks"""
+  """Additional remarks (max 50 characters)"""
   details2: String
 
   """Due date"""
@@ -391,7 +391,7 @@ type Transaction {
   """Reference-2"""
   reference2: Int
 
-  """Reference-3"""
+  """Referenc-3"""
   reference3: Int
 
   """Register number"""
@@ -556,7 +556,7 @@ type ARecordErrorDetails {
 """Root Mutation"""
 type Mutation {
   """Opens a new batch and return the number"""
-  newBatch: NewBatch
+  createNewBatch: NewBatch
 
   """Checks and inputs the temporary batch into the permanent storage"""
   issueBatch(
@@ -670,13 +670,13 @@ type PostTransactionsResponsWithErrors {
 
 """Interface for posting new Transaction"""
 input PostTransaction {
-  """VAT registration number (max 9 characters)"""
+  """VAT registration number (max [20 or 9?] characters)"""
   authorizedDealerNumber: String
 
   """Branch"""
   branch: Int
 
-  """Cost-center code (existing code)"""
+  """Code of cost center (existing code)"""
   costingCode: String
 
   """Main credit account identifier (max 15 charactes)"""
@@ -709,7 +709,7 @@ input PostTransaction {
   """Due date"""
   dueDate: String
 
-  """Total amount in foreign currency (credit or debit)"""
+  """Total amount in foreign currency"""
   foreignCurrencySum: Float
 
   """Quantity"""

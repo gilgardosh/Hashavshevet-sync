@@ -142,8 +142,8 @@ const RootMutationType = new GraphQLObjectType({
   name: "Mutation",
   description: "Root Mutation",
   fields: () => ({
-    newBatch: {
-      type: graphqlType.NewBatchType,
+    createNewBatch: {
+      type: graphqlType.createNewBatchType,
       description: "Opens a new batch and return the number",
       resolve: () => hashavshevet.newBatch(),
     },

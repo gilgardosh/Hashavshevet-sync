@@ -157,67 +157,97 @@ export type Account = {
   sortGroup?: Maybe<Scalars['Int']>;
   /** Filtering (5 characters) */
   filter?: Maybe<Scalars['String']>;
+  /** Remarks (max 50 characters) */
   details?: Maybe<Scalars['String']>;
+  /** Initiate date */
   initDate?: Maybe<Scalars['String']>;
+  /** Type of account */
   type?: Maybe<Scalars['String']>;
+  /** Active/inactive account */
   isActive?: Maybe<Scalars['String']>;
+  /** Address (max 50 characters) */
   address?: Maybe<Scalars['String']>;
+  /** City (max 20 characters) */
   city?: Maybe<Scalars['String']>;
+  /** Zip code (max 10 characters) */
   zipcode?: Maybe<Scalars['String']>;
+  /** Country (max 20 characters) */
   country?: Maybe<Scalars['String']>;
+  /** Phone (max 30 characters) */
   phone?: Maybe<Scalars['String']>;
+  /** Callphone */
   cellphone?: Maybe<Scalars['String']>;
+  /** Fax (max 30 characters) */
   fax?: Maybe<Scalars['String']>;
+  /** Email */
   email?: Maybe<Scalars['String']>;
+  /** Code for the balance and profit and loss report */
   balanceCode?: Maybe<Scalars['String']>;
+  /** % customer discount */
   generalDiscountPercent?: Maybe<Scalars['Float']>;
+  /** VAT exempt, 1/0 */
   vatExempt?: Maybe<Scalars['String']>;
+  /** Occupation (max 15 characters) */
   occupation?: Maybe<Scalars['String']>;
+  /** Salesperson */
   agent?: Maybe<Scalars['Int']>;
+  /** % withholding tax */
   withholdingPercent?: Maybe<Scalars['Float']>;
+  /** Validity date of the % withholding tax */
   withholdingValidity?: Maybe<Scalars['String']>;
+  /** Bank code (max 3 characters) */
   bankId?: Maybe<Scalars['String']>;
+  /** Bank branch code (max 5 characters) */
   bankBranchId?: Maybe<Scalars['String']>;
+  /** Bank account # (max 20 characters) */
   bankAccountId?: Maybe<Scalars['String']>;
+  /** VAT registration number (max [20 or 9?] characters) */
   authorizedDealerNumber?: Maybe<Scalars['String']>;
+  /** Code of the main account */
   mainAccount?: Maybe<Scalars['String']>;
+  /** Credit limit */
   maxCredit?: Maybe<Scalars['Float']>;
+  /** Credit currency (max 5 characters) */
   maxCreditCurrency?: Maybe<Scalars['String']>;
+  /** Credit risk limit */
   maxObligo?: Maybe<Scalars['Float']>;
+  /** Credit risk currency (max 5 characters) */
   maxObligoCurrency?: Maybe<Scalars['String']>;
+  /** Income file number (max 20 characters) */
   incomeFileNumber?: Maybe<Scalars['String']>;
   centralAccount?: Maybe<Scalars['String']>;
   accountantTransfer?: Maybe<Scalars['String']>;
+  /** Code of cost center (existing code) */
   costingCode?: Maybe<Scalars['String']>;
 };
 
 /** A Single Batch */
 export type Batch = {
   __typename?: 'Batch';
-  /** Batch identifier */
-  id: Scalars['Int'];
-  /** Type */
-  type?: Maybe<Scalars['String']>;
-  /** Status */
-  status?: Maybe<Scalars['String']>;
-  /** Issue date of the batch */
-  issueDate?: Maybe<Scalars['String']>;
   /** Remarks */
   details?: Maybe<Scalars['String']>;
-  /** Initiate time of the batch */
-  initTime?: Maybe<Scalars['String']>;
-  /** Initiate date of the batch */
+  /** Batch identifier */
+  id: Scalars['Int'];
+  /** Initiate date */
   initDate?: Maybe<Scalars['String']>;
-  /** Batch's transactions details list */
-  transactions?: Maybe<Array<Maybe<Transaction>>>;
+  /** Initiate time */
+  initTime?: Maybe<Scalars['String']>;
+  /** Issue date */
+  issueDate?: Maybe<Scalars['String']>;
   /** Batch's records details list */
   records?: Maybe<Array<Maybe<Record>>>;
+  /** Status */
+  status?: Maybe<Scalars['String']>;
+  /** Batch's transactions details list */
+  transactions?: Maybe<Array<Maybe<Transaction>>>;
+  /** Type */
+  type?: Maybe<Scalars['String']>;
 };
 
 /** A Transaction of Some Records */
 export type Transaction = {
   __typename?: 'Transaction';
-  /** VAT registration number */
+  /** VAT registration number (max [20 or 9?] characters) */
   authorizedDealerNumber?: Maybe<Scalars['String']>;
   /** Batch details */
   batch?: Maybe<Batch>;
@@ -229,7 +259,7 @@ export type Transaction = {
   branchName?: Maybe<Scalars['String']>;
   /** Cheque Identifier */
   chequeId?: Maybe<Scalars['Int']>;
-  /** Cost-center code */
+  /** Code of cost center (existing code) */
   costingCode?: Maybe<Scalars['String']>;
   /** Cost-center code name */
   costingCodeName?: Maybe<Scalars['String']>;
@@ -237,21 +267,21 @@ export type Transaction = {
   costingCodeFilter?: Maybe<Scalars['String']>;
   /** Main credit account details */
   creditor?: Maybe<Account>;
-  /** Main credit account Identifier */
+  /** Main credit account identifier (max 15 charactes) */
   creditorId?: Maybe<Scalars['String']>;
-  /** Currency */
+  /** Currency (max 5 characters) */
   currencyCode?: Maybe<Scalars['String']>;
   /** Additional date */
   date3?: Maybe<Scalars['String']>;
   /** Main debit account details */
   debtor?: Maybe<Account>;
-  /** Main debit account identifier */
+  /** Main debit account identifier (max 15 charactes) */
   debtorId?: Maybe<Scalars['String']>;
-  /** Description */
+  /** Description (max 250 characters) */
   description?: Maybe<Scalars['String']>;
-  /** Remarks */
+  /** Remarks (max 50 characters) */
   details1?: Maybe<Scalars['String']>;
-  /** Additional remarks */
+  /** Additional remarks (max 50 characters) */
   details2?: Maybe<Scalars['String']>;
   /** Due date */
   dueDate?: Maybe<Scalars['String']>;
@@ -273,7 +303,7 @@ export type Transaction = {
   reference1?: Maybe<Scalars['Int']>;
   /** Reference-2 */
   reference2?: Maybe<Scalars['Int']>;
-  /** Reference-3 */
+  /** Referenc-3 */
   reference3?: Maybe<Scalars['Int']>;
   /** Register number */
   registerNumber?: Maybe<Scalars['Int']>;
@@ -397,7 +427,7 @@ export type ARecordErrorDetails = {
 export type Mutation = {
   __typename?: 'Mutation';
   /** Opens a new batch and return the number */
-  newBatch?: Maybe<NewBatch>;
+  createNewBatch?: Maybe<NewBatch>;
   /** Checks and inputs the temporary batch into the permanent storage */
   issueBatch?: Maybe<IsuueBatch>;
   /** Import transactions to a new or already existing temporary batch. You may check for errors or input the batch into the permanent storage (if no errors were found). */
@@ -492,11 +522,11 @@ export type PostTransactionsResponsWithErrors = {
 
 /** Interface for posting new Transaction */
 export type PostTransaction = {
-  /** VAT registration number (max 9 characters) */
+  /** VAT registration number (max [20 or 9?] characters) */
   authorizedDealerNumber?: Maybe<Scalars['String']>;
   /** Branch */
   branch?: Maybe<Scalars['Int']>;
-  /** Cost-center code (existing code) */
+  /** Code of cost center (existing code) */
   costingCode?: Maybe<Scalars['String']>;
   /** Main credit account identifier (max 15 charactes) */
   creditorId?: Maybe<Scalars['String']>;
@@ -518,7 +548,7 @@ export type PostTransaction = {
   details2?: Maybe<Scalars['String']>;
   /** Due date */
   dueDate?: Maybe<Scalars['String']>;
-  /** Total amount in foreign currency (credit or debit) */
+  /** Total amount in foreign currency */
   foreignCurrencySum?: Maybe<Scalars['Float']>;
   /** Quantity */
   quantity?: Maybe<Scalars['Float']>;
@@ -813,15 +843,15 @@ export type AccountResolvers<ContextType = any, ParentType extends ResolversPare
 };
 
 export type BatchResolvers<ContextType = any, ParentType extends ResolversParentTypes['Batch'] = ResolversParentTypes['Batch']> = {
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  status?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  issueDate?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   details?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  initTime?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   initDate?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  transactions?: Resolver<Maybe<Array<Maybe<ResolversTypes['Transaction']>>>, ParentType, ContextType>;
+  initTime?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  issueDate?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   records?: Resolver<Maybe<Array<Maybe<ResolversTypes['Record']>>>, ParentType, ContextType>;
+  status?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  transactions?: Resolver<Maybe<Array<Maybe<ResolversTypes['Transaction']>>>, ParentType, ContextType>;
+  type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: isTypeOfResolverFn<ParentType>;
 };
 
@@ -934,7 +964,7 @@ export type ARecordErrorDetailsResolvers<ContextType = any, ParentType extends R
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  newBatch?: Resolver<Maybe<ResolversTypes['NewBatch']>, ParentType, ContextType>;
+  createNewBatch?: Resolver<Maybe<ResolversTypes['NewBatch']>, ParentType, ContextType>;
   issueBatch?: Resolver<Maybe<ResolversTypes['IsuueBatch']>, ParentType, ContextType, RequireFields<MutationIssueBatchArgs, never>>;
   postTransactionsToBatch?: Resolver<Maybe<ResolversTypes['PostTransactionsResponse']>, ParentType, ContextType, RequireFields<MutationPostTransactionsToBatchArgs, never>>;
   postBankPage?: Resolver<Maybe<ResolversTypes['PostBankPageResponse']>, ParentType, ContextType, RequireFields<MutationPostBankPageArgs, never>>;

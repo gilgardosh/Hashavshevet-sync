@@ -68,14 +68,14 @@ const recordErrorType = new GraphQLObjectType({  // TODO: convers keys
       description: "Error message",
     },
     transaction: {
-      type: type.BatchType,
+      type: type.TransactionType,
       description: "Transaction details",
       resolve: (recordError) => {
         return resolver.transactionById(recordError.headerID);
       },
     },
     record: {
-      type: type.BatchType,
+      type: type.RecordType,
       description: "Record details",
       resolve: (recordError) => {
         return resolver.recordById(recordError.recId);
@@ -117,7 +117,7 @@ const CheckBatchType = new GraphQLUnionType({
   },
 });
 
-const NewBatchType = new GraphQLObjectType({ // TODO: convers keys
+const createNewBatchType = new GraphQLObjectType({ // TODO: convers keys
   name: "NewBatch",
   fields: () => ({
     newbatch: {
@@ -163,6 +163,6 @@ export {
   BatchType,
   CheckBatchType,
   IssueBatchType,
-  NewBatchType,
+  createNewBatchType,
   recordErrorType,
 };
