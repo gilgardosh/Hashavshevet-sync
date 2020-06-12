@@ -18,15 +18,15 @@ const BatchType = new GraphQLObjectType({
       description: "Batch identifier",
     },
     type: {
-      type: GraphQLString, // Enum type? NonNull?
+      type: GraphQLString, // TODO: Enum type? NonNull?
       description: "Type",
     },
     status: {
-      type: GraphQLString, // Enum type? NonNull?
+      type: GraphQLString, // TODO: Enum type? NonNull?
       description: "Status",
     },
     issueDate: {
-      type: GraphQLString, // Date type
+      type: GraphQLString, // TODO: Date type
       description: "Issue date of the batch",
     },
     details: {
@@ -38,7 +38,7 @@ const BatchType = new GraphQLObjectType({
       description: "Initiate time of the batch",
     },
     initDate: {
-      type: GraphQLString, // Date type
+      type: GraphQLString, // TODO: Date type
       description: "Initiate date of the batch",
     },
     transactions: {
@@ -67,7 +67,7 @@ const recordErrorType = new GraphQLObjectType({
     },
     err: {
       type: GraphQLInt,
-      description: "",
+      description: "Error code",  // TODO: whats the meaning of this err?
     },
     recId: {
       type: GraphQLInt,
@@ -75,11 +75,11 @@ const recordErrorType = new GraphQLObjectType({
     },
     field: {
       type: GraphQLString,
-      description: "",
+      description: "Field name where error occurred",
     },
     TxtMsg: {
       type: GraphQLString,
-      description: "",
+      description: "Error message",
     },
     transaction: {
       type: type.BatchType,

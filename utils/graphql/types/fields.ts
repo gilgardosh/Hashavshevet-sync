@@ -5,8 +5,6 @@ import {
   GraphQLNonNull,
   GraphQLEnumType,
 } from "graphql";
-import * as resolver from "../resolvers";
-import * as type from "../types";
 
 const accountId = {
   type: GraphQLString,

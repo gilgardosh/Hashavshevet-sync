@@ -8,8 +8,7 @@ import {
   GraphQLBoolean,
   GraphQLNonNull,
 } from "graphql";
-import * as graphql from "./types";
-import * as type from "./types/types"
+import * as graphqlType from "./types";
 import * as resolver from "./resolvers";
 import * as hashavshevet from "../wizcloudProccess/wizCloudFetch";
 import { PostBankPageRecord } from "./types/bankPages";
@@ -18,7 +17,7 @@ const RootQueryType = new GraphQLObjectType({
   name: "Query",
   fields: () => ({
     getRecordById: {
-      type: graphql.RecordType,
+      type: graphqlType.RecordType,
       description: "A Single Record by its ID",
       args: {
         id: {
@@ -29,12 +28,12 @@ const RootQueryType = new GraphQLObjectType({
       resolve: (_, args) => resolver.recordById(args.id),
     },
     getRecords: {
-      type: GraphQLList(graphql.RecordType),
+      type: GraphQLList(graphqlType.RecordType),
       description: "List of All Records",
       resolve: () => resolver.allRecords(),
     },
     getTransactionById: {
-      type: graphql.TransactionType,
+      type: graphqlType.TransactionType,
       description: "A Single Transaction by its ID",
       args: {
         id: {
@@ -45,12 +44,12 @@ const RootQueryType = new GraphQLObjectType({
       resolve: (_, args) => resolver.transactionById(args.id),
     },
     getTransactions: {
-      type: GraphQLList(graphql.TransactionType),
+      type: GraphQLList(graphqlType.TransactionType),
       description: "List of All Transactions",
       resolve: () => resolver.allTransactions(),
     },
     getBatchById: {
-      type: graphql.BatchType,
+      type: graphqlType.BatchType,
       description: "A Single Batch by its ID",
       args: {
         id: {
@@ -61,12 +60,12 @@ const RootQueryType = new GraphQLObjectType({
       resolve: (_, args) => resolver.batchById(args.id),
     },
     getBatches: {
-      type: GraphQLList(graphql.BatchType),
+      type: GraphQLList(graphqlType.BatchType),
       description: "List of All Batches",
       resolve: () => resolver.allBatches(),
     },
     getAccountById: {
-      type: graphql.AccountType,
+      type: graphqlType.AccountType,
       description: "A Single Account by its ID",
       args: {
         id: {
@@ -77,12 +76,12 @@ const RootQueryType = new GraphQLObjectType({
       resolve: (_, args) => resolver.accountById(args.id),
     },
     getAccounts: {
-      type: GraphQLList(graphql.AccountType),
+      type: GraphQLList(graphqlType.AccountType),
       description: "List of All Accounts",
       resolve: () => resolver.allAccounts(),
     },
     getBankPageRecordById: {
-      type: graphql.BankPageRecordType,
+      type: graphqlType.BankPageRecordType,
       description: "A Single Bank Page Record by its ID",
       args: {
         id: {
@@ -93,12 +92,12 @@ const RootQueryType = new GraphQLObjectType({
       resolve: (_, args) => resolver.bankPageRecordById(args.id),
     },
     getBankPageRecords: {
-      type: GraphQLList(graphql.BankPageRecordType),
+      type: GraphQLList(graphqlType.BankPageRecordType),
       description: "List of All Bank Page Records",
       resolve: () => resolver.allBankPageRecords(),
     },
     getBankPageById: {
-      type: graphql.BankPageType,
+      type: graphqlType.BankPageType,
       description:
         "A Single Bank Page (Which Is A List Of Bank Page Records), by its ID",
       args: {
@@ -110,23 +109,23 @@ const RootQueryType = new GraphQLObjectType({
       resolve: (_, args) => resolver.bankPageById(args.id),
     },
     getBankPages: {
-      type: GraphQLList(graphql.BankPageType),
+      type: GraphQLList(graphqlType.BankPageType),
       description: "List Of Bank Pages",
       resolve: () => resolver.allBankPages(),
     },
     getUserCompanies: {
-      type: GraphQLList(graphql.CompanyType),
+      type: GraphQLList(graphqlType.CompanyType),
       description:
         "List of Companies for user token thats defined on: 'WizcloudApiPrivateKey'",
       resolve: () => hashavshevet.getCompanies(),
     },
     getUserDetails: {
-      type: graphql.UserType,
+      type: graphqlType.UserType,
       description: "Get User Details",
       resolve: () => hashavshevet.napi(),
     },
     checkBatch: {
-      type: graphql.CheckBatchType,
+      type: graphqlType.CheckBatchType,
       description: "Checks if there are errors in the batch",
       args: {
         id: {
@@ -144,12 +143,12 @@ const RootMutationType = new GraphQLObjectType({
   description: "Root Mutation",
   fields: () => ({
     newBatch: {
-      type: graphql.NewBatchType,
+      type: graphqlType.NewBatchType,
       description: "Opens a new batch and return the number",
       resolve: () => hashavshevet.newBatch(),
     },
     issueBatch: {
-      type: graphql.IssueBatchType,
+      type: graphqlType.IssueBatchType,
       description:
         "Checks and inputs the temporary batch into the permanent storage",
       args: {
@@ -161,14 +160,14 @@ const RootMutationType = new GraphQLObjectType({
       resolve: (_, args) => resolver.issueBatch(args.id),
     },
     postTransactionsToBatch: {
-      type: graphql.PostTransactionsResponseType,
+      type: graphqlType.PostTransactionsResponseType,
       description:
         "Import transactions to a new or already existing temporary batch. You may check for errors or input the batch into the permanent storage (if no errors were found).",
-      args: graphql.postTransactionsToBatchArgs,
+      args: graphqlType.postTransactionsToBatchArgs,
       resolve: (_, args) => resolver.postTransactionsToBatch(args),
     },
     postBankPage: {
-      type: graphql.PostBankPageResponseType,
+      type: graphqlType.PostBankPageResponseType,
       description: "Import  or update records to chosen index",
       args: {
         bankPageRecords: {

@@ -11,7 +11,7 @@ import {
   GraphQLEnumType,
 } from "graphql";
 import * as resolver from "../resolvers";
-import * as type from "../types";
+import * as graphqlType from "../types";
 import * as field from "./fields"
 
 const RecordType = new GraphQLObjectType({
@@ -19,7 +19,7 @@ const RecordType = new GraphQLObjectType({
   description: "A Single Record",
   fields: () => ({
     account: {
-      type: type.AccountType,
+      type: graphqlType.AccountType,
       description: "Main account details",
       resolve: (record) => resolver.accountById(record.accountId),
     },
@@ -28,7 +28,7 @@ const RecordType = new GraphQLObjectType({
       description: "Main account details identifier",
     },
     batch: {
-      type: type.BatchType,
+      type: graphqlType.BatchType,
       description: "Batch details",
       resolve: (record) => resolver.batchById(record.batchId),
     },
@@ -37,7 +37,7 @@ const RecordType = new GraphQLObjectType({
       description: "Batch identifier",
     },
     counterAccount: {
-      type: type.AccountType,
+      type: graphqlType.AccountType,
       description: "Counter account details",
       resolve: (record) => resolver.accountById(record.counterAccountId),
     },
@@ -46,7 +46,7 @@ const RecordType = new GraphQLObjectType({
       description: "Counter account identifier",
     },
     counterAccountName: {
-      type: GraphQLString, // can be removed
+      type: GraphQLString, // TODO: can be removed
       description: "Counter account name",
     },
     cumulativeBalance: {
@@ -70,8 +70,8 @@ const RecordType = new GraphQLObjectType({
       description: "Credit / Debit",
     },
     debitOrCreditNumber: {
-      type: GraphQLInt,
-      description: "0=Credit / 1=Debit",
+      type: field.debitOrCreditNumberEnum,
+      description: "Credit / Debit",
     },
     estimatedSum: {
       type: GraphQLFloat,
@@ -158,7 +158,7 @@ const TransactionType = new GraphQLObjectType({
       description: "VAT registration number",
     },
     batch: {
-      type: type.BatchType,
+      type: graphqlType.BatchType,
       description: "Batch details",
       resolve: (transaction) => resolver.batchById(transaction.batchId),
     },
@@ -168,7 +168,7 @@ const TransactionType = new GraphQLObjectType({
     },
     branch: {
       type: GraphQLInt,
-      description: "Branch", // NonNull? Enum  type?
+      description: "Branch", // TODO: NonNull? Enum  type?
     },
     branchName: {
       type: GraphQLString,
@@ -191,7 +191,7 @@ const TransactionType = new GraphQLObjectType({
       description: "Cost-center code filter",
     },
     creditor: {
-      type: type.AccountType,
+      type: graphqlType.AccountType,
       description: "Main credit account details",
       resolve: (transaction) => resolver.accountById(transaction.creditorId),
     },
@@ -201,14 +201,14 @@ const TransactionType = new GraphQLObjectType({
     },
     currencyCode: {
       type: GraphQLString,
-      description: "Currency", // Enum type?
+      description: "Currency", // TODO: Enum type?
     },
     date3: {
       type: GraphQLString,
       description: "Additional date",
     },
     debtor: {
-      type: type.AccountType,
+      type: graphqlType.AccountType,
       description: "Main debit account details",
       resolve: (transaction) => resolver.accountById(transaction.debtorId),
     },
@@ -230,11 +230,11 @@ const TransactionType = new GraphQLObjectType({
     },
     dueDate: {
       type: GraphQLString,
-      description: "Due date", // Date type
+      description: "Due date", // TODO: Date type
     },
     exchangeRateDifferences: {
       type: GraphQLString,
-      description: "exchange rate differences", // Enum type, perhaps NonNull
+      description: "exchange rate differences", // TODO: Enum type, perhaps NonNull
     },
     foreignCurrencySum: {
       type: GraphQLFloat,
@@ -287,7 +287,7 @@ const TransactionType = new GraphQLObjectType({
     },
     type: {
       type: GraphQLString,
-      description: "Transaction type code", // Enum type?
+      description: "Transaction type code", // TODO: Enum type?
     },
     username: {
       type: GraphQLString,
@@ -295,7 +295,7 @@ const TransactionType = new GraphQLObjectType({
     },
     valueDate: {
       type: GraphQLString,
-      description: "Date", // Date type
+      description: "Date", // TODO: Date type
     },
   }),
 });
@@ -330,7 +330,7 @@ const PostTransactionsResponseFields = {
     },
   },
   batch: {
-    type: type.BatchType,
+    type: graphqlType.BatchType,
     description: "Batch Details",
     resolve: (res) => {
       return resolver.batchById(res.newbatch || res.batchno);
@@ -356,7 +356,7 @@ const PostTransactionsResponseWithErrors = new GraphQLObjectType({
   fields: () => ({
     ...PostTransactionsResponseFields,
     errors: {
-      type: GraphQLList(type.recordErrorType),
+      type: GraphQLList(graphqlType.recordErrorType),
       description: "errors list",
     },
   }),

@@ -7,7 +7,7 @@ import {
   GraphQLInputObjectType,
 } from "graphql";
 import * as resolver from "../resolvers";
-import * as type from "../types";
+import * as graphqlType from "../types";
 import * as field from "./fields"
 
 const BankPageRecordType = new GraphQLObjectType({
@@ -15,12 +15,12 @@ const BankPageRecordType = new GraphQLObjectType({
   description: "A Single Bank Page Record",
   fields: () => ({
     account: {
-      type: type.AccountType,
+      type: graphqlType.AccountType,
       description: "Main account details",
       resolve: (record) => resolver.accountById(record.accountId),
     },
     accountId: field.accountId,
-    accountName: field.accountName,  // remove?
+    accountName: field.accountName,  // TODO: remove?
     adjustedRecord: field.adjustedRecord,
     bankPage: {
       type: BankPageType,
