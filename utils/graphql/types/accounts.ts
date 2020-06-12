@@ -18,121 +18,100 @@ const AccountType = new GraphQLObjectType({
     name: field.accountName,
     sortGroup: field.sortGroup,
     filter: field.filter,
-    details: {
-      type: GraphQLString,
-      description: "",
-    },
-    initDate: {
-      type: GraphQLString, // TODO: Date type
-      description: "",
-    },
-    type: {
-      type: GraphQLString, // TODO: Enum type? NonNull?
-      description: "",
-    },
-    isActive: {
-      type: GraphQLString, // TODO: Enum type? NonNull?
-      description: "",
-    },
-    address: {
-      type: GraphQLString,
-      description: "",
-    },
-    city: {
-      type: GraphQLString,
-      description: "",
-    },
-    zipcode: {
-      type: GraphQLString,
-      description: "",
-    },
+    details: field.details1,
+    initDate: field.initDate,
+    type: field.accountType,
+    isActive: field.isActive,
+    address: field.address,
+    city: field.city,
+    zipcode: field.zipcode,
     country: {
       type: GraphQLString,
-      description: "",
+      description: "Country (max 20 characters)",// TODO: add validation
     },
     phone: {
       type: GraphQLString,
-      description: "",
+      description: "Phone (max 30 characters)",// TODO: add validation
     },
     cellphone: {
       type: GraphQLString,
-      description: "",
+      description: "Callphone",
     },
     fax: {
       type: GraphQLString,
-      description: "",
+      description: "Fax (max 30 characters)",// TODO: add validation
     },
     email: {
       type: GraphQLString,
-      description: "",
+      description: "Email",
     },
     balanceCode: {
       type: GraphQLString, // TODO: NonNull?
-      description: "",
+      description: "Code for the balance and profit and loss report",
     },
     generalDiscountPercent: {
       type: GraphQLFloat,
-      description: "",
+      description: "% customer discount",
     },
     vatExempt: {
       type: GraphQLString, // TODO: Enum type, NonNull
-      description: "",
+      description: "VAT exempt, 1/0",
     },
     occupation: {
       type: GraphQLString,
-      description: "",
+      description: "Occupation (max 15 characters)",
     },
     agent: {
       type: GraphQLInt,
-      description: "",
+      description: "Salesperson",
     },
     withholdingPercent: {
       type: GraphQLFloat,
-      description: "",
+      description: "% withholding tax",
     },
     withholdingValidity: {
-      type: GraphQLString, // TODO: Date type. NonNull?
-      description: "",
+      type: GraphQLString, // TODO: Date type. mm/dd/yyyy NonNull?
+      description: "Validity date of the % withholding tax",
     },
     bankId: {
       type: GraphQLString,
-      description: "",
+      description: "Bank code (max 3 characters)", // TODO: add validation
     },
     bankBranchId: {
       type: GraphQLString,
-      description: "",
+      description: "Bank branch code (max 5 characters)", // TODO: add validation
     },
     bankAccountId: {
       type: GraphQLString,
-      description: "",
+      description: "Bank account # (max 20 characters)", // TODO: add validation
     },
     authorizedDealerNumber: {
       type: GraphQLString,
-      description: "",
+      description: "VAT registration number (max 20 characters)", // TODO: add validation
     },
     mainAccount: {
-      type: GraphQLString, // TODO: NonNull?
-      description: "",
+      type: GraphQLString, // TODO: NonNull? documentation says "INT"
+      description: "Code of the main account",
     },
     maxCredit: {
       type: GraphQLFloat,
-      description: "",
+      description: "Credit limit",
     },
     maxCreditCurrency: {
       type: GraphQLString, // TODO: Enum type? NonNull?
-      description: "",
+      description: "Credit currency (max 5 characters)",
     },
     maxObligo: {
       type: GraphQLFloat,
-      description: "",
+      description: "Credit risk limit",
     },
     maxObligoCurrency: {
       type: GraphQLString, // TODO: Enum type? NonNull?
-      description: "",
+      description: "Credit risk currency (max 5 characters)",
     },
     incomeFileNumber: {
       type: GraphQLString,
-      description: "",
+      description: "Income file number (max 20 characters)",
     },
     centralAccount: {
       type: GraphQLString,
@@ -144,7 +123,7 @@ const AccountType = new GraphQLObjectType({
     },
     costingCode: {
       type: GraphQLString,
-      description: "",
+      description: "Code of cost center (existing code)",
     },
   }),
 });
