@@ -680,7 +680,7 @@ input PostTransaction {
   costingCode: String
 
   """Main credit account identifier (max 15 charactes)"""
-  creditorId: String!
+  creditorId: String
 
   """Name of the main credit account (max 50 characters)"""
   creditorName: String
@@ -692,7 +692,7 @@ input PostTransaction {
   date3: String
 
   """Main debit account identifier (max 15 charactes)"""
-  debtorId: String!
+  debtorId: String
 
   """Name of the main debit account (max 50 characters)"""
   debtorName: String

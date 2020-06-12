@@ -499,7 +499,7 @@ export type PostTransaction = {
   /** Cost-center code (existing code) */
   costingCode?: Maybe<Scalars['String']>;
   /** Main credit account identifier (max 15 charactes) */
-  creditorId: Scalars['String'];
+  creditorId?: Maybe<Scalars['String']>;
   /** Name of the main credit account (max 50 characters) */
   creditorName?: Maybe<Scalars['String']>;
   /** Currency (max 5 characters) */
@@ -507,7 +507,7 @@ export type PostTransaction = {
   /** Additional date */
   date3?: Maybe<Scalars['String']>;
   /** Main debit account identifier (max 15 charactes) */
-  debtorId: Scalars['String'];
+  debtorId?: Maybe<Scalars['String']>;
   /** Name of the main debit account (max 50 characters) */
   debtorName?: Maybe<Scalars['String']>;
   /** Description (max 250 characters) */

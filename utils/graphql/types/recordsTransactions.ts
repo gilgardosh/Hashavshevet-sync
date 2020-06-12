@@ -395,7 +395,7 @@ const PostTransaction = new GraphQLInputObjectType({
       description: "Cost-center code (existing code)",
     },
     creditorId: {
-      type: GraphQLNonNull(GraphQLString),
+      type: GraphQLString,
       description: "Main credit account identifier (max 15 charactes)", // TODO: create validation
     },
     creditorName: {
@@ -411,7 +411,7 @@ const PostTransaction = new GraphQLInputObjectType({
       description: "Additional date", // TODO: create validation for date type mm/dd/yyyy
     },
     debtorId: {
-      type: GraphQLNonNull(GraphQLString),
+      type: GraphQLString,
       description: "Main debit account identifier (max 15 charactes)", // TODO: create validation
     },
     debtorName: {
