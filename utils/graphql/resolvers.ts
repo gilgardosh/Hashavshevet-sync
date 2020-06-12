@@ -6,8 +6,8 @@ function allRecords() {
   return hashavshevet.getAllRecords();
 }
 
-function recordById(args: type.QueryGetRecordByIdArgs) {
-  return loader.recordById.load(args.id);
+function recordById(id: number) {
+  return loader.recordById.load(id);
 }
 
 function recordsByTransactionId(transactionId) {
@@ -22,8 +22,8 @@ function allTransactions() {
   return hashavshevet.getAllTransactions();
 }
 
-function transactionById(args: type.QueryGetTransactionByIdArgs) {
-  return loader.transactionById.load(args.id);
+function transactionById(id: number) {
+  return loader.transactionById.load(id);
 }
 
 function transactionsByBatcnId(batchId) {
@@ -91,44 +91,44 @@ function allBatches() {
   return hashavshevet.getAllBatches();
 }
 
-function batchById(args: type.QueryGetBatchByIdArgs) {
-  return loader.batchById.load(args.id);
+function batchById(id: number) {
+  return loader.batchById.load(id);
 }
 
-function checkBatch(args: type.QueryCheckBatchArgs) {
-  return hashavshevet.checkBatch({ batchNo: args.batchId });
+function checkBatchById(id: number) {
+  return hashavshevet.checkBatch({ batchNo: id });
 }
 
-function issueBatch(args: type.MutationIssueBatchArgs) {
-  return hashavshevet.checkBatch({ batchNo: args.batchId });
+function issueBatch(id: number) {
+  return hashavshevet.checkBatch({ batchNo: id });
 }
 
 function allAccounts() {
   return hashavshevet.getAllAccounts();
 }
 
-function accountById(args: type.QueryGetAccountByIdArgs) {
-  return loader.accountById.load(args.id);
+function accountById(id: number) {
+  return loader.accountById.load(id);
 }
 
 function allBankPageRecords() {
   return hashavshevet.getAllBankPageRecords();
 }
 
-function bankPageRecordById(args: type.QueryGetBankPageRecordByIdArgs) {
-  return loader.bankPageRecordById.load(args.id);
+function bankPageRecordById(id: number) {
+  return loader.bankPageRecordById.load(id);
 }
 
-function bankPageRecordsByBankPageId(args) {
-  return loader.bankPageRecordsByBankPageId.load(args);
+function bankPageRecordsByBankPageId(id: number) {
+  return loader.bankPageRecordsByBankPageId.load(id);
 }
 
 function allBankPages() {
   return hashavshevet.getAllBankPages();
 }
 
-function bankPageById(bankPageId: type.QueryGetBankPageByIdArgs) {
-  return loader.bankPageById.load(bankPageId.id);
+function bankPageById(id: number) {
+  return loader.bankPageById.load(id);
 }
 
 function postBankPage(args: type.MutationPostBankPageArgs) {
@@ -146,7 +146,7 @@ export {
   postTransactionsToBatch,
   allBatches,
   batchById,
-  checkBatch,
+  checkBatchById,
   issueBatch,
   allAccounts,
   accountById,

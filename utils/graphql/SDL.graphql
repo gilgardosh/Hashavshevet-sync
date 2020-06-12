@@ -45,96 +45,105 @@ type Query {
 
   """Checks if there are errors in the batch"""
   checkBatch(
-    """check the batch having this number"""
-    batchId: Int!
+    """check the batch having this ID"""
+    id: Int!
   ): BatchErrorReport
 }
 
 """A Single Record"""
 type Record {
-  debitOrCredit: String!
-  counterAccountId: String
-  matchNumberCardAnalysis: Int
-  debitOrCreditNumber: Int!
-  id: Int!
-  accountId: String!
-  counterAccountName: String
-  shekelCredit: Float
-  shekelDebit: Float
-  shekelSum: Float
-  shekelSumClosedInRecord: Float
-  shekelSumOpenInRecord: Float
-  cumulativeBalance: Float
-  foreignCurrencyCumulativeBalanceWithoutOpeningBalance: Float
-  cumulativeBalanceWithoutOpeningBalance: Float
-  shekelCumulativeBalanceBySector: Float
-  cumulativeBalanceBySortKey: Float
-  cumulativeBalanceOfOpenSumInRecord: Float
-  foreignCurrencyCredit: Float
-  foreignCurrencyDebit: Float
-  foreignCurrencyCumulativeBalance: Float
-  foreignCurrencySum: Float
-  foreignCurrencySumClosedInRecord: Float
-  foreignCurrencySunOpenInRecord: Float
-  estimatedSum: Float
-  transactionId: Int!
-  batchId: Int!
-  transaction: Transaction
-  batch: Batch
+  """Main account details"""
   account: Account
-  counterAccount: Account
-}
 
-"""A Transaction of Some Records"""
-type Transaction {
-  debtorId: String
-  creditorId: String
-  type: String
-  currencyCode: String
-  foreignCurrencySum: Float
-  shekelSum: Float
-  reference1: Int
-  reference2: Int
-  reference3: Int
-  valueDate: String
-  dueDate: String
-  details1: String
-  details2: String
-  exchangeRateDifferences: String
-  costingCodeSector: String
-  quantity: Float
-  inventoryId: Int
-  chequeId: Int
-  id: Int!
-  batchId: Int!
-  authorizedDealerNumber: String
-  registerNumber: Int
-  stornoCancelledTransactionId: Int
-  branch: Int
-  description: String
-  linkedFile: String
-  costingCode: String
-  username: String
-  branchName: String
-  costingCodeName: String
-  date3: String
+  """Main account details identifier"""
+  accountId: String!
+
+  """Batch details"""
   batch: Batch
-  debtor: Account
-  creditor: Account
-  records: [Record]
-}
 
-"""A Single Batch"""
-type Batch {
+  """Batch identifier"""
+  batchId: Int!
+
+  """Counter account details"""
+  counterAccount: Account
+
+  """Counter account identifier"""
+  counterAccountId: String
+
+  """Counter account name"""
+  counterAccountName: String
+
+  """Cumulative balance"""
+  cumulativeBalance: Float
+
+  """Cumulative balance by sorting code"""
+  cumulativeBalanceBySortKey: Float
+
+  """Cumulative balance of total open amount of record"""
+  cumulativeBalanceOfOpenSumInRecord: Float
+
+  """Cumulative balance without opening balance"""
+  cumulativeBalanceWithoutOpeningBalance: Float
+
+  """Credit / Debit"""
+  debitOrCredit: String!
+
+  """0=Credit / 1=Debit"""
+  debitOrCreditNumber: Int!
+
+  """Estimated total amount"""
+  estimatedSum: Float
+
+  """Credit amount in foreign currency"""
+  foreignCurrencyCredit: Float
+
+  """Cumulative balance in foreign currency"""
+  foreignCurrencyCumulativeBalance: Float
+
+  """Cumulative balance in foreign currency without opening balance"""
+  foreignCurrencyCumulativeBalanceWithoutOpeningBalance: Float
+
+  """Dedit amount in foreign currency"""
+  foreignCurrencyDebit: Float
+
+  """Total amount in foreign currency"""
+  foreignCurrencySum: Float
+
+  """Total amount in foreign currency closed in record"""
+  foreignCurrencySumClosedInRecord: Float
+
+  """Total amount in foreign currency open  in record"""
+  foreignCurrencySunOpenInRecord: Float
+
+  """Record identifier"""
   id: Int!
-  type: String
-  status: String
-  issueDate: String
-  details: String
-  initTime: String
-  initDate: String
-  transactions: [Transaction]
-  records: [Record]
+
+  """Match number - card analysis"""
+  matchNumberCardAnalysis: Int
+
+  """Credit amount in NIS"""
+  shekelCredit: Float
+
+  """Cumulative balance in NIS by filter"""
+  shekelCumulativeBalanceBySector: Float
+
+  """Dedit amount in NIS"""
+  shekelDebit: Float
+
+  """Total NIS amount"""
+  shekelSum: Float
+
+  """Total NIS amount closed in record"""
+  shekelSumClosedInRecord: Float
+
+  """Total NIS amount open  in record"""
+  shekelSumOpenInRecord: Float
+
+  """Transaction details"""
+  transaction: Transaction
+
+  """Transaction identifier"""
+  transactionId: Int!
 }
 
 """A Single Account"""
@@ -175,6 +184,127 @@ type Account {
   centralAccount: String
   accountantTransfer: String
   costingCode: String
+}
+
+"""A Single Batch"""
+type Batch {
+  id: Int!
+  type: String
+  status: String
+  issueDate: String
+  details: String
+  initTime: String
+  initDate: String
+  transactions: [Transaction]
+  records: [Record]
+}
+
+"""A Transaction of Some Records"""
+type Transaction {
+  """VAT registration number"""
+  authorizedDealerNumber: String
+
+  """Batch details"""
+  batch: Batch
+
+  """Batch Identifier"""
+  batchId: Int!
+
+  """Branch"""
+  branch: Int
+
+  """Branch Name"""
+  branchName: String
+
+  """Cheque Identifier"""
+  chequeId: Int
+
+  """Cost-center code"""
+  costingCode: String
+
+  """Cost-center code name"""
+  costingCodeName: String
+
+  """Cost-center code filter"""
+  costingCodeSector: String
+
+  """Main credit account details"""
+  creditor: Account
+
+  """Main credit account Identifier"""
+  creditorId: String
+
+  """Currency"""
+  currencyCode: String
+
+  """Additional date"""
+  date3: String
+
+  """Main debit account details"""
+  debtor: Account
+
+  """Main debit account identifier"""
+  debtorId: String
+
+  """Description"""
+  description: String
+
+  """Remarks"""
+  details1: String
+
+  """Additional remarks"""
+  details2: String
+
+  """Due date"""
+  dueDate: String
+
+  """exchange rate differences"""
+  exchangeRateDifferences: String
+
+  """Total amount in foreign currency"""
+  foreignCurrencySum: Float
+
+  """Transaction Identifier"""
+  id: Int!
+
+  """Inventory Identifier"""
+  inventoryId: Int
+
+  """Linked file"""
+  linkedFile: String
+
+  """Quantity"""
+  quantity: Float
+
+  """Transaction's records details"""
+  records: [Record]
+
+  """Reference"""
+  reference1: Int
+
+  """Reference-2"""
+  reference2: Int
+
+  """Reference-3"""
+  reference3: Int
+
+  """Register number"""
+  registerNumber: Int
+
+  """Total NIS amount"""
+  shekelSum: Float
+
+  """Identifier of transaction cancelled by Strogno"""
+  stornoCancelledTransactionId: Int
+
+  """Transaction type code"""
+  type: String
+
+  """User name"""
+  username: String
+
+  """Date"""
+  valueDate: String
 }
 
 """A Single Bank Page Record"""
@@ -254,8 +384,8 @@ type Mutation {
 
   """Checks and inputs the temporary batch into the permanent storage"""
   issueBatch(
-    """Input the batch having this number"""
-    batchId: Int
+    """Input the batch having this ID"""
+    id: Int
   ): IsuueBatch
 
   """
@@ -302,12 +432,25 @@ union PostTransactionsResponse = PostTransactionsResponsWithoutErrors | PostTran
 
 """Response for Posting Transactions to a Batch"""
 type PostTransactionsResponsWithoutErrors {
+  """Final Status"""
   status: String
+
+  """Batch Issue Status"""
   batch_issue: String
+
+  """Batch Check Status"""
   batch_check: String
+
+  """Batch identifier (on cases new batch was created)"""
   newbatch: Int
+
+  """Batch identifier (on cases added to existing batch)"""
   batchno: Int
+
+  """Batch identifier"""
   batchId: Int
+
+  """Batch Details"""
   batch: Batch
 
   """errors list"""
@@ -316,12 +459,25 @@ type PostTransactionsResponsWithoutErrors {
 
 """Response for Posting Transactions to a Batch"""
 type PostTransactionsResponsWithErrors {
+  """Final Status"""
   status: String
+
+  """Batch Issue Status"""
   batch_issue: String
+
+  """Batch Check Status"""
   batch_check: String
+
+  """Batch identifier (on cases new batch was created)"""
   newbatch: Int
+
+  """Batch identifier (on cases added to existing batch)"""
   batchno: Int
+
+  """Batch identifier"""
   batchId: Int
+
+  """Batch Details"""
   batch: Batch
 
   """errors list"""
@@ -339,7 +495,7 @@ input PostTransaction {
   """Cost-center code (existing code)"""
   costingCode: String
 
-  """Main credit account key (max 15 charactes)"""
+  """Main credit account identifier (max 15 charactes)"""
   creditorId: String!
 
   """Name of the main credit account (max 50 characters)"""
@@ -351,7 +507,7 @@ input PostTransaction {
   """Additional date"""
   date3: String
 
-  """Main debit account key (max 15 charactes)"""
+  """Main debit account identifier (max 15 charactes)"""
   debtorId: String!
 
   """Name of the main debit account (max 50 characters)"""
@@ -360,11 +516,11 @@ input PostTransaction {
   """Description (max 250 characters)"""
   description: String
 
-  """Additional remarks (max 50 characters)"""
-  details2: String
-
   """Remarks (max 50 characters)"""
   details1: String
+
+  """Additional remarks (max 50 characters)"""
+  details2: String
 
   """Due date"""
   dueDate: String
@@ -399,10 +555,10 @@ input PostTransaction {
 
 """Interface for posting new Record"""
 input PostRecord {
-  """Account key (max 15 characters)"""
+  """Account identifier (max 15 characters)"""
   accountId: String!
 
-  """Credit/Debit"""
+  """Credit / Debit"""
   debitOrCreditNumber: debitOrCreditNumber!
 
   """Foreign currency amount"""
@@ -412,7 +568,7 @@ input PostRecord {
   shekelSum: Float!
 }
 
-"""Credit/Debit"""
+"""Credit / Debit"""
 enum debitOrCreditNumber {
   Credit
   Debit

@@ -23,7 +23,7 @@ const RootQueryType = new GraphQLObjectType({
       args: {
         id: { type: GraphQLNonNull(GraphQLInt) },
       },
-      resolve: (_, args: type.QueryGetRecordByIdArgs) => resolver.recordById(args),
+      resolve: (_, args) => resolver.recordById(args.id),
     },
     getRecords: {
       type: GraphQLList(graphql.RecordType),
@@ -36,7 +36,7 @@ const RootQueryType = new GraphQLObjectType({
       args: {
         id: { type: GraphQLNonNull(GraphQLInt) },
       },
-      resolve: (_, args: type.QueryGetTransactionByIdArgs) => resolver.transactionById(args),
+      resolve: (_, args) => resolver.transactionById(args.id),
     },
     getTransactions: {
       type: GraphQLList(graphql.TransactionType),
@@ -49,7 +49,7 @@ const RootQueryType = new GraphQLObjectType({
       args: {
         id: { type: GraphQLNonNull(GraphQLInt) },
       },
-      resolve: (_, args: type.QueryGetBatchByIdArgs) => resolver.batchById(args),
+      resolve: (_, args) => resolver.batchById(args.id),
     },
     getBatches: {
       type: GraphQLList(graphql.BatchType),
@@ -62,7 +62,7 @@ const RootQueryType = new GraphQLObjectType({
       args: {
         id: { type: GraphQLNonNull(GraphQLInt) },
       },
-      resolve: (_, args: type.QueryGetAccountByIdArgs) => resolver.accountById(args),
+      resolve: (_, args) => resolver.accountById(args.id),
     },
     getAccounts: {
       type: GraphQLList(graphql.AccountType),
@@ -75,7 +75,7 @@ const RootQueryType = new GraphQLObjectType({
       args: {
         id: { type: GraphQLNonNull(GraphQLInt) },
       },
-      resolve: (_, args: type.QueryGetBankPageRecordByIdArgs) => resolver.bankPageRecordById(args),
+      resolve: (_, args) => resolver.bankPageRecordById(args.id),
     },
     getBankPageRecords: {
       type: GraphQLList(graphql.BankPageRecordType),
@@ -89,7 +89,7 @@ const RootQueryType = new GraphQLObjectType({
       args: {
         id: { type: GraphQLNonNull(GraphQLInt) },
       },
-      resolve: (_, args: type.QueryGetBankPageByIdArgs) => resolver.bankPageById(args),
+      resolve: (_, args) => resolver.bankPageById(args.id),
     },
     getBankPages: {
       type: GraphQLList(graphql.BankPageType),
@@ -111,12 +111,12 @@ const RootQueryType = new GraphQLObjectType({
       type: graphql.CheckBatchType,
       description: "Checks if there are errors in the batch",
       args: {
-        batchId: {
+        id: {
           type: GraphQLNonNull(GraphQLInt),
-          description: "check the batch having this number",
+          description: "check the batch having this ID",
         },
       },
-      resolve: (_, args: type.QueryCheckBatchArgs) => resolver.checkBatch(args),
+      resolve: (_, args) => resolver.checkBatchById(args.id),
     },
   }),
 });
@@ -135,12 +135,12 @@ const RootMutationType = new GraphQLObjectType({
       description:
         "Checks and inputs the temporary batch into the permanent storage",
       args: {
-        batchId: {
+        id: {
           type: GraphQLInt,
-          description: "Input the batch having this number",
+          description: "Input the batch having this ID",
         },
       },
-      resolve: (_, args) => resolver.issueBatch(args),
+      resolve: (_, args) => resolver.issueBatch(args.id),
     },
     postTransactionsToBatch: {
       type: graphql.PostTransactionsResponseType,

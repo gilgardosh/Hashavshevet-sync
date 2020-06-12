@@ -17,110 +17,133 @@ const RecordType = new GraphQLObjectType({
   name: "Record",
   description: "A Single Record",
   fields: () => ({
-    debitOrCredit: {
-      type: GraphQLNonNull(GraphQLString),
-    },
-    counterAccountId: {
-      type: GraphQLString,
-    },
-    matchNumberCardAnalysis: {
-      type: GraphQLInt,
-    },
-    debitOrCreditNumber: {
-      type: GraphQLNonNull(GraphQLInt),
-    },
-    id: {
-      type: GraphQLNonNull(GraphQLInt),
+    account: {
+      type: type.AccountType,
+      description: "Main account details",
+      resolve: (record) => resolver.accountById(record.accountId),
     },
     accountId: {
       type: GraphQLNonNull(GraphQLString),
-    },
-    counterAccountName: {
-      type: GraphQLString, // can be removed
-    },
-    shekelCredit: {
-      type: GraphQLFloat,
-    },
-    shekelDebit: {
-      type: GraphQLFloat,
-    },
-    shekelSum: {
-      type: GraphQLFloat,
-    },
-    shekelSumClosedInRecord: {
-      type: GraphQLFloat,
-    },
-    shekelSumOpenInRecord: {
-      type: GraphQLFloat,
-    },
-    cumulativeBalance: {
-      type: GraphQLFloat,
-    },
-    foreignCurrencyCumulativeBalanceWithoutOpeningBalance: {
-      type: GraphQLFloat,
-    },
-    cumulativeBalanceWithoutOpeningBalance: {
-      type: GraphQLFloat,
-    },
-    shekelCumulativeBalanceBySector: {
-      type: GraphQLFloat,
-    },
-    cumulativeBalanceBySortKey: {
-      type: GraphQLFloat,
-    },
-    cumulativeBalanceOfOpenSumInRecord: {
-      type: GraphQLFloat,
-    },
-    foreignCurrencyCredit: {
-      type: GraphQLFloat,
-    },
-    foreignCurrencyDebit: {
-      type: GraphQLFloat,
-    },
-    foreignCurrencyCumulativeBalance: {
-      type: GraphQLFloat,
-    },
-    foreignCurrencySum: {
-      type: GraphQLFloat,
-    },
-    foreignCurrencySumClosedInRecord: {
-      type: GraphQLFloat,
-    },
-    foreignCurrencySunOpenInRecord: {
-      type: GraphQLFloat,
-    },
-    estimatedSum: {
-      type: GraphQLFloat,
-    },
-    transactionId: {
-      type: GraphQLNonNull(GraphQLInt),
-    },
-    batchId: {
-      type: GraphQLNonNull(GraphQLInt),
-    },
-    transaction: {
-      type: TransactionType,
-      resolve: (record) => {
-        return resolver.transactionById(record.transactionId);
-      },
+      description: "Main account details identifier",
     },
     batch: {
       type: type.BatchType,
-      resolve: (record) => {
-        return resolver.batchById(record.batchId);
-      },
+      description: "Batch details",
+      resolve: (record) => resolver.batchById(record.batchId),
     },
-    account: {
-      type: type.AccountType,
-      resolve: (record) => {
-        return resolver.accountById(record.accountId);
-      },
+    batchId: {
+      type: GraphQLNonNull(GraphQLInt),
+      description: "Batch identifier",
     },
     counterAccount: {
       type: type.AccountType,
-      resolve: (record) => {
-        return resolver.accountById(record.counterAccountId);
-      },
+      description: "Counter account details",
+      resolve: (record) => resolver.accountById(record.counterAccountId),
+    },
+    counterAccountId: {
+      type: GraphQLString,
+      description: "Counter account identifier",
+    },
+    counterAccountName: {
+      type: GraphQLString, // can be removed
+      description: "Counter account name",
+    },
+    cumulativeBalance: {
+      type: GraphQLFloat,
+      description: "Cumulative balance",
+    },
+    cumulativeBalanceBySortKey: {
+      type: GraphQLFloat,
+      description: "Cumulative balance by sorting code",
+    },
+    cumulativeBalanceOfOpenSumInRecord: {
+      type: GraphQLFloat,
+      description: "Cumulative balance of total open amount of record",
+    },
+    cumulativeBalanceWithoutOpeningBalance: {
+      type: GraphQLFloat,
+      description: "Cumulative balance without opening balance",
+    },
+    debitOrCredit: {
+      type: GraphQLNonNull(GraphQLString),
+      description: "Credit / Debit",
+    },
+    debitOrCreditNumber: {
+      type: GraphQLNonNull(GraphQLInt),
+      description: "0=Credit / 1=Debit",
+    },
+    estimatedSum: {
+      type: GraphQLFloat,
+      description: "Estimated total amount",
+    },
+    foreignCurrencyCredit: {
+      type: GraphQLFloat,
+      description: "Credit amount in foreign currency",
+    },
+    foreignCurrencyCumulativeBalance: {
+      type: GraphQLFloat,
+      description: "Cumulative balance in foreign currency",
+    },
+    foreignCurrencyCumulativeBalanceWithoutOpeningBalance: {
+      type: GraphQLFloat,
+      description: "Cumulative balance in foreign currency without opening balance",
+    },
+    foreignCurrencyDebit: {
+      type: GraphQLFloat,
+      description: "Dedit amount in foreign currency",
+    },
+    foreignCurrencySum: {
+      type: GraphQLFloat,
+      description: "Total amount in foreign currency",
+    },
+    foreignCurrencySumClosedInRecord: {
+      type: GraphQLFloat,
+      description: "Total amount in foreign currency closed in record",
+    },
+    foreignCurrencySunOpenInRecord: {
+      type: GraphQLFloat,
+      description: "Total amount in foreign currency open  in record",
+    },
+    id: {
+      type: GraphQLNonNull(GraphQLInt),
+      description: "Record identifier",
+    },
+    matchNumberCardAnalysis: {
+      type: GraphQLInt,
+      description: "Match number - card analysis",
+    },
+    shekelCredit: {
+      type: GraphQLFloat,
+      description: "Credit amount in NIS",
+    },
+    shekelCumulativeBalanceBySector: {
+      type: GraphQLFloat,
+      description: "Cumulative balance in NIS by filter",
+    },
+    shekelDebit: {
+      type: GraphQLFloat,
+      description: "Dedit amount in NIS",
+    },
+    shekelSum: {
+      type: GraphQLFloat,
+      description: "Total NIS amount",
+    },
+    shekelSumClosedInRecord: {
+      type: GraphQLFloat,
+      description: "Total NIS amount closed in record",
+    },
+    shekelSumOpenInRecord: {
+      type: GraphQLFloat,
+      description: "Total NIS amount open  in record",
+    },
+    transaction: {
+      type: TransactionType,
+      description: "Transaction details",
+      resolve: (record) => resolver.transactionById(record.transactionId),
+    },
+    transactionId: {
+      type: GraphQLNonNull(GraphQLInt),
+      description: "Transaction identifier",
     },
   }),
 });
@@ -129,152 +152,187 @@ const TransactionType = new GraphQLObjectType({
   name: "Transaction",
   description: "A Transaction of Some Records",
   fields: () => ({
-    debtorId: {
-      type: GraphQLString,
-    },
-    creditorId: {
-      type: GraphQLString,
-    },
-    type: {
-      type: GraphQLString, // Enum type?
-    },
-    currencyCode: {
-      type: GraphQLString, // Enum type?
-    },
-    foreignCurrencySum: {
-      type: GraphQLFloat,
-    },
-    shekelSum: {
-      type: GraphQLFloat,
-    },
-    reference1: {
-      type: GraphQLInt,
-    },
-    reference2: {
-      type: GraphQLInt,
-    },
-    reference3: {
-      type: GraphQLInt,
-    },
-    valueDate: {
-      type: GraphQLString, // Date type
-    },
-    dueDate: {
-      type: GraphQLString, // Date type
-    },
-    details1: {
-      type: GraphQLString,
-    },
-    details2: {
-      type: GraphQLString,
-    },
-    exchangeRateDifferences: {
-      type: GraphQLString, // Enum type, perhaps NonNull
-    },
-    costingCodeSector: {
-      type: GraphQLString,
-    },
-    quantity: {
-      type: GraphQLFloat,
-    },
-    inventoryId: {
-      type: GraphQLInt,
-    },
-    chequeId: {
-      type: GraphQLInt,
-    },
-    id: {
-      type: GraphQLNonNull(GraphQLInt),
-    },
-    batchId: {
-      type: GraphQLNonNull(GraphQLInt),
-    },
     authorizedDealerNumber: {
       type: GraphQLString,
-    },
-    registerNumber: {
-      type: GraphQLInt,
-    },
-    stornoCancelledTransactionId: {
-      type: GraphQLInt,
-    },
-    branch: {
-      type: GraphQLInt, // NonNull? Enum  type?
-    },
-    description: {
-      type: GraphQLString,
-    },
-    linkedFile: {
-      type: GraphQLString,
-    },
-    costingCode: {
-      type: GraphQLString,
-    },
-    username: {
-      type: GraphQLString,
-    },
-    branchName: {
-      type: GraphQLString,
-    },
-    costingCodeName: {
-      type: GraphQLString,
-    },
-    date3: {
-      type: GraphQLString,
+      description: "VAT registration number",
     },
     batch: {
       type: type.BatchType,
-      resolve: (transaction) => {
-        return resolver.batchById(transaction.batchId);
-      },
+      description: "Batch details",
+      resolve: (transaction) => resolver.batchById(transaction.batchId),
     },
-    debtor: {
-      type: type.AccountType,
-      resolve: (transaction) => {
-        return resolver.accountById(transaction.debtorId);
-      },
+    batchId: {
+      type: GraphQLNonNull(GraphQLInt),
+      description: "Batch Identifier",
+    },
+    branch: {
+      type: GraphQLInt, // NonNull? Enum  type?
+      description: "Branch",
+    },
+    branchName: {
+      type: GraphQLString,
+      description: "Branch Name",
+    },
+    chequeId: {
+      type: GraphQLInt,
+      description: "Cheque Identifier",
+    },
+    costingCode: {
+      type: GraphQLString,
+      description: "Cost-center code",
+    },
+    costingCodeName: {
+      type: GraphQLString,
+      description: "Cost-center code name",
+    },
+    costingCodeSector: {
+      type: GraphQLString,
+      description: "Cost-center code filter",
     },
     creditor: {
       type: type.AccountType,
-      resolve: (transaction) => {
-        return resolver.accountById(transaction.creditorId);
-      },
+      description: "Main credit account details",
+      resolve: (transaction) => resolver.accountById(transaction.creditorId),
+    },
+    creditorId: {
+      type: GraphQLString,
+      description: "Main credit account Identifier",
+    },
+    currencyCode: {
+      type: GraphQLString, // Enum type?
+      description: "Currency",
+    },
+    date3: {
+      type: GraphQLString,
+      description: "Additional date",
+    },
+    debtor: {
+      type: type.AccountType,
+      description: "Main debit account details",
+      resolve: (transaction) => resolver.accountById(transaction.debtorId),
+    },
+    debtorId: {
+      type: GraphQLString,
+      description: "Main debit account identifier",
+    },
+    description: {
+      type: GraphQLString,
+      description: "Description",
+    },
+    details1: {
+      type: GraphQLString,
+      description: "Remarks",
+    },
+    details2: {
+      type: GraphQLString,
+      description: "Additional remarks",
+    },
+    dueDate: {
+      type: GraphQLString, // Date type
+      description: "Due date",
+    },
+    exchangeRateDifferences: {
+      type: GraphQLString, // Enum type, perhaps NonNull
+      description: "exchange rate differences",
+    },
+    foreignCurrencySum: {
+      type: GraphQLFloat,
+      description: "Total amount in foreign currency",
+    },
+    id: {
+      type: GraphQLNonNull(GraphQLInt),
+      description: "Transaction Identifier",
+    },
+    inventoryId: {
+      type: GraphQLInt,
+      description: "Inventory Identifier",
+    },
+    linkedFile: {
+      type: GraphQLString,
+      description: "Linked file",
+    },
+    quantity: {
+      type: GraphQLFloat,
+      description: "Quantity",
     },
     records: {
       type: GraphQLList(RecordType),
-      resolve: (transaction) => {
-        return resolver.recordsByTransactionId(transaction.id);
-      },
+      description: "Transaction's records details",
+      resolve: (transaction) => resolver.recordsByTransactionId(transaction.id),
+    },
+    reference1: {
+      type: GraphQLInt,
+      description: "Reference",
+    },
+    reference2: {
+      type: GraphQLInt,
+      description: "Reference-2",
+    },
+    reference3: {
+      type: GraphQLInt,
+      description: "Reference-3",
+    },
+    registerNumber: {
+      type: GraphQLInt,
+      description: "Register number",
+    },
+    shekelSum: {
+      type: GraphQLFloat,
+      description: "Total NIS amount",
+    },
+    stornoCancelledTransactionId: {
+      type: GraphQLInt,
+      description: "Identifier of transaction cancelled by Strogno",
+    },
+    type: {
+      type: GraphQLString, // Enum type?
+      description: "Transaction type code",
+    },
+    username: {
+      type: GraphQLString,
+      description: "User name",
+    },
+    valueDate: {
+      type: GraphQLString, // Date type
+      description: "Date",
     },
   }),
 });
 
 const PostTransactionsResponseFields = {
+  // TODO: rename fields
   status: {
     type: GraphQLString,
+    description: "Final Status",
   },
   batch_issue: {
     type: GraphQLString,
+    description: "Batch Issue Status",
   },
   batch_check: {
     type: GraphQLString,
+    description: "Batch Check Status",
   },
   newbatch: {
     type: GraphQLInt,
+    description: "Batch identifier (on cases new batch was created)",
   },
   batchno: {
     type: GraphQLInt,
+    description: "Batch identifier (on cases added to existing batch)",
   },
   batchId: {
     type: GraphQLInt,
+    description: "Batch identifier",
     resolve: (res) => {
       return res.newbatch || res.batchno;
     },
   },
   batch: {
     type: type.BatchType,
+    description: "Batch Details",
     resolve: (res) => {
-      return resolver.batchById({id: res.newbatch || res.batchno});
+      return resolver.batchById(res.newbatch || res.batchno);
     },
   },
 };
@@ -337,7 +395,7 @@ const PostTransaction = new GraphQLInputObjectType({
     },
     creditorId: {
       type: GraphQLNonNull(GraphQLString),
-      description: "Main credit account key (max 15 charactes)", // TODO: create validation
+      description: "Main credit account identifier (max 15 charactes)", // TODO: create validation
     },
     creditorName: {
       type: GraphQLString,
@@ -353,7 +411,7 @@ const PostTransaction = new GraphQLInputObjectType({
     },
     debtorId: {
       type: GraphQLNonNull(GraphQLString),
-      description: "Main debit account key (max 15 charactes)", // TODO: create validation
+      description: "Main debit account identifier (max 15 charactes)", // TODO: create validation
     },
     debtorName: {
       type: GraphQLString,
@@ -363,13 +421,13 @@ const PostTransaction = new GraphQLInputObjectType({
       type: GraphQLString,
       description: "Description (max 250 characters)", // TODO: create validation
     },
-    details2: {
-      type: GraphQLString,
-      description: "Additional remarks (max 50 characters)", // TODO: create validation
-    },
     details1: {
       type: GraphQLString,
       description: "Remarks (max 50 characters)", // TODO: create validation
+    },
+    details2: {
+      type: GraphQLString,
+      description: "Additional remarks (max 50 characters)", // TODO: create validation
     },
     dueDate: {
       type: GraphQLString,
@@ -420,11 +478,11 @@ const PostRecord = new GraphQLInputObjectType({
   fields: () => ({
     accountId: {
       type: GraphQLNonNull(GraphQLString),
-      description: "Account key (max 15 characters)", // TODO: create validation
+      description: "Account identifier (max 15 characters)", // TODO: create validation
     },
     debitOrCreditNumber: {
       type: GraphQLNonNull(debitOrCreditNumber),
-      description: "Credit/Debit",
+      description: "Credit / Debit",
     },
     foreignCurrencySum: {
       type: GraphQLFloat,
@@ -439,7 +497,7 @@ const PostRecord = new GraphQLInputObjectType({
 
 const debitOrCreditNumber = new GraphQLEnumType({
   name: "debitOrCreditNumber",
-  description: "Credit/Debit",
+  description: "Credit / Debit",
   values: {
     Credit: {
       value: 0,
