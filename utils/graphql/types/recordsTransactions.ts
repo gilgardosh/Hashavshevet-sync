@@ -117,7 +117,7 @@ const RecordType = new GraphQLObjectType({
       type: GraphQLFloat,
       description: "Credit amount in NIS",
     },
-    shekelCumulativeBalanceBySector: {
+    shekelCumulativeBalanceByFilter: {
       type: GraphQLFloat,
       description: "Cumulative balance in NIS by filter",
     },
@@ -186,7 +186,7 @@ const TransactionType = new GraphQLObjectType({
       type: GraphQLString,
       description: "Cost-center code name",
     },
-    costingCodeSector: {
+    costingCodeFilter: {
       type: GraphQLString,
       description: "Cost-center code filter",
     },

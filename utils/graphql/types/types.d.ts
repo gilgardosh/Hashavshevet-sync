@@ -76,106 +76,87 @@ export type QueryGetBankPageByIdArgs = {
 
 
 export type QueryCheckBatchArgs = {
-  batchId: Scalars['Int'];
+  id: Scalars['Int'];
 };
 
 /** A Single Record */
 export type Record = {
   __typename?: 'Record';
-  debitOrCredit: Scalars['String'];
-  counterAccountId?: Maybe<Scalars['String']>;
-  matchNumberCardAnalysis?: Maybe<Scalars['Int']>;
-  debitOrCreditNumber: Scalars['Int'];
-  id: Scalars['Int'];
-  accountId: Scalars['String'];
-  counterAccountName?: Maybe<Scalars['String']>;
-  shekelCredit?: Maybe<Scalars['Float']>;
-  shekelDebit?: Maybe<Scalars['Float']>;
-  shekelSum?: Maybe<Scalars['Float']>;
-  shekelSumClosedInRecord?: Maybe<Scalars['Float']>;
-  shekelSumOpenInRecord?: Maybe<Scalars['Float']>;
-  cumulativeBalance?: Maybe<Scalars['Float']>;
-  foreignCurrencyCumulativeBalanceWithoutOpeningBalance?: Maybe<Scalars['Float']>;
-  cumulativeBalanceWithoutOpeningBalance?: Maybe<Scalars['Float']>;
-  shekelCumulativeBalanceBySector?: Maybe<Scalars['Float']>;
-  cumulativeBalanceBySortKey?: Maybe<Scalars['Float']>;
-  cumulativeBalanceOfOpenSumInRecord?: Maybe<Scalars['Float']>;
-  foreignCurrencyCredit?: Maybe<Scalars['Float']>;
-  foreignCurrencyDebit?: Maybe<Scalars['Float']>;
-  foreignCurrencyCumulativeBalance?: Maybe<Scalars['Float']>;
-  foreignCurrencySum?: Maybe<Scalars['Float']>;
-  foreignCurrencySumClosedInRecord?: Maybe<Scalars['Float']>;
-  foreignCurrencySunOpenInRecord?: Maybe<Scalars['Float']>;
-  estimatedSum?: Maybe<Scalars['Float']>;
-  transactionId: Scalars['Int'];
-  batchId: Scalars['Int'];
-  transaction?: Maybe<Transaction>;
-  batch?: Maybe<Batch>;
+  /** Main account details */
   account?: Maybe<Account>;
-  counterAccount?: Maybe<Account>;
-};
-
-/** A Transaction of Some Records */
-export type Transaction = {
-  __typename?: 'Transaction';
-  debtorId?: Maybe<Scalars['String']>;
-  creditorId?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
-  currencyCode?: Maybe<Scalars['String']>;
-  foreignCurrencySum?: Maybe<Scalars['Float']>;
-  shekelSum?: Maybe<Scalars['Float']>;
-  reference1?: Maybe<Scalars['Int']>;
-  reference2?: Maybe<Scalars['Int']>;
-  reference3?: Maybe<Scalars['Int']>;
-  valueDate?: Maybe<Scalars['String']>;
-  dueDate?: Maybe<Scalars['String']>;
-  details1?: Maybe<Scalars['String']>;
-  details2?: Maybe<Scalars['String']>;
-  exchangeRateDifferences?: Maybe<Scalars['String']>;
-  costingCodeSector?: Maybe<Scalars['String']>;
-  quantity?: Maybe<Scalars['Float']>;
-  inventoryId?: Maybe<Scalars['Int']>;
-  chequeId?: Maybe<Scalars['Int']>;
-  id: Scalars['Int'];
-  batchId: Scalars['Int'];
-  authorizedDealerNumber?: Maybe<Scalars['String']>;
-  registerNumber?: Maybe<Scalars['Int']>;
-  stornoCancelledTransactionId?: Maybe<Scalars['Int']>;
-  branch?: Maybe<Scalars['Int']>;
-  description?: Maybe<Scalars['String']>;
-  linkedFile?: Maybe<Scalars['String']>;
-  costingCode?: Maybe<Scalars['String']>;
-  username?: Maybe<Scalars['String']>;
-  branchName?: Maybe<Scalars['String']>;
-  costingCodeName?: Maybe<Scalars['String']>;
-  date3?: Maybe<Scalars['String']>;
+  /** Main account details identifier */
+  accountId: Scalars['String'];
+  /** Batch details */
   batch?: Maybe<Batch>;
-  debtor?: Maybe<Account>;
-  creditor?: Maybe<Account>;
-  records?: Maybe<Array<Maybe<Record>>>;
-};
-
-/** A Single Batch */
-export type Batch = {
-  __typename?: 'Batch';
+  /** Batch identifier */
+  batchId: Scalars['Int'];
+  /** Counter account details */
+  counterAccount?: Maybe<Account>;
+  /** Counter account identifier */
+  counterAccountId?: Maybe<Scalars['String']>;
+  /** Counter account name */
+  counterAccountName?: Maybe<Scalars['String']>;
+  /** Cumulative balance */
+  cumulativeBalance?: Maybe<Scalars['Float']>;
+  /** Cumulative balance by sorting code */
+  cumulativeBalanceBySortKey?: Maybe<Scalars['Float']>;
+  /** Cumulative balance of total open amount of record */
+  cumulativeBalanceOfOpenSumInRecord?: Maybe<Scalars['Float']>;
+  /** Cumulative balance without opening balance */
+  cumulativeBalanceWithoutOpeningBalance?: Maybe<Scalars['Float']>;
+  /** Credit / Debit */
+  debitOrCredit?: Maybe<Scalars['String']>;
+  /** Credit / Debit */
+  debitOrCreditNumber?: Maybe<DebitOrCreditNumber>;
+  /** Estimated total amount */
+  estimatedSum?: Maybe<Scalars['Float']>;
+  /** Credit amount in foreign currency */
+  foreignCurrencyCredit?: Maybe<Scalars['Float']>;
+  /** Cumulative balance in foreign currency */
+  foreignCurrencyCumulativeBalance?: Maybe<Scalars['Float']>;
+  /** Cumulative balance in foreign currency without opening balance */
+  foreignCurrencyCumulativeBalanceWithoutOpeningBalance?: Maybe<Scalars['Float']>;
+  /** Dedit amount in foreign currency */
+  foreignCurrencyDebit?: Maybe<Scalars['Float']>;
+  /** Total amount in foreign currency */
+  foreignCurrencySum?: Maybe<Scalars['Float']>;
+  /** Total amount in foreign currency closed in record */
+  foreignCurrencySumClosedInRecord?: Maybe<Scalars['Float']>;
+  /** Total amount in foreign currency open  in record */
+  foreignCurrencySunOpenInRecord?: Maybe<Scalars['Float']>;
+  /** Record identifier */
   id: Scalars['Int'];
-  type?: Maybe<Scalars['String']>;
-  status?: Maybe<Scalars['String']>;
-  issueDate?: Maybe<Scalars['String']>;
-  details?: Maybe<Scalars['String']>;
-  initTime?: Maybe<Scalars['String']>;
-  initDate?: Maybe<Scalars['String']>;
-  transactions?: Maybe<Array<Maybe<Transaction>>>;
-  records?: Maybe<Array<Maybe<Record>>>;
+  /** Match number - card analysis */
+  matchNumberCardAnalysis?: Maybe<Scalars['Int']>;
+  /** Credit amount in NIS */
+  shekelCredit?: Maybe<Scalars['Float']>;
+  /** Cumulative balance in NIS by filter */
+  shekelCumulativeBalanceByFilter?: Maybe<Scalars['Float']>;
+  /** Dedit amount in NIS */
+  shekelDebit?: Maybe<Scalars['Float']>;
+  /** Total NIS amount */
+  shekelSum?: Maybe<Scalars['Float']>;
+  /** Total NIS amount closed in record */
+  shekelSumClosedInRecord?: Maybe<Scalars['Float']>;
+  /** Total NIS amount open  in record */
+  shekelSumOpenInRecord?: Maybe<Scalars['Float']>;
+  /** Transaction details */
+  transaction?: Maybe<Transaction>;
+  /** Transaction identifier */
+  transactionId: Scalars['Int'];
 };
 
 /** A Single Account */
 export type Account = {
   __typename?: 'Account';
+  /** Account identifier (max 15 characters) */
   id: Scalars['String'];
+  /** Account name (max 50 characters) */
   name?: Maybe<Scalars['String']>;
+  /** Sorting code */
   sortGroup?: Maybe<Scalars['Int']>;
-  sector?: Maybe<Scalars['String']>;
+  /** Filtering (5 characters) */
+  filter?: Maybe<Scalars['String']>;
   details?: Maybe<Scalars['String']>;
   initDate?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
@@ -210,30 +191,151 @@ export type Account = {
   costingCode?: Maybe<Scalars['String']>;
 };
 
+/** A Single Batch */
+export type Batch = {
+  __typename?: 'Batch';
+  /** Batch identifier */
+  id: Scalars['Int'];
+  /** Type */
+  type?: Maybe<Scalars['String']>;
+  /** Status */
+  status?: Maybe<Scalars['String']>;
+  /** Issue date of the batch */
+  issueDate?: Maybe<Scalars['String']>;
+  /** Remarks */
+  details?: Maybe<Scalars['String']>;
+  /** Initiate time of the batch */
+  initTime?: Maybe<Scalars['String']>;
+  /** Initiate date of the batch */
+  initDate?: Maybe<Scalars['String']>;
+  /** Batch's transactions details list */
+  transactions?: Maybe<Array<Maybe<Transaction>>>;
+  /** Batch's records details list */
+  records?: Maybe<Array<Maybe<Record>>>;
+};
+
+/** A Transaction of Some Records */
+export type Transaction = {
+  __typename?: 'Transaction';
+  /** VAT registration number */
+  authorizedDealerNumber?: Maybe<Scalars['String']>;
+  /** Batch details */
+  batch?: Maybe<Batch>;
+  /** Batch Identifier */
+  batchId: Scalars['Int'];
+  /** Branch */
+  branch?: Maybe<Scalars['Int']>;
+  /** Branch Name */
+  branchName?: Maybe<Scalars['String']>;
+  /** Cheque Identifier */
+  chequeId?: Maybe<Scalars['Int']>;
+  /** Cost-center code */
+  costingCode?: Maybe<Scalars['String']>;
+  /** Cost-center code name */
+  costingCodeName?: Maybe<Scalars['String']>;
+  /** Cost-center code filter */
+  costingCodeFilter?: Maybe<Scalars['String']>;
+  /** Main credit account details */
+  creditor?: Maybe<Account>;
+  /** Main credit account Identifier */
+  creditorId?: Maybe<Scalars['String']>;
+  /** Currency */
+  currencyCode?: Maybe<Scalars['String']>;
+  /** Additional date */
+  date3?: Maybe<Scalars['String']>;
+  /** Main debit account details */
+  debtor?: Maybe<Account>;
+  /** Main debit account identifier */
+  debtorId?: Maybe<Scalars['String']>;
+  /** Description */
+  description?: Maybe<Scalars['String']>;
+  /** Remarks */
+  details1?: Maybe<Scalars['String']>;
+  /** Additional remarks */
+  details2?: Maybe<Scalars['String']>;
+  /** Due date */
+  dueDate?: Maybe<Scalars['String']>;
+  /** exchange rate differences */
+  exchangeRateDifferences?: Maybe<Scalars['String']>;
+  /** Total amount in foreign currency */
+  foreignCurrencySum?: Maybe<Scalars['Float']>;
+  /** Transaction Identifier */
+  id: Scalars['Int'];
+  /** Inventory Identifier */
+  inventoryId?: Maybe<Scalars['Int']>;
+  /** Linked file */
+  linkedFile?: Maybe<Scalars['String']>;
+  /** Quantity */
+  quantity?: Maybe<Scalars['Float']>;
+  /** Transaction's records details list */
+  records?: Maybe<Array<Maybe<Record>>>;
+  /** Reference */
+  reference1?: Maybe<Scalars['Int']>;
+  /** Reference-2 */
+  reference2?: Maybe<Scalars['Int']>;
+  /** Reference-3 */
+  reference3?: Maybe<Scalars['Int']>;
+  /** Register number */
+  registerNumber?: Maybe<Scalars['Int']>;
+  /** Total NIS amount */
+  shekelSum?: Maybe<Scalars['Float']>;
+  /** Identifier of transaction cancelled by Strogno */
+  stornoCancelledTransactionId?: Maybe<Scalars['Int']>;
+  /** Transaction type code */
+  type?: Maybe<Scalars['String']>;
+  /** User name */
+  username?: Maybe<Scalars['String']>;
+  /** Date */
+  valueDate?: Maybe<Scalars['String']>;
+};
+
+/** Credit / Debit */
+export enum DebitOrCreditNumber {
+  Credit = 'Credit',
+  Debit = 'Debit'
+}
+
 /** A Single Bank Page Record */
 export type BankPageRecord = {
   __typename?: 'BankPageRecord';
-  id: Scalars['Int'];
-  bankPageId: Scalars['Int'];
-  reference?: Maybe<Scalars['Int']>;
-  debitOrCredit: Scalars['String'];
-  cumulativeBalance?: Maybe<Scalars['Float']>;
-  cumulativeBalanceCalculated?: Maybe<Scalars['Float']>;
-  matchNumber?: Maybe<Scalars['Int']>;
-  accountId?: Maybe<Scalars['String']>;
-  sum?: Maybe<Scalars['Float']>;
-  details?: Maybe<Scalars['String']>;
-  accountName?: Maybe<Scalars['String']>;
-  date?: Maybe<Scalars['String']>;
-  adjustedRecord?: Maybe<Scalars['String']>;
-  bankPage?: Maybe<BankPage>;
+  /** Main account details */
   account?: Maybe<Account>;
+  /** Account identifier */
+  accountId?: Maybe<Scalars['String']>;
+  /** Account name (max 50 characters) */
+  accountName?: Maybe<Scalars['String']>;
+  /** Adjusted record */
+  adjustedRecord?: Maybe<Scalars['String']>;
+  /** Bank page details */
+  bankPage?: Maybe<BankPage>;
+  /** Bank page identifier */
+  bankPageId: Scalars['Int'];
+  /** Cumulative balance */
+  cumulativeBalance?: Maybe<Scalars['Float']>;
+  /** Calculated cumulative balance */
+  cumulativeBalanceCalculated?: Maybe<Scalars['Float']>;
+  /** Credit / Debit */
+  debitOrCredit?: Maybe<Scalars['String']>;
+  /** Remarks (max 50 characters) */
+  details?: Maybe<Scalars['String']>;
+  /** Bank page record identifier */
+  id: Scalars['Int'];
+  /** Match number */
+  matchNumber?: Maybe<Scalars['Int']>;
+  /** Reference */
+  reference?: Maybe<Scalars['Int']>;
+  /** Total ammount */
+  sum?: Maybe<Scalars['Float']>;
+  /** Date */
+  date?: Maybe<Scalars['String']>;
 };
 
 /** A Single BA Single Bank Page (Which Is A List Of Bank Page Records)atch */
 export type BankPage = {
   __typename?: 'BankPage';
+  /** Bank page identifier */
   id: Scalars['Int'];
+  /** Bank page's records details list */
   bankPageRecords?: Maybe<Array<Maybe<BankPageRecord>>>;
 };
 
@@ -263,24 +365,31 @@ export type BatchErrorReport = BatchCheckMessage | BatchCheckList;
 
 export type BatchCheckMessage = {
   __typename?: 'BatchCheckMessage';
+  /** Batch check status */
   batch_check?: Maybe<Scalars['String']>;
 };
 
 export type BatchCheckList = {
   __typename?: 'BatchCheckList';
+  /** Batch check errors list */
   batch_check?: Maybe<Array<Maybe<ARecordErrorDetails>>>;
 };
 
 export type ARecordErrorDetails = {
   __typename?: 'ARecordErrorDetails';
-  /** AKA transactionId */
+  /** Transaction identifier. AKA transactionId */
   headerID?: Maybe<Scalars['String']>;
+  /** Error code */
   err?: Maybe<Scalars['Int']>;
-  /** AKA recordId */
+  /** Record identifier. AKA recordId */
   recId?: Maybe<Scalars['Int']>;
+  /** Field name where error occurred */
   field?: Maybe<Scalars['String']>;
+  /** Error message */
   TxtMsg?: Maybe<Scalars['String']>;
+  /** Transaction details */
   transaction?: Maybe<Batch>;
+  /** Record details */
   record?: Maybe<Batch>;
 };
 
@@ -300,15 +409,15 @@ export type Mutation = {
 
 /** Root Mutation */
 export type MutationIssueBatchArgs = {
-  batchId?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
 };
 
 
 /** Root Mutation */
 export type MutationPostTransactionsToBatchArgs = {
   batchId?: Maybe<Scalars['Int']>;
-  insertToLastBatch?: Maybe<Scalars['Boolean']>;
   checkBatch?: Maybe<Scalars['Boolean']>;
+  insertToLastBatch?: Maybe<Scalars['Boolean']>;
   issueBatch?: Maybe<Scalars['Boolean']>;
   transactionsList?: Maybe<Array<Maybe<PostTransaction>>>;
 };
@@ -321,14 +430,18 @@ export type MutationPostBankPageArgs = {
 
 export type NewBatch = {
   __typename?: 'NewBatch';
+  /** New Batch's identifier */
   newbatch?: Maybe<Scalars['Int']>;
+  /** Batch details */
   batch?: Maybe<Batch>;
 };
 
+/** Batch issue response */
 export type IsuueBatch = IssueBatchStatus | BatchCheckMessage | BatchCheckList;
 
 export type IssueBatchStatus = {
   __typename?: 'IssueBatchStatus';
+  /** Batch issue status */
   batch_issue?: Maybe<Scalars['String']>;
 };
 
@@ -338,81 +451,132 @@ export type PostTransactionsResponse = PostTransactionsResponsWithoutErrors | Po
 /** Response for Posting Transactions to a Batch */
 export type PostTransactionsResponsWithoutErrors = {
   __typename?: 'PostTransactionsResponsWithoutErrors';
+  /** Final Status */
   status?: Maybe<Scalars['String']>;
+  /** Batch Issue Status */
   batch_issue?: Maybe<Scalars['String']>;
+  /** Batch Check Status */
   batch_check?: Maybe<Scalars['String']>;
+  /** Batch identifier (on cases new batch was created) */
   newbatch?: Maybe<Scalars['Int']>;
+  /** Batch identifier (on cases added to existing batch) */
   batchno?: Maybe<Scalars['Int']>;
-  batch_id?: Maybe<Scalars['Int']>;
-  errors?: Maybe<Scalars['String']>;
+  /** Batch identifier */
+  batchId?: Maybe<Scalars['Int']>;
+  /** Batch Details */
   batch?: Maybe<Batch>;
+  /** errors list */
+  errors?: Maybe<Scalars['String']>;
 };
 
 /** Response for Posting Transactions to a Batch */
 export type PostTransactionsResponsWithErrors = {
   __typename?: 'PostTransactionsResponsWithErrors';
+  /** Final Status */
   status?: Maybe<Scalars['String']>;
+  /** Batch Issue Status */
   batch_issue?: Maybe<Scalars['String']>;
+  /** Batch Check Status */
   batch_check?: Maybe<Scalars['String']>;
+  /** Batch identifier (on cases new batch was created) */
   newbatch?: Maybe<Scalars['Int']>;
+  /** Batch identifier (on cases added to existing batch) */
   batchno?: Maybe<Scalars['Int']>;
-  batch_id?: Maybe<Scalars['Int']>;
-  errors?: Maybe<Array<Maybe<ARecordErrorDetails>>>;
+  /** Batch identifier */
+  batchId?: Maybe<Scalars['Int']>;
+  /** Batch Details */
   batch?: Maybe<Batch>;
+  /** errors list */
+  errors?: Maybe<Array<Maybe<ARecordErrorDetails>>>;
 };
 
 /** Interface for posting new Transaction */
 export type PostTransaction = {
-  branch?: Maybe<Scalars['Int']>;
-  costingCode?: Maybe<Scalars['String']>;
-  creditorName?: Maybe<Scalars['String']>;
-  currencyCode?: Maybe<Scalars['String']>;
-  date3?: Maybe<Scalars['String']>;
-  debtorName?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
-  details2?: Maybe<Scalars['String']>;
-  details1?: Maybe<Scalars['String']>;
-  dueDate?: Maybe<Scalars['String']>;
+  /** VAT registration number (max 9 characters) */
   authorizedDealerNumber?: Maybe<Scalars['String']>;
-  quantity?: Maybe<Scalars['Float']>;
-  reference1?: Maybe<Scalars['Int']>;
-  reference2?: Maybe<Scalars['Int']>;
-  reference3?: Maybe<Scalars['Int']>;
-  shekelSum: Scalars['Float'];
-  foreignCurrencySum?: Maybe<Scalars['Float']>;
+  /** Branch */
+  branch?: Maybe<Scalars['Int']>;
+  /** Cost-center code (existing code) */
+  costingCode?: Maybe<Scalars['String']>;
+  /** Main credit account identifier (max 15 charactes) */
   creditorId: Scalars['String'];
+  /** Name of the main credit account (max 50 characters) */
+  creditorName?: Maybe<Scalars['String']>;
+  /** Currency (max 5 characters) */
+  currencyCode?: Maybe<Scalars['String']>;
+  /** Additional date */
+  date3?: Maybe<Scalars['String']>;
+  /** Main debit account identifier (max 15 charactes) */
   debtorId: Scalars['String'];
+  /** Name of the main debit account (max 50 characters) */
+  debtorName?: Maybe<Scalars['String']>;
+  /** Description (max 250 characters) */
+  description?: Maybe<Scalars['String']>;
+  /** Remarks (max 50 characters) */
+  details1?: Maybe<Scalars['String']>;
+  /** Additional remarks (max 50 characters) */
+  details2?: Maybe<Scalars['String']>;
+  /** Due date */
+  dueDate?: Maybe<Scalars['String']>;
+  /** Total amount in foreign currency (credit or debit) */
+  foreignCurrencySum?: Maybe<Scalars['Float']>;
+  /** Quantity */
+  quantity?: Maybe<Scalars['Float']>;
+  /** Reference */
+  reference1?: Maybe<Scalars['Int']>;
+  /** Reference-2 */
+  reference2?: Maybe<Scalars['Int']>;
+  /** Referenc-3 */
+  reference3?: Maybe<Scalars['Int']>;
+  /** Total NIS amount (credit or debit) */
+  shekelSum: Scalars['Float'];
+  /** Transaction type code */
   type?: Maybe<Scalars['String']>;
+  /** Date */
   valueDate?: Maybe<Scalars['String']>;
+  /** List of Records to add. */
   records?: Maybe<Array<Maybe<PostRecord>>>;
 };
 
 /** Interface for posting new Record */
 export type PostRecord = {
+  /** Account identifier (max 15 characters) */
   accountId: Scalars['String'];
-  debitOrCreditNumber: Scalars['String'];
-  shekelSum: Scalars['Float'];
+  /** Credit / Debit */
+  debitOrCreditNumber: DebitOrCreditNumber;
+  /** Foreign currency amount */
   foreignCurrencySum?: Maybe<Scalars['Float']>;
+  /** NIS amount */
+  shekelSum: Scalars['Float'];
 };
 
 export type PostBankPageResponse = {
   __typename?: 'PostBankPageResponse';
+  /** Post proccess status */
   status?: Maybe<Scalars['String']>;
+  /** Errors list */
   errors?: Maybe<Array<Maybe<BankError>>>;
 };
 
 export type BankError = {
   __typename?: 'BankError';
+  /** Index */
   index?: Maybe<Scalars['Int']>;
+  /** Error description */
   err?: Maybe<Scalars['String']>;
 };
 
 /** Interface for posting new Bank Page Record */
 export type PostBankPageRecord = {
+  /** Account identifier (max 15 character) */
   AccountKey: Scalars['String'];
+  /** Reference */
   Reference?: Maybe<Scalars['Int']>;
-  CreditDebit: Scalars['Int'];
+  /** Credit / Debit */
+  CreditDebit: DebitOrCreditNumber;
+  /** Amount */
   SuF: Scalars['Int'];
+  /** Remarks (max 50 characters) */
   Details?: Maybe<Scalars['String']>;
 };
 
@@ -495,9 +659,10 @@ export type ResolversTypes = {
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Record: ResolverTypeWrapper<Record>;
   Float: ResolverTypeWrapper<Scalars['Float']>;
-  Transaction: ResolverTypeWrapper<Transaction>;
-  Batch: ResolverTypeWrapper<Batch>;
   Account: ResolverTypeWrapper<Account>;
+  Batch: ResolverTypeWrapper<Batch>;
+  Transaction: ResolverTypeWrapper<Transaction>;
+  debitOrCreditNumber: DebitOrCreditNumber;
   BankPageRecord: ResolverTypeWrapper<BankPageRecord>;
   BankPage: ResolverTypeWrapper<BankPage>;
   Company: ResolverTypeWrapper<Company>;
@@ -528,9 +693,10 @@ export type ResolversParentTypes = {
   Int: Scalars['Int'];
   Record: Record;
   Float: Scalars['Float'];
-  Transaction: Transaction;
-  Batch: Batch;
   Account: Account;
+  Batch: Batch;
+  Transaction: Transaction;
+  debitOrCreditNumber: DebitOrCreditNumber;
   BankPageRecord: BankPageRecord;
   BankPage: BankPage;
   Company: Company;
@@ -568,93 +734,41 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getBankPages?: Resolver<Maybe<Array<Maybe<ResolversTypes['BankPage']>>>, ParentType, ContextType>;
   getUserCompanies?: Resolver<Maybe<Array<Maybe<ResolversTypes['Company']>>>, ParentType, ContextType>;
   getUserDetails?: Resolver<Maybe<ResolversTypes['HashavshevetUser']>, ParentType, ContextType>;
-  checkBatch?: Resolver<Maybe<ResolversTypes['BatchErrorReport']>, ParentType, ContextType, RequireFields<QueryCheckBatchArgs, 'batchId'>>;
+  checkBatch?: Resolver<Maybe<ResolversTypes['BatchErrorReport']>, ParentType, ContextType, RequireFields<QueryCheckBatchArgs, 'id'>>;
 };
 
 export type RecordResolvers<ContextType = any, ParentType extends ResolversParentTypes['Record'] = ResolversParentTypes['Record']> = {
-  debitOrCredit?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  counterAccountId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  matchNumberCardAnalysis?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  debitOrCreditNumber?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  account?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType>;
   accountId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  batch?: Resolver<Maybe<ResolversTypes['Batch']>, ParentType, ContextType>;
+  batchId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  counterAccount?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType>;
+  counterAccountId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   counterAccountName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  cumulativeBalance?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  cumulativeBalanceBySortKey?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  cumulativeBalanceOfOpenSumInRecord?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  cumulativeBalanceWithoutOpeningBalance?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  debitOrCredit?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  debitOrCreditNumber?: Resolver<Maybe<ResolversTypes['debitOrCreditNumber']>, ParentType, ContextType>;
+  estimatedSum?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  foreignCurrencyCredit?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  foreignCurrencyCumulativeBalance?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  foreignCurrencyCumulativeBalanceWithoutOpeningBalance?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  foreignCurrencyDebit?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  foreignCurrencySum?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  foreignCurrencySumClosedInRecord?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  foreignCurrencySunOpenInRecord?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  matchNumberCardAnalysis?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   shekelCredit?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  shekelCumulativeBalanceByFilter?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   shekelDebit?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   shekelSum?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   shekelSumClosedInRecord?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   shekelSumOpenInRecord?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  cumulativeBalance?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  foreignCurrencyCumulativeBalanceWithoutOpeningBalance?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  cumulativeBalanceWithoutOpeningBalance?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  shekelCumulativeBalanceBySector?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  cumulativeBalanceBySortKey?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  cumulativeBalanceOfOpenSumInRecord?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  foreignCurrencyCredit?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  foreignCurrencyDebit?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  foreignCurrencyCumulativeBalance?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  foreignCurrencySum?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  foreignCurrencySumClosedInRecord?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  foreignCurrencySunOpenInRecord?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  estimatedSum?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  transactionId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  batchId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   transaction?: Resolver<Maybe<ResolversTypes['Transaction']>, ParentType, ContextType>;
-  batch?: Resolver<Maybe<ResolversTypes['Batch']>, ParentType, ContextType>;
-  account?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType>;
-  counterAccount?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType>;
-  __isTypeOf?: isTypeOfResolverFn<ParentType>;
-};
-
-export type TransactionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Transaction'] = ResolversParentTypes['Transaction']> = {
-  debtorId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  creditorId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  currencyCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  foreignCurrencySum?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  shekelSum?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  reference1?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  reference2?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  reference3?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  valueDate?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  dueDate?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  details1?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  details2?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  exchangeRateDifferences?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  costingCodeSector?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  quantity?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  inventoryId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  chequeId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  batchId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  authorizedDealerNumber?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  registerNumber?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  stornoCancelledTransactionId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  branch?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  linkedFile?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  costingCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  username?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  branchName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  costingCodeName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  date3?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  batch?: Resolver<Maybe<ResolversTypes['Batch']>, ParentType, ContextType>;
-  debtor?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType>;
-  creditor?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType>;
-  records?: Resolver<Maybe<Array<Maybe<ResolversTypes['Record']>>>, ParentType, ContextType>;
-  __isTypeOf?: isTypeOfResolverFn<ParentType>;
-};
-
-export type BatchResolvers<ContextType = any, ParentType extends ResolversParentTypes['Batch'] = ResolversParentTypes['Batch']> = {
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  status?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  issueDate?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  details?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  initTime?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  initDate?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  transactions?: Resolver<Maybe<Array<Maybe<ResolversTypes['Transaction']>>>, ParentType, ContextType>;
-  records?: Resolver<Maybe<Array<Maybe<ResolversTypes['Record']>>>, ParentType, ContextType>;
+  transactionId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: isTypeOfResolverFn<ParentType>;
 };
 
@@ -662,7 +776,7 @@ export type AccountResolvers<ContextType = any, ParentType extends ResolversPare
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   sortGroup?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  sector?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  filter?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   details?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   initDate?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -698,22 +812,74 @@ export type AccountResolvers<ContextType = any, ParentType extends ResolversPare
   __isTypeOf?: isTypeOfResolverFn<ParentType>;
 };
 
-export type BankPageRecordResolvers<ContextType = any, ParentType extends ResolversParentTypes['BankPageRecord'] = ResolversParentTypes['BankPageRecord']> = {
+export type BatchResolvers<ContextType = any, ParentType extends ResolversParentTypes['Batch'] = ResolversParentTypes['Batch']> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  bankPageId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  reference?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  debitOrCredit?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  cumulativeBalance?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  cumulativeBalanceCalculated?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  matchNumber?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  accountId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  sum?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  status?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  issueDate?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   details?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  initTime?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  initDate?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  transactions?: Resolver<Maybe<Array<Maybe<ResolversTypes['Transaction']>>>, ParentType, ContextType>;
+  records?: Resolver<Maybe<Array<Maybe<ResolversTypes['Record']>>>, ParentType, ContextType>;
+  __isTypeOf?: isTypeOfResolverFn<ParentType>;
+};
+
+export type TransactionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Transaction'] = ResolversParentTypes['Transaction']> = {
+  authorizedDealerNumber?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  batch?: Resolver<Maybe<ResolversTypes['Batch']>, ParentType, ContextType>;
+  batchId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  branch?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  branchName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  chequeId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  costingCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  costingCodeName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  costingCodeFilter?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  creditor?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType>;
+  creditorId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  currencyCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  date3?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  debtor?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType>;
+  debtorId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  details1?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  details2?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  dueDate?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  exchangeRateDifferences?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  foreignCurrencySum?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  inventoryId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  linkedFile?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  quantity?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  records?: Resolver<Maybe<Array<Maybe<ResolversTypes['Record']>>>, ParentType, ContextType>;
+  reference1?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  reference2?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  reference3?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  registerNumber?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  shekelSum?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  stornoCancelledTransactionId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  username?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  valueDate?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: isTypeOfResolverFn<ParentType>;
+};
+
+export type BankPageRecordResolvers<ContextType = any, ParentType extends ResolversParentTypes['BankPageRecord'] = ResolversParentTypes['BankPageRecord']> = {
+  account?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType>;
+  accountId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   accountName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  date?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   adjustedRecord?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   bankPage?: Resolver<Maybe<ResolversTypes['BankPage']>, ParentType, ContextType>;
-  account?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType>;
+  bankPageId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  cumulativeBalance?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  cumulativeBalanceCalculated?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  debitOrCredit?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  details?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  matchNumber?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  reference?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  sum?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  date?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: isTypeOfResolverFn<ParentType>;
 };
 
@@ -799,9 +965,9 @@ export type PostTransactionsResponsWithoutErrorsResolvers<ContextType = any, Par
   batch_check?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   newbatch?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   batchno?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  batch_id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  errors?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  batchId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   batch?: Resolver<Maybe<ResolversTypes['Batch']>, ParentType, ContextType>;
+  errors?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: isTypeOfResolverFn<ParentType>;
 };
 
@@ -811,9 +977,9 @@ export type PostTransactionsResponsWithErrorsResolvers<ContextType = any, Parent
   batch_check?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   newbatch?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   batchno?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  batch_id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  errors?: Resolver<Maybe<Array<Maybe<ResolversTypes['ARecordErrorDetails']>>>, ParentType, ContextType>;
+  batchId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   batch?: Resolver<Maybe<ResolversTypes['Batch']>, ParentType, ContextType>;
+  errors?: Resolver<Maybe<Array<Maybe<ResolversTypes['ARecordErrorDetails']>>>, ParentType, ContextType>;
   __isTypeOf?: isTypeOfResolverFn<ParentType>;
 };
 
@@ -832,9 +998,9 @@ export type BankErrorResolvers<ContextType = any, ParentType extends ResolversPa
 export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>;
   Record?: RecordResolvers<ContextType>;
-  Transaction?: TransactionResolvers<ContextType>;
-  Batch?: BatchResolvers<ContextType>;
   Account?: AccountResolvers<ContextType>;
+  Batch?: BatchResolvers<ContextType>;
+  Transaction?: TransactionResolvers<ContextType>;
   BankPageRecord?: BankPageRecordResolvers<ContextType>;
   BankPage?: BankPageResolvers<ContextType>;
   Company?: CompanyResolvers<ContextType>;

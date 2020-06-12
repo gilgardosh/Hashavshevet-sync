@@ -36,7 +36,7 @@ async function getAllRecords() {
             r["foreign_currency_cumulative_balance_without_opening_balance"],
           cumulativeBalanceWithoutOpeningBalance:
             r["cumulative_balance_without_opening_balance"],
-          shekelCumulativeBalanceBySector: r["cumulative_balance_by_sector"],
+          shekelCumulativeBalanceByFilter: r["cumulative_balance_by_sector"],
           cumulativeBalanceBySortKey: r["cumulative_balance_by_sort_key"],
           cumulativeBalanceOfOpenSumInRecord:
             r["cumulative_balance_of_open_sum_in_record"],
@@ -84,7 +84,7 @@ async function getAllTransactions() {
         details1: t["details1"],
         details2: t["details2"],
         exchangeRateDifferences: t["exchange_rate_differences"],
-        costingCodeSector: t["costing_code_sector"],
+        costingCodeFilter: t["costing_code_sector"],
         quantity: t["quantity"],
         inventoryId: t["inventory_id"],
         chequeId: t["cheque_id"],
@@ -155,7 +155,7 @@ async function getAllAccounts() {
         id: a["id"],
         name: a["name"],
         sortGroup: a["sort_group"],
-        sector: a["sector"],
+        filter: a["sector"],
         details: a["details"],
         initDate: a["init_date"],
         type: a["type"],

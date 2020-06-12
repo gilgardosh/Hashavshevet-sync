@@ -5,6 +5,7 @@ import {
   GraphQLFloat,
   GraphQLNonNull,
 } from "graphql";
+import * as field from "./fields";
 
 const AccountType = new GraphQLObjectType({
   name: "Account",
@@ -12,20 +13,11 @@ const AccountType = new GraphQLObjectType({
   fields: () => ({
     id: {
       type: GraphQLNonNull(GraphQLString),
-      description: "",
+      description: "Account identifier (max 15 characters)", // TODO: add varification
     },
-    name: {
-      type: GraphQLString,
-      description: "",
-    },
-    sortGroup: {
-      type: GraphQLInt, // TODO: Enum type?
-      description: "",      
-    },
-    sector: {
-      type: GraphQLString, // TODO: NonNull?
-      description: "",
-    },
+    name: field.accountName,
+    sortGroup: field.sortGroup,
+    filter: field.filter,
     details: {
       type: GraphQLString,
       description: "",

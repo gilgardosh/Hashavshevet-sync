@@ -12,7 +12,7 @@ const accountId = {
 };
 const accountName = {
   type: GraphQLString,
-  description: "Account name",
+  description: "Account name (max 50 characters)", // TODO: add varification
 };
 const adjustedRecord = {
   type: GraphQLString,
@@ -47,10 +47,10 @@ const debitOrCreditNumberEnum = new GraphQLEnumType({
   description: "Credit / Debit",
   values: {
     Credit: {
-      value: -1,
+      value: 1,
     },
     Debit: {
-      value: 1,
+      value: -1,
     },
   },
 });
@@ -60,7 +60,11 @@ const debitOrCreditNumber = {
 };
 const details1 = {
   type: GraphQLString,
-  description: "Remarks (max 50 characters)",  // TODO: add varification
+  description: "Remarks (max 50 characters)", // TODO: add varification
+};
+const filter = {
+  type: GraphQLString, // TODO: NonNull? add varification
+  description: "Filtering (5 characters)",
 };
 const matchNumber = {
   type: GraphQLInt,
@@ -69,6 +73,10 @@ const matchNumber = {
 const reference1 = {
   type: GraphQLInt,
   description: "Reference",
+};
+const sortGroup = {
+  type: GraphQLInt, // TODO: Enum type?
+  description: "Sorting code",
 };
 const sum = {
   type: GraphQLFloat,
@@ -88,7 +96,9 @@ export {
   debitOrCreditNumber,
   debitOrCreditNumberEnum,
   details1,
+  filter,
   matchNumber,
   reference1,
+  sortGroup,
   sum,
 };

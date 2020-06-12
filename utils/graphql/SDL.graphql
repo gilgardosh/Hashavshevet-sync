@@ -106,8 +106,8 @@ type Record {
   """Credit / Debit"""
   debitOrCredit: String
 
-  """0=Credit / 1=Debit"""
-  debitOrCreditNumber: Int
+  """Credit / Debit"""
+  debitOrCreditNumber: debitOrCreditNumber
 
   """Estimated total amount"""
   estimatedSum: Float
@@ -143,7 +143,7 @@ type Record {
   shekelCredit: Float
 
   """Cumulative balance in NIS by filter"""
-  shekelCumulativeBalanceBySector: Float
+  shekelCumulativeBalanceByFilter: Float
 
   """Dedit amount in NIS"""
   shekelDebit: Float
@@ -166,41 +166,112 @@ type Record {
 
 """A Single Account"""
 type Account {
+  """Account identifier (max 15 characters)"""
   id: String!
+
+  """Account name (max 50 characters)"""
   name: String
+
+  """Sorting code"""
   sortGroup: Int
-  sector: String
+
+  """Filtering (5 characters)"""
+  filter: String
+
+  """"""
   details: String
+
+  """"""
   initDate: String
+
+  """"""
   type: String
+
+  """"""
   isActive: String
+
+  """"""
   address: String
+
+  """"""
   city: String
+
+  """"""
   zipcode: String
+
+  """"""
   country: String
+
+  """"""
   phone: String
+
+  """"""
   cellphone: String
+
+  """"""
   fax: String
+
+  """"""
   email: String
+
+  """"""
   balanceCode: String
+
+  """"""
   generalDiscountPercent: Float
+
+  """"""
   vatExempt: String
+
+  """"""
   occupation: String
+
+  """"""
   agent: Int
+
+  """"""
   withholdingPercent: Float
+
+  """"""
   withholdingValidity: String
+
+  """"""
   bankId: String
+
+  """"""
   bankBranchId: String
+
+  """"""
   bankAccountId: String
+
+  """"""
   authorizedDealerNumber: String
+
+  """"""
   mainAccount: String
+
+  """"""
   maxCredit: Float
+
+  """"""
   maxCreditCurrency: String
+
+  """"""
   maxObligo: Float
+
+  """"""
   maxObligoCurrency: String
+
+  """"""
   incomeFileNumber: String
+
+  """"""
   centralAccount: String
+
+  """"""
   accountantTransfer: String
+
+  """"""
   costingCode: String
 }
 
@@ -261,7 +332,7 @@ type Transaction {
   costingCodeName: String
 
   """Cost-center code filter"""
-  costingCodeSector: String
+  costingCodeFilter: String
 
   """Main credit account details"""
   creditor: Account
@@ -342,6 +413,12 @@ type Transaction {
   valueDate: String
 }
 
+"""Credit / Debit"""
+enum debitOrCreditNumber {
+  Credit
+  Debit
+}
+
 """A Single Bank Page Record"""
 type BankPageRecord {
   """Main account details"""
@@ -350,7 +427,7 @@ type BankPageRecord {
   """Account identifier"""
   accountId: String
 
-  """Account name"""
+  """Account name (max 50 characters)"""
   accountName: String
 
   """Adjusted record"""
@@ -457,16 +534,16 @@ type ARecordErrorDetails {
   """Transaction identifier. AKA transactionId"""
   headerID: String
 
-  """"""
+  """Error code"""
   err: Int
 
   """Record identifier. AKA recordId"""
   recId: Int
 
-  """"""
+  """Field name where error occurred"""
   field: String
 
-  """"""
+  """Error message"""
   TxtMsg: String
 
   """Transaction details"""
@@ -673,12 +750,6 @@ input PostRecord {
 
   """NIS amount"""
   shekelSum: Float!
-}
-
-"""Credit / Debit"""
-enum debitOrCreditNumber {
-  Credit
-  Debit
 }
 
 type PostBankPageResponse {
