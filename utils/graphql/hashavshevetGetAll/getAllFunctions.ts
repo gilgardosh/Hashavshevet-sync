@@ -14,7 +14,7 @@ function getAll(datafile: string, parameters = []) {
 async function getAllRecords() {
   return await getAll(dataFile.records)
     .then((d: { repdata: any[] }) => d.repdata)
-    // temorary until datafiles update
+    // TODO: temorary until datafiles update
     .then((records_list) => {
       let recordsList: type.Record[] = [];
       for (let r of records_list) {
@@ -65,7 +65,7 @@ async function getAllRecords() {
 async function getAllTransactions() {
   return await getAll(dataFile.transactions)
   .then((d: { repdata: any[] }) => d.repdata)
-  // temorary until datafiles update
+  // TODO: temorary until datafiles update
   .then((transactions_list) => {
     let transactionsList: type.Transaction[] = [];
     for (let t of transactions_list) {
@@ -114,7 +114,7 @@ async function getAllTransactions() {
 async function getAllBatches() {
   return await getAll(dataFile.batches)
   .then((d: { repdata: any[] }) => d.repdata)
-  // temorary until datafiles update
+  // TODO: temorary until datafiles update
   .then((batches_list) => {
     let batchesList: type.Batch[] = [];
     for (let b of batches_list) {
@@ -147,7 +147,7 @@ async function getAllBatches() {
 async function getAllAccounts() {
   return await getAll(dataFile.accounts)
   .then((d: { repdata: any[] }) => d.repdata)
-  // temorary until datafiles update
+  // TODO: temorary until datafiles update
   .then((accounts_list) => {
     let accountsList: type.Account[] = [];
     for (let a of accounts_list) {
@@ -201,7 +201,7 @@ async function getAllAccounts() {
 async function getAllBankPageRecords() {
   return await getAll(dataFile.bankPageRecords)
   .then((d: { repdata: any[] }) => d.repdata)
-  // temorary until datafiles update
+  // TODO: temorary until datafiles update
   .then((bank_page_records_list) => {
     let bankPageRecordsList: type.BankPageRecord[] = [];
     for (let r of bank_page_records_list) {

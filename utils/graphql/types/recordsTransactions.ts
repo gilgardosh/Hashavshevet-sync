@@ -12,6 +12,7 @@ import {
 } from "graphql";
 import * as resolver from "../resolvers";
 import * as type from "../types";
+import * as field from "./fields"
 
 const RecordType = new GraphQLObjectType({
   name: "Record",
@@ -481,7 +482,7 @@ const PostRecord = new GraphQLInputObjectType({
       description: "Account identifier (max 15 characters)", // TODO: create validation
     },
     debitOrCreditNumber: {
-      type: GraphQLNonNull(debitOrCreditNumber),
+      type: GraphQLNonNull(field.debitOrCreditNumberEnum),
       description: "Credit / Debit",
     },
     foreignCurrencySum: {
@@ -493,19 +494,6 @@ const PostRecord = new GraphQLInputObjectType({
       description: "NIS amount",
     },
   }),
-});
-
-const debitOrCreditNumber = new GraphQLEnumType({
-  name: "debitOrCreditNumber",
-  description: "Credit / Debit",
-  values: {
-    Credit: {
-      value: 0,
-    },
-    Debit: {
-      value: 1,
-    },
-  },
 });
 
 const postTransactionsToBatchArgs = {

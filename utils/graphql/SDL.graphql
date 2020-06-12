@@ -1,36 +1,54 @@
 type Query {
   """A Single Record by its ID"""
-  getRecordById(id: Int!): Record
+  getRecordById(
+    """Record identifier"""
+    id: Int!
+  ): Record
 
   """List of All Records"""
   getRecords: [Record]
 
   """A Single Transaction by its ID"""
-  getTransactionById(id: Int!): Transaction
+  getTransactionById(
+    """Transaction identifier"""
+    id: Int!
+  ): Transaction
 
   """List of All Transactions"""
   getTransactions: [Transaction]
 
   """A Single Batch by its ID"""
-  getBatchById(id: Int!): Batch
+  getBatchById(
+    """Batch identifier"""
+    id: Int!
+  ): Batch
 
   """List of All Batches"""
   getBatches: [Batch]
 
   """A Single Account by its ID"""
-  getAccountById(id: Int!): Account
+  getAccountById(
+    """Account identifier"""
+    id: Int!
+  ): Account
 
   """List of All Accounts"""
   getAccounts: [Account]
 
   """A Single Bank Page Record by its ID"""
-  getBankPageRecordById(id: Int!): BankPageRecord
+  getBankPageRecordById(
+    """Bank page record identifier"""
+    id: Int!
+  ): BankPageRecord
 
   """List of All Bank Page Records"""
   getBankPageRecords: [BankPageRecord]
 
   """A Single Bank Page (Which Is A List Of Bank Page Records), by its ID"""
-  getBankPageById(id: Int!): BankPage
+  getBankPageById(
+    """Bank page identifier"""
+    id: Int!
+  ): BankPage
 
   """List Of Bank Pages"""
   getBankPages: [BankPage]
@@ -86,10 +104,10 @@ type Record {
   cumulativeBalanceWithoutOpeningBalance: Float
 
   """Credit / Debit"""
-  debitOrCredit: String!
+  debitOrCredit: String
 
   """0=Credit / 1=Debit"""
-  debitOrCreditNumber: Int!
+  debitOrCreditNumber: Int
 
   """Estimated total amount"""
   estimatedSum: Float
@@ -188,14 +206,31 @@ type Account {
 
 """A Single Batch"""
 type Batch {
+  """Batch identifier"""
   id: Int!
+
+  """Type"""
   type: String
+
+  """Status"""
   status: String
+
+  """Issue date of the batch"""
   issueDate: String
+
+  """Remarks"""
   details: String
+
+  """Initiate time of the batch"""
   initTime: String
+
+  """Initiate date of the batch"""
   initDate: String
+
+  """Batch's transactions details list"""
   transactions: [Transaction]
+
+  """Batch's records details list"""
   records: [Record]
 }
 
@@ -276,7 +311,7 @@ type Transaction {
   """Quantity"""
   quantity: Float
 
-  """Transaction's records details"""
+  """Transaction's records details list"""
   records: [Record]
 
   """Reference"""
@@ -309,47 +344,99 @@ type Transaction {
 
 """A Single Bank Page Record"""
 type BankPageRecord {
-  id: Int!
-  bankPageId: Int!
-  reference: Int
-  debitOrCredit: String!
-  cumulativeBalance: Float
-  cumulativeBalanceCalculated: Float
-  matchNumber: Int
-  accountId: String
-  sum: Float
-  details: String
-  accountName: String
-  date: String
-  adjustedRecord: String
-  bankPage: BankPage
+  """Main account details"""
   account: Account
+
+  """Account identifier"""
+  accountId: String
+
+  """Account name"""
+  accountName: String
+
+  """Adjusted record"""
+  adjustedRecord: String
+
+  """Bank page details"""
+  bankPage: BankPage
+
+  """Bank page identifier"""
+  bankPageId: Int!
+
+  """Cumulative balance"""
+  cumulativeBalance: Float
+
+  """Calculated cumulative balance"""
+  cumulativeBalanceCalculated: Float
+
+  """Credit / Debit"""
+  debitOrCredit: String
+
+  """Remarks (max 50 characters)"""
+  details: String
+
+  """Bank page record identifier"""
+  id: Int!
+
+  """Match number"""
+  matchNumber: Int
+
+  """Reference"""
+  reference: Int
+
+  """Total ammount"""
+  sum: Float
+
+  """Date"""
+  date: String
 }
 
 """
 A Single BA Single Bank Page (Which Is A List Of Bank Page Records)atch
 """
 type BankPage {
+  """Bank page identifier"""
   id: Int!
+
+  """Bank page's records details list"""
   bankPageRecords: [BankPageRecord]
 }
 
 """A Single Hashavshevet Company"""
 type Company {
+  """"""
   Company_File_Name: String!
+
+  """"""
   Company_Name: String!
+
+  """"""
   Comp_Vatnum: String!
 }
 
 """A Single User on Hashavshevet"""
 type HashavshevetUser {
+  """"""
   cid: String!
+
+  """"""
   user: String!
+
+  """"""
   use_name: String!
+
+  """"""
   wizcomp_no: String
+
+  """"""
   company_name: String
+
+  """"""
   user_id: Int!
+
+  """"""
   company_id: Int
+
+  """"""
   branch: Int
 }
 
@@ -357,23 +444,35 @@ type HashavshevetUser {
 union BatchErrorReport = BatchCheckMessage | BatchCheckList
 
 type BatchCheckMessage {
+  """Batch check status"""
   batch_check: String
 }
 
 type BatchCheckList {
+  """Batch check errors list"""
   batch_check: [ARecordErrorDetails]
 }
 
 type ARecordErrorDetails {
-  """AKA transactionId"""
+  """Transaction identifier. AKA transactionId"""
   headerID: String
+
+  """"""
   err: Int
 
-  """AKA recordId"""
+  """Record identifier. AKA recordId"""
   recId: Int
+
+  """"""
   field: String
+
+  """"""
   TxtMsg: String
+
+  """Transaction details"""
   transaction: Batch
+
+  """Record details"""
   record: Batch
 }
 
@@ -413,17 +512,25 @@ type Mutation {
   ): PostTransactionsResponse
 
   """Import  or update records to chosen index"""
-  postBankPage(bankPageRecords: [PostBankPageRecord]): PostBankPageResponse
+  postBankPage(
+    """Bank page's records details list"""
+    bankPageRecords: [PostBankPageRecord]
+  ): PostBankPageResponse
 }
 
 type NewBatch {
+  """New Batch's identifier"""
   newbatch: Int
+
+  """Batch details"""
   batch: Batch
 }
 
+"""Batch issue response"""
 union IsuueBatch = IssueBatchStatus | BatchCheckMessage | BatchCheckList
 
 type IssueBatchStatus {
+  """Batch issue status"""
   batch_issue: String
 }
 
@@ -575,20 +682,35 @@ enum debitOrCreditNumber {
 }
 
 type PostBankPageResponse {
+  """Post proccess status"""
   status: String
+
+  """Errors list"""
   errors: [BankError]
 }
 
 type BankError {
+  """Index"""
   index: Int
+
+  """Error description"""
   err: String
 }
 
 """Interface for posting new Bank Page Record"""
 input PostBankPageRecord {
+  """Account identifier (max 15 character)"""
   AccountKey: String!
+
+  """Reference"""
   Reference: Int
-  CreditDebit: Int!
+
+  """Credit / Debit"""
+  CreditDebit: debitOrCreditNumber!
+
+  """Amount"""
   SuF: Int!
+
+  """Remarks (max 50 characters)"""
   Details: String
 }

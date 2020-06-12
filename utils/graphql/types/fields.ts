@@ -44,12 +44,12 @@ const debitOrCreditName = {
   type: GraphQLString,
   description: "Credit / Debit",
 };
-const debitOrCreditEnum = new GraphQLEnumType({
+const debitOrCreditNumberEnum = new GraphQLEnumType({
   name: "debitOrCreditNumber",
   description: "Credit / Debit",
   values: {
     Credit: {
-      value: 0,
+      value: -1,
     },
     Debit: {
       value: 1,
@@ -57,12 +57,12 @@ const debitOrCreditEnum = new GraphQLEnumType({
   },
 });
 const debitOrCreditNumber = {
-  type: debitOrCreditEnum,
+  type: debitOrCreditNumberEnum,
   description: "Credit / Debit",
 };
 const details1 = {
   type: GraphQLString,
-  description: "Remarks",
+  description: "Remarks (max 50 characters)",  // TODO: add varification
 };
 const matchNumber = {
   type: GraphQLInt,
@@ -88,6 +88,7 @@ export {
   date,
   debitOrCreditName,
   debitOrCreditNumber,
+  debitOrCreditNumberEnum,
   details1,
   matchNumber,
   reference1,
