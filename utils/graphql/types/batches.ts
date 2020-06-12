@@ -8,46 +8,23 @@ import {
 } from "graphql";
 import * as resolver from "../resolvers";
 import * as type from "../types";
+import * as field from "./fields"
 
 const BatchType = new GraphQLObjectType({
   name: "Batch",
   description: "A Single Batch",
   fields: () => ({
-    id: {
-      type: GraphQLNonNull(GraphQLInt),
-      description: "Batch identifier",
-    },
-    type: {
-      type: GraphQLString, // TODO: Enum type? NonNull?
-      description: "Type",
-    },
-    status: {
-      type: GraphQLString, // TODO: Enum type? NonNull?
-      description: "Status",
-    },
-    issueDate: {
-      type: GraphQLString, // TODO: Date type
-      description: "Issue date of the batch",
-    },
     details: {
       type: GraphQLString,
       description: "Remarks",
     },
-    initTime: {
-      type: GraphQLString,
-      description: "Initiate time of the batch",
+    id: {
+      type: GraphQLNonNull(GraphQLInt),
+      description: "Batch identifier",
     },
-    initDate: {
-      type: GraphQLString, // TODO: Date type
-      description: "Initiate date of the batch",
-    },
-    transactions: {
-      type: GraphQLList(type.TransactionType),
-      description: "Batch's transactions details list",
-      resolve: (batch) => {
-        return resolver.transactionsByBatcnId(batch.id);
-      },
-    },
+    initDate: field.initDate,
+    initTime: field.initTime,
+    issueDate: field.issueDate,
     records: {
       type: GraphQLList(type.RecordType),
       description: "Batch's records details list",
@@ -55,10 +32,19 @@ const BatchType = new GraphQLObjectType({
         return resolver.recordsByBatcnId(batch.id);
       },
     },
+    status: field.status,
+    transactions: {
+      type: GraphQLList(type.TransactionType),
+      description: "Batch's transactions details list",
+      resolve: (batch) => {
+        return resolver.transactionsByBatcnId(batch.id);
+      },
+    },
+    type: field.batchType,
   }),
 });
 
-const recordErrorType = new GraphQLObjectType({
+const recordErrorType = new GraphQLObjectType({  // TODO: convers keys
   name: "ARecordErrorDetails",
   fields: () => ({
     headerID: {
@@ -98,7 +84,7 @@ const recordErrorType = new GraphQLObjectType({
   }),
 });
 
-const BatchCheckIfListType = new GraphQLObjectType({
+const BatchCheckIfListType = new GraphQLObjectType({ // TODO: convers keys
   name: "BatchCheckList",
   fields: () => ({
     batch_check: {
@@ -108,7 +94,7 @@ const BatchCheckIfListType = new GraphQLObjectType({
   }),
 });
 
-const BatchCheckIfStringType = new GraphQLObjectType({
+const BatchCheckIfStringType = new GraphQLObjectType({ // TODO: convers keys
   name: "BatchCheckMessage",
   fields: () => ({
     batch_check: {
@@ -131,7 +117,7 @@ const CheckBatchType = new GraphQLUnionType({
   },
 });
 
-const NewBatchType = new GraphQLObjectType({
+const NewBatchType = new GraphQLObjectType({ // TODO: convers keys
   name: "NewBatch",
   fields: () => ({
     newbatch: {
@@ -148,7 +134,7 @@ const NewBatchType = new GraphQLObjectType({
   }),
 });
 
-const IssueBatchStatusType = new GraphQLObjectType({
+const IssueBatchStatusType = new GraphQLObjectType({ // TODO: convers keys
   name: "IssueBatchStatus",
   fields: () => ({
     batch_issue: {

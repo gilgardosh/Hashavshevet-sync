@@ -8,11 +8,10 @@ import {
   GraphQLUnionType,
   GraphQLInputObjectType,
   GraphQLBoolean,
-  GraphQLEnumType,
 } from "graphql";
 import * as resolver from "../resolvers";
 import * as graphqlType from "../types";
-import * as field from "./fields"
+import * as field from "./fields";
 
 const RecordType = new GraphQLObjectType({
   name: "Record",
@@ -153,10 +152,7 @@ const TransactionType = new GraphQLObjectType({
   name: "Transaction",
   description: "A Transaction of Some Records",
   fields: () => ({
-    authorizedDealerNumber: {
-      type: GraphQLString,
-      description: "VAT registration number",
-    },
+    authorizedDealerNumber: field.authorizedDealerNumber,
     batch: {
       type: graphqlType.BatchType,
       description: "Batch details",
@@ -166,142 +162,57 @@ const TransactionType = new GraphQLObjectType({
       type: GraphQLNonNull(GraphQLInt),
       description: "Batch Identifier",
     },
-    branch: {
-      type: GraphQLInt,
-      description: "Branch", // TODO: NonNull? Enum  type?
-    },
-    branchName: {
-      type: GraphQLString,
-      description: "Branch Name",
-    },
-    chequeId: {
-      type: GraphQLInt,
-      description: "Cheque Identifier",
-    },
-    costingCode: {
-      type: GraphQLString,
-      description: "Cost-center code",
-    },
-    costingCodeName: {
-      type: GraphQLString,
-      description: "Cost-center code name",
-    },
-    costingCodeFilter: {
-      type: GraphQLString,
-      description: "Cost-center code filter",
-    },
+    branch: field.branch,
+    branchName: field.branchName,
+    chequeId: field.chequeId,
+    costingCode: field.costingCode,
+    costingCodeName: field.costingCodeName,
+    costingCodeFilter: field.costingCodeFilter,
     creditor: {
       type: graphqlType.AccountType,
       description: "Main credit account details",
       resolve: (transaction) => resolver.accountById(transaction.creditorId),
     },
-    creditorId: {
-      type: GraphQLString,
-      description: "Main credit account Identifier",
-    },
-    currencyCode: {
-      type: GraphQLString,
-      description: "Currency", // TODO: Enum type?
-    },
-    date3: {
-      type: GraphQLString,
-      description: "Additional date",
-    },
+    creditorId: field.creditorId,
+    currencyCode: field.currencyCode,
+    date3: field.date3,
     debtor: {
       type: graphqlType.AccountType,
       description: "Main debit account details",
       resolve: (transaction) => resolver.accountById(transaction.debtorId),
     },
-    debtorId: {
-      type: GraphQLString,
-      description: "Main debit account identifier",
-    },
-    description: {
-      type: GraphQLString,
-      description: "Description",
-    },
-    details1: {
-      type: GraphQLString,
-      description: "Remarks",
-    },
-    details2: {
-      type: GraphQLString,
-      description: "Additional remarks",
-    },
-    dueDate: {
-      type: GraphQLString,
-      description: "Due date", // TODO: Date type
-    },
-    exchangeRateDifferences: {
-      type: GraphQLString,
-      description: "exchange rate differences", // TODO: Enum type, perhaps NonNull
-    },
-    foreignCurrencySum: {
-      type: GraphQLFloat,
-      description: "Total amount in foreign currency",
-    },
+    debtorId: field.debtorId,
+    description: field.description,
+    details1: field.details1,
+    details2: field.details2,
+    dueDate: field.dueDate,
+    exchangeRateDifferences: field.exchangeRateDifferences,
+    foreignCurrencySum: field.foreignCurrencySum,
     id: {
       type: GraphQLNonNull(GraphQLInt),
       description: "Transaction Identifier",
     },
-    inventoryId: {
-      type: GraphQLInt,
-      description: "Inventory Identifier",
-    },
-    linkedFile: {
-      type: GraphQLString,
-      description: "Linked file",
-    },
-    quantity: {
-      type: GraphQLFloat,
-      description: "Quantity",
-    },
+    inventoryId: field.inventoryId,
+    linkedFile: field.linkedFile,
+    quantity: field.quantity,
     records: {
       type: GraphQLList(RecordType),
       description: "Transaction's records details list",
       resolve: (transaction) => resolver.recordsByTransactionId(transaction.id),
     },
-    reference1: {
-      type: GraphQLInt,
-      description: "Reference",
-    },
-    reference2: {
-      type: GraphQLInt,
-      description: "Reference-2",
-    },
-    reference3: {
-      type: GraphQLInt,
-      description: "Reference-3",
-    },
-    registerNumber: {
-      type: GraphQLInt,
-      description: "Register number",
-    },
-    shekelSum: {
-      type: GraphQLFloat,
-      description: "Total NIS amount",
-    },
-    stornoCancelledTransactionId: {
-      type: GraphQLInt,
-      description: "Identifier of transaction cancelled by Strogno",
-    },
-    type: {
-      type: GraphQLString,
-      description: "Transaction type code", // TODO: Enum type?
-    },
-    username: {
-      type: GraphQLString,
-      description: "User name",
-    },
-    valueDate: {
-      type: GraphQLString,
-      description: "Date", // TODO: Date type
-    },
+    reference1: field.reference1,
+    reference2: field.reference2,
+    reference3: field.reference3,
+    registerNumber: field.registerNumber,
+    shekelSum: field.shekelSum,
+    stornoCancelledTransactionId: field.stornoCancelledTransactionId,
+    type: field.transactionType,
+    username: field.username,
+    valueDate: field.valueDate,
   }),
 });
 
-const PostTransactionsResponseFields = {
-  // TODO: rename fields
+const PostTransactionsResponseFields = { // TODO: convers keys
   status: {
     type: GraphQLString,
     description: "Final Status",
@@ -382,90 +293,30 @@ const PostTransaction = new GraphQLInputObjectType({
   name: "PostTransaction",
   description: "Interface for posting new Transaction",
   fields: () => ({
-    authorizedDealerNumber: {
-      type: GraphQLString,
-      description: "VAT registration number (max 9 characters)", // TODO: create validation
-    },
-    branch: {
-      type: GraphQLInt,
-      description: "Branch",
-    },
-    costingCode: {
-      type: GraphQLString,
-      description: "Cost-center code (existing code)",
-    },
-    creditorId: {
-      type: GraphQLString,
-      description: "Main credit account identifier (max 15 charactes)", // TODO: create validation
-    },
-    creditorName: {
-      type: GraphQLString,
-      description: "Name of the main credit account (max 50 characters)", // TODO: create validation
-    },
-    currencyCode: {
-      type: GraphQLString,
-      description: "Currency (max 5 characters)", // TODO: create validation
-    },
-    date3: {
-      type: GraphQLString,
-      description: "Additional date", // TODO: create validation for date type mm/dd/yyyy
-    },
-    debtorId: {
-      type: GraphQLString,
-      description: "Main debit account identifier (max 15 charactes)", // TODO: create validation
-    },
-    debtorName: {
-      type: GraphQLString,
-      description: "Name of the main debit account (max 50 characters)", // TODO: create validation
-    },
-    description: {
-      type: GraphQLString,
-      description: "Description (max 250 characters)", // TODO: create validation
-    },
-    details1: {
-      type: GraphQLString,
-      description: "Remarks (max 50 characters)", // TODO: create validation
-    },
-    details2: {
-      type: GraphQLString,
-      description: "Additional remarks (max 50 characters)", // TODO: create validation
-    },
-    dueDate: {
-      type: GraphQLString,
-      description: "Due date", // TODO: create validation for date type mm/dd/yyyy
-    },
-    foreignCurrencySum: {
-      type: GraphQLFloat,
-      description: "Total amount in foreign currency (credit or debit)",
-    },
-    quantity: {
-      type: GraphQLFloat,
-      description: "Quantity",
-    },
-    reference1: {
-      type: GraphQLInt,
-      description: "Reference",
-    },
-    reference2: {
-      type: GraphQLInt,
-      description: "Reference-2",
-    },
-    reference3: {
-      type: GraphQLInt,
-      description: "Referenc-3",
-    },
+    authorizedDealerNumber: field.authorizedDealerNumber,
+    branch: field.branch,
+    costingCode: field.costingCode,
+    creditorId: field.creditorId,
+    creditorName: field.creditorName,
+    currencyCode: field.currencyCode,
+    date3: field.date3,
+    debtorId: field.debtorId,
+    debtorName: field.debtorName,
+    description: field.description,
+    details1: field.details1,
+    details2: field.details2,
+    dueDate: field.dueDate,
+    foreignCurrencySum: field.foreignCurrencySum,
+    quantity: field.quantity,
+    reference1: field.reference1,
+    reference2: field.reference2,
+    reference3: field.reference3,
     shekelSum: {
       type: GraphQLNonNull(GraphQLFloat),
       description: "Total NIS amount (credit or debit)",
     },
-    type: {
-      type: GraphQLString,
-      description: "Transaction type code", // TODO: is ENUM?
-    },
-    valueDate: {
-      type: GraphQLString,
-      description: "Date", // TODO: create validation for date type mm/dd/yyyy
-    },
+    type: field.transactionType,
+    valueDate: field.valueDate,
     records: {
       type: GraphQLList(PostRecord),
       description: "List of Records to add.",

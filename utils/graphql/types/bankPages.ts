@@ -63,7 +63,7 @@ const BankPageType = new GraphQLObjectType({
   }),
 });
 
-const BankErrorType = new GraphQLObjectType({
+const BankErrorType = new GraphQLObjectType({ // TODO: convers keys
   name: "BankError",
   fields: () => ({
     index: {
@@ -77,7 +77,7 @@ const BankErrorType = new GraphQLObjectType({
   }),
 });
 
-const PostBankPageRecord = new GraphQLInputObjectType({
+const PostBankPageRecord = new GraphQLInputObjectType({ // TODO: convers keys
   name: "PostBankPageRecord",
   description: "Interface for posting new Bank Page Record",
   fields: () => ({
