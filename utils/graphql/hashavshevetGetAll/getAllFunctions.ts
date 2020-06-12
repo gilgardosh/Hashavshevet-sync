@@ -100,6 +100,7 @@ async function getAllTransactions() {
         username: t["username"],
         branchName: t["branch_name"],
         costingCodeName: t["costing_code_name"],
+        date3: t["date3"],
       });
     }
     return transactionsList;
@@ -248,3 +249,4 @@ export {
   getAllBankPageRecords,
   getAllBankPages,
 };
+export * from "../../wizcloudProccess/wizCloudFetch"

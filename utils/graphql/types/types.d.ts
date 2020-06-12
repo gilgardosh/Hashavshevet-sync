@@ -13,70 +13,70 @@ export type Scalars = {
 export type Query = {
   __typename?: 'Query';
   /** A Single Record by its ID */
-  recordById?: Maybe<Record>;
+  getRecordById?: Maybe<Record>;
   /** List of All Records */
-  records?: Maybe<Array<Maybe<Record>>>;
+  getRecords?: Maybe<Array<Maybe<Record>>>;
   /** A Single Transaction by its ID */
-  transactionById?: Maybe<Transaction>;
+  getTransactionById?: Maybe<Transaction>;
   /** List of All Transactions */
-  transactions?: Maybe<Array<Maybe<Transaction>>>;
+  getTransactions?: Maybe<Array<Maybe<Transaction>>>;
   /** A Single Batch by its ID */
-  batchById?: Maybe<Batch>;
+  getBatchById?: Maybe<Batch>;
   /** List of All Batches */
-  batches?: Maybe<Array<Maybe<Batch>>>;
+  getBatches?: Maybe<Array<Maybe<Batch>>>;
   /** A Single Account by its ID */
-  accountById?: Maybe<Account>;
+  getAccountById?: Maybe<Account>;
   /** List of All Accounts */
-  accounts?: Maybe<Array<Maybe<Account>>>;
+  getAccounts?: Maybe<Array<Maybe<Account>>>;
   /** A Single Bank Page Record by its ID */
-  bankPageRecordById?: Maybe<BankPageRecord>;
+  getBankPageRecordById?: Maybe<BankPageRecord>;
   /** List of All Bank Page Records */
-  bankPageRecords?: Maybe<Array<Maybe<BankPageRecord>>>;
+  getBankPageRecords?: Maybe<Array<Maybe<BankPageRecord>>>;
   /** A Single Bank Page (Which Is A List Of Bank Page Records), by its ID */
-  bankPageById?: Maybe<BankPage>;
+  getBankPageById?: Maybe<BankPage>;
   /** List Of Bank Pages */
-  bankPages?: Maybe<Array<Maybe<BankPage>>>;
+  getBankPages?: Maybe<Array<Maybe<BankPage>>>;
   /** List of Companies for user token thats defined on: 'WizcloudApiPrivateKey' */
-  userCompanies?: Maybe<Array<Maybe<Company>>>;
+  getUserCompanies?: Maybe<Array<Maybe<Company>>>;
   /** Get User Details */
-  userDetails?: Maybe<HashavshevetUser>;
+  getUserDetails?: Maybe<HashavshevetUser>;
   /** Checks if there are errors in the batch */
   checkBatch?: Maybe<BatchErrorReport>;
 };
 
 
-export type QueryRecordByIdArgs = {
-  id?: Maybe<Scalars['Int']>;
+export type QueryGetRecordByIdArgs = {
+  id: Scalars['Int'];
 };
 
 
-export type QueryTransactionByIdArgs = {
-  id?: Maybe<Scalars['Int']>;
+export type QueryGetTransactionByIdArgs = {
+  id: Scalars['Int'];
 };
 
 
-export type QueryBatchByIdArgs = {
-  id?: Maybe<Scalars['Int']>;
+export type QueryGetBatchByIdArgs = {
+  id: Scalars['Int'];
 };
 
 
-export type QueryAccountByIdArgs = {
-  id?: Maybe<Scalars['Int']>;
+export type QueryGetAccountByIdArgs = {
+  id: Scalars['Int'];
 };
 
 
-export type QueryBankPageRecordByIdArgs = {
-  id?: Maybe<Scalars['Int']>;
+export type QueryGetBankPageRecordByIdArgs = {
+  id: Scalars['Int'];
 };
 
 
-export type QueryBankPageByIdArgs = {
-  id?: Maybe<Scalars['Int']>;
+export type QueryGetBankPageByIdArgs = {
+  id: Scalars['Int'];
 };
 
 
 export type QueryCheckBatchArgs = {
-  batchId?: Maybe<Scalars['Int']>;
+  batchId: Scalars['Int'];
 };
 
 /** A Single Record */
@@ -148,6 +148,7 @@ export type Transaction = {
   username?: Maybe<Scalars['String']>;
   branchName?: Maybe<Scalars['String']>;
   costingCodeName?: Maybe<Scalars['String']>;
+  date3?: Maybe<Scalars['String']>;
   batch?: Maybe<Batch>;
   debtor?: Maybe<Account>;
   creditor?: Maybe<Account>;
@@ -389,7 +390,7 @@ export type PostTransaction = {
 /** Interface for posting new Record */
 export type PostRecord = {
   accountId: Scalars['String'];
-  debit_orCreditNumber: Scalars['String'];
+  debitOrCreditNumber: Scalars['String'];
   shekelSum: Scalars['Float'];
   foreignCurrencySum?: Maybe<Scalars['Float']>;
 };
@@ -553,21 +554,21 @@ export type ResolversParentTypes = {
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  recordById?: Resolver<Maybe<ResolversTypes['Record']>, ParentType, ContextType, RequireFields<QueryRecordByIdArgs, never>>;
-  records?: Resolver<Maybe<Array<Maybe<ResolversTypes['Record']>>>, ParentType, ContextType>;
-  transactionById?: Resolver<Maybe<ResolversTypes['Transaction']>, ParentType, ContextType, RequireFields<QueryTransactionByIdArgs, never>>;
-  transactions?: Resolver<Maybe<Array<Maybe<ResolversTypes['Transaction']>>>, ParentType, ContextType>;
-  batchById?: Resolver<Maybe<ResolversTypes['Batch']>, ParentType, ContextType, RequireFields<QueryBatchByIdArgs, never>>;
-  batches?: Resolver<Maybe<Array<Maybe<ResolversTypes['Batch']>>>, ParentType, ContextType>;
-  accountById?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType, RequireFields<QueryAccountByIdArgs, never>>;
-  accounts?: Resolver<Maybe<Array<Maybe<ResolversTypes['Account']>>>, ParentType, ContextType>;
-  bankPageRecordById?: Resolver<Maybe<ResolversTypes['BankPageRecord']>, ParentType, ContextType, RequireFields<QueryBankPageRecordByIdArgs, never>>;
-  bankPageRecords?: Resolver<Maybe<Array<Maybe<ResolversTypes['BankPageRecord']>>>, ParentType, ContextType>;
-  bankPageById?: Resolver<Maybe<ResolversTypes['BankPage']>, ParentType, ContextType, RequireFields<QueryBankPageByIdArgs, never>>;
-  bankPages?: Resolver<Maybe<Array<Maybe<ResolversTypes['BankPage']>>>, ParentType, ContextType>;
-  userCompanies?: Resolver<Maybe<Array<Maybe<ResolversTypes['Company']>>>, ParentType, ContextType>;
-  userDetails?: Resolver<Maybe<ResolversTypes['HashavshevetUser']>, ParentType, ContextType>;
-  checkBatch?: Resolver<Maybe<ResolversTypes['BatchErrorReport']>, ParentType, ContextType, RequireFields<QueryCheckBatchArgs, never>>;
+  getRecordById?: Resolver<Maybe<ResolversTypes['Record']>, ParentType, ContextType, RequireFields<QueryGetRecordByIdArgs, 'id'>>;
+  getRecords?: Resolver<Maybe<Array<Maybe<ResolversTypes['Record']>>>, ParentType, ContextType>;
+  getTransactionById?: Resolver<Maybe<ResolversTypes['Transaction']>, ParentType, ContextType, RequireFields<QueryGetTransactionByIdArgs, 'id'>>;
+  getTransactions?: Resolver<Maybe<Array<Maybe<ResolversTypes['Transaction']>>>, ParentType, ContextType>;
+  getBatchById?: Resolver<Maybe<ResolversTypes['Batch']>, ParentType, ContextType, RequireFields<QueryGetBatchByIdArgs, 'id'>>;
+  getBatches?: Resolver<Maybe<Array<Maybe<ResolversTypes['Batch']>>>, ParentType, ContextType>;
+  getAccountById?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType, RequireFields<QueryGetAccountByIdArgs, 'id'>>;
+  getAccounts?: Resolver<Maybe<Array<Maybe<ResolversTypes['Account']>>>, ParentType, ContextType>;
+  getBankPageRecordById?: Resolver<Maybe<ResolversTypes['BankPageRecord']>, ParentType, ContextType, RequireFields<QueryGetBankPageRecordByIdArgs, 'id'>>;
+  getBankPageRecords?: Resolver<Maybe<Array<Maybe<ResolversTypes['BankPageRecord']>>>, ParentType, ContextType>;
+  getBankPageById?: Resolver<Maybe<ResolversTypes['BankPage']>, ParentType, ContextType, RequireFields<QueryGetBankPageByIdArgs, 'id'>>;
+  getBankPages?: Resolver<Maybe<Array<Maybe<ResolversTypes['BankPage']>>>, ParentType, ContextType>;
+  getUserCompanies?: Resolver<Maybe<Array<Maybe<ResolversTypes['Company']>>>, ParentType, ContextType>;
+  getUserDetails?: Resolver<Maybe<ResolversTypes['HashavshevetUser']>, ParentType, ContextType>;
+  checkBatch?: Resolver<Maybe<ResolversTypes['BatchErrorReport']>, ParentType, ContextType, RequireFields<QueryCheckBatchArgs, 'batchId'>>;
 };
 
 export type RecordResolvers<ContextType = any, ParentType extends ResolversParentTypes['Record'] = ResolversParentTypes['Record']> = {
@@ -636,6 +637,7 @@ export type TransactionResolvers<ContextType = any, ParentType extends Resolvers
   username?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   branchName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   costingCodeName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  date3?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   batch?: Resolver<Maybe<ResolversTypes['Batch']>, ParentType, ContextType>;
   debtor?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType>;
   creditor?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType>;

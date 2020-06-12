@@ -4,11 +4,6 @@ import {
   GraphQLInt,
   GraphQLNonNull,
 } from "graphql";
-import * as resolver from "./resolvers";
-import * as recordTransaction from "./types/recordsTransactions";
-import * as batch from "./types/batches";
-import * as account from "./types/accounts";
-import * as bankPage from "./types/bankPages";
 
 const CompanyType = new GraphQLObjectType({
   name: "Company",

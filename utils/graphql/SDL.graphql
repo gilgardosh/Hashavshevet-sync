@@ -1,50 +1,53 @@
 type Query {
   """A Single Record by its ID"""
-  recordById(id: Int): Record
+  getRecordById(id: Int!): Record
 
   """List of All Records"""
-  records: [Record]
+  getRecords: [Record]
 
   """A Single Transaction by its ID"""
-  transactionById(id: Int): Transaction
+  getTransactionById(id: Int!): Transaction
 
   """List of All Transactions"""
-  transactions: [Transaction]
+  getTransactions: [Transaction]
 
   """A Single Batch by its ID"""
-  batchById(id: Int): Batch
+  getBatchById(id: Int!): Batch
 
   """List of All Batches"""
-  batches: [Batch]
+  getBatches: [Batch]
 
   """A Single Account by its ID"""
-  accountById(id: Int): Account
+  getAccountById(id: Int!): Account
 
   """List of All Accounts"""
-  accounts: [Account]
+  getAccounts: [Account]
 
   """A Single Bank Page Record by its ID"""
-  bankPageRecordById(id: Int): BankPageRecord
+  getBankPageRecordById(id: Int!): BankPageRecord
 
   """List of All Bank Page Records"""
-  bankPageRecords: [BankPageRecord]
+  getBankPageRecords: [BankPageRecord]
 
   """A Single Bank Page (Which Is A List Of Bank Page Records), by its ID"""
-  bankPageById(id: Int): BankPage
+  getBankPageById(id: Int!): BankPage
 
   """List Of Bank Pages"""
-  bankPages: [BankPage]
+  getBankPages: [BankPage]
 
   """
   List of Companies for user token thats defined on: 'WizcloudApiPrivateKey'
   """
-  userCompanies: [Company]
+  getUserCompanies: [Company]
 
   """Get User Details"""
-  userDetails: HashavshevetUser
+  getUserDetails: HashavshevetUser
 
   """Checks if there are errors in the batch"""
-  checkBatch(batchId: Int): BatchErrorReport
+  checkBatch(
+    """check the batch having this number"""
+    batchId: Int!
+  ): BatchErrorReport
 }
 
 """A Single Record"""
@@ -114,6 +117,7 @@ type Transaction {
   username: String
   branchName: String
   costingCodeName: String
+  date3: String
   batch: Batch
   debtor: Account
   creditor: Account
@@ -249,12 +253,34 @@ type Mutation {
   newBatch: NewBatch
 
   """Checks and inputs the temporary batch into the permanent storage"""
-  issueBatch(batchId: Int): IsuueBatch
+  issueBatch(
+    """Input the batch having this number"""
+    batchId: Int
+  ): IsuueBatch
 
   """
   Import transactions to a new or already existing temporary batch. You may check for errors or input the batch into the permanent storage (if no errors were found).
   """
-  postTransactionsToBatch(batchId: Int, insertToLastBatch: Boolean, checkBatch: Boolean, issueBatch: Boolean, transactionsList: [PostTransaction]): PostTransactionsResponse
+  postTransactionsToBatch(
+    """
+    Insert the transactions to the temporary batch having this number. If no such temporary batch exists, open a new batch.
+    """
+    batchId: Int
+
+    """check the batch for errors and return the batch status"""
+    checkBatch: Boolean
+
+    """
+    Insert the transactions to the last open temporary batch. If false, open a new batch.
+    """
+    insertToLastBatch: Boolean
+
+    """input the temporary batch into the permanent storage."""
+    issueBatch: Boolean
+
+    """List of Transactions to add."""
+    transactionsList: [PostTransaction]
+  ): PostTransactionsResponse
 
   """Import  or update records to chosen index"""
   postBankPage(bankPageRecords: [PostBankPageRecord]): PostBankPageResponse
@@ -281,9 +307,11 @@ type PostTransactionsResponsWithoutErrors {
   batch_check: String
   newbatch: Int
   batchno: Int
-  batch_id: Int
-  errors: String
+  batchId: Int
   batch: Batch
+
+  """errors list"""
+  errors: String
 }
 
 """Response for Posting Transactions to a Batch"""
@@ -293,43 +321,101 @@ type PostTransactionsResponsWithErrors {
   batch_check: String
   newbatch: Int
   batchno: Int
-  batch_id: Int
-  errors: [ARecordErrorDetails]
+  batchId: Int
   batch: Batch
+
+  """errors list"""
+  errors: [ARecordErrorDetails]
 }
 
 """Interface for posting new Transaction"""
 input PostTransaction {
-  branch: Int
-  costingCode: String
-  creditorName: String
-  currencyCode: String
-  date3: String
-  debtorName: String
-  description: String
-  details2: String
-  details1: String
-  dueDate: String
+  """VAT registration number (max 9 characters)"""
   authorizedDealerNumber: String
-  quantity: Float
-  reference1: Int
-  reference2: Int
-  reference3: Int
-  shekelSum: Float!
-  foreignCurrencySum: Float
+
+  """Branch"""
+  branch: Int
+
+  """Cost-center code (existing code)"""
+  costingCode: String
+
+  """Main credit account key (max 15 charactes)"""
   creditorId: String!
+
+  """Name of the main credit account (max 50 characters)"""
+  creditorName: String
+
+  """Currency (max 5 characters)"""
+  currencyCode: String
+
+  """Additional date"""
+  date3: String
+
+  """Main debit account key (max 15 charactes)"""
   debtorId: String!
+
+  """Name of the main debit account (max 50 characters)"""
+  debtorName: String
+
+  """Description (max 250 characters)"""
+  description: String
+
+  """Additional remarks (max 50 characters)"""
+  details2: String
+
+  """Remarks (max 50 characters)"""
+  details1: String
+
+  """Due date"""
+  dueDate: String
+
+  """Total amount in foreign currency (credit or debit)"""
+  foreignCurrencySum: Float
+
+  """Quantity"""
+  quantity: Float
+
+  """Reference"""
+  reference1: Int
+
+  """Reference-2"""
+  reference2: Int
+
+  """Referenc-3"""
+  reference3: Int
+
+  """Total NIS amount (credit or debit)"""
+  shekelSum: Float!
+
+  """Transaction type code"""
   type: String
+
+  """Date"""
   valueDate: String
+
+  """List of Records to add."""
   records: [PostRecord]
 }
 
 """Interface for posting new Record"""
 input PostRecord {
+  """Account key (max 15 characters)"""
   accountId: String!
-  debit_orCreditNumber: String!
-  shekelSum: Float!
+
+  """Credit/Debit"""
+  debitOrCreditNumber: debitOrCreditNumber!
+
+  """Foreign currency amount"""
   foreignCurrencySum: Float
+
+  """NIS amount"""
+  shekelSum: Float!
+}
+
+"""Credit/Debit"""
+enum debitOrCreditNumber {
+  Credit
+  Debit
 }
 
 type PostBankPageResponse {
