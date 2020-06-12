@@ -65,11 +65,11 @@ const RecordType = new GraphQLObjectType({
       description: "Cumulative balance without opening balance",
     },
     debitOrCredit: {
-      type: GraphQLNonNull(GraphQLString),
+      type: GraphQLString,
       description: "Credit / Debit",
     },
     debitOrCreditNumber: {
-      type: GraphQLNonNull(GraphQLInt),
+      type: GraphQLInt,
       description: "0=Credit / 1=Debit",
     },
     estimatedSum: {
@@ -166,8 +166,8 @@ const TransactionType = new GraphQLObjectType({
       description: "Batch Identifier",
     },
     branch: {
-      type: GraphQLInt, // NonNull? Enum  type?
-      description: "Branch",
+      type: GraphQLInt,
+      description: "Branch", // NonNull? Enum  type?
     },
     branchName: {
       type: GraphQLString,
@@ -199,8 +199,8 @@ const TransactionType = new GraphQLObjectType({
       description: "Main credit account Identifier",
     },
     currencyCode: {
-      type: GraphQLString, // Enum type?
-      description: "Currency",
+      type: GraphQLString,
+      description: "Currency", // Enum type?
     },
     date3: {
       type: GraphQLString,
@@ -228,12 +228,12 @@ const TransactionType = new GraphQLObjectType({
       description: "Additional remarks",
     },
     dueDate: {
-      type: GraphQLString, // Date type
-      description: "Due date",
+      type: GraphQLString,
+      description: "Due date", // Date type
     },
     exchangeRateDifferences: {
-      type: GraphQLString, // Enum type, perhaps NonNull
-      description: "exchange rate differences",
+      type: GraphQLString,
+      description: "exchange rate differences", // Enum type, perhaps NonNull
     },
     foreignCurrencySum: {
       type: GraphQLFloat,
@@ -257,7 +257,7 @@ const TransactionType = new GraphQLObjectType({
     },
     records: {
       type: GraphQLList(RecordType),
-      description: "Transaction's records details",
+      description: "Transaction's records details list",
       resolve: (transaction) => resolver.recordsByTransactionId(transaction.id),
     },
     reference1: {
@@ -285,16 +285,16 @@ const TransactionType = new GraphQLObjectType({
       description: "Identifier of transaction cancelled by Strogno",
     },
     type: {
-      type: GraphQLString, // Enum type?
-      description: "Transaction type code",
+      type: GraphQLString,
+      description: "Transaction type code", // Enum type?
     },
     username: {
       type: GraphQLString,
       description: "User name",
     },
     valueDate: {
-      type: GraphQLString, // Date type
-      description: "Date",
+      type: GraphQLString,
+      description: "Date", // Date type
     },
   }),
 });
@@ -363,11 +363,11 @@ const PostTransactionsResponseWithErrors = new GraphQLObjectType({
 
 const PostTransactionsResponseType = new GraphQLUnionType({
   name: "PostTransactionsResponse",
-  description: "Response for Posting Transactions to a Batch",
   types: [
     PostTransactionsResponseWithoutErrors,
     PostTransactionsResponseWithErrors,
   ],
+  description: "Response for Posting Transactions to a Batch",
   resolveType: (data) => {
     if (typeof data.errors === "string" || typeof data.errors === "undefined") {
       return PostTransactionsResponseWithoutErrors;

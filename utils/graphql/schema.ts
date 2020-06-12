@@ -21,7 +21,10 @@ const RootQueryType = new GraphQLObjectType({
       type: graphql.RecordType,
       description: "A Single Record by its ID",
       args: {
-        id: { type: GraphQLNonNull(GraphQLInt) },
+        id: {
+          type: GraphQLNonNull(GraphQLInt),
+          description: "Record identifier",
+        },
       },
       resolve: (_, args) => resolver.recordById(args.id),
     },
@@ -34,7 +37,10 @@ const RootQueryType = new GraphQLObjectType({
       type: graphql.TransactionType,
       description: "A Single Transaction by its ID",
       args: {
-        id: { type: GraphQLNonNull(GraphQLInt) },
+        id: {
+          type: GraphQLNonNull(GraphQLInt),
+          description: "Transaction identifier",
+        },
       },
       resolve: (_, args) => resolver.transactionById(args.id),
     },
@@ -47,7 +53,10 @@ const RootQueryType = new GraphQLObjectType({
       type: graphql.BatchType,
       description: "A Single Batch by its ID",
       args: {
-        id: { type: GraphQLNonNull(GraphQLInt) },
+        id: {
+          type: GraphQLNonNull(GraphQLInt),
+          description: "Batch identifier",
+        },
       },
       resolve: (_, args) => resolver.batchById(args.id),
     },
@@ -60,7 +69,10 @@ const RootQueryType = new GraphQLObjectType({
       type: graphql.AccountType,
       description: "A Single Account by its ID",
       args: {
-        id: { type: GraphQLNonNull(GraphQLInt) },
+        id: {
+          type: GraphQLNonNull(GraphQLInt),
+          description: "Account identifier",
+        },
       },
       resolve: (_, args) => resolver.accountById(args.id),
     },
@@ -73,7 +85,10 @@ const RootQueryType = new GraphQLObjectType({
       type: graphql.BankPageRecordType,
       description: "A Single Bank Page Record by its ID",
       args: {
-        id: { type: GraphQLNonNull(GraphQLInt) },
+        id: {
+          type: GraphQLNonNull(GraphQLInt),
+          description: "Bank page record identifier",
+        },
       },
       resolve: (_, args) => resolver.bankPageRecordById(args.id),
     },
@@ -87,7 +102,10 @@ const RootQueryType = new GraphQLObjectType({
       description:
         "A Single Bank Page (Which Is A List Of Bank Page Records), by its ID",
       args: {
-        id: { type: GraphQLNonNull(GraphQLInt) },
+        id: {
+          type: GraphQLNonNull(GraphQLInt),
+          description: "Bank page identifier",
+        },
       },
       resolve: (_, args) => resolver.bankPageById(args.id),
     },
@@ -153,7 +171,10 @@ const RootMutationType = new GraphQLObjectType({
       type: graphql.PostBankPageResponseType,
       description: "Import  or update records to chosen index",
       args: {
-        bankPageRecords: { type: GraphQLList(PostBankPageRecord) },
+        bankPageRecords: {
+          type: GraphQLList(PostBankPageRecord),
+          description: "Bank page's records details list",
+        },
       },
       resolve: (_, args) => resolver.postBankPage(args),
     },

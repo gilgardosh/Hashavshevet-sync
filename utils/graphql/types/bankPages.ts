@@ -3,68 +3,46 @@ import {
   GraphQLString,
   GraphQLList,
   GraphQLInt,
-  GraphQLFloat,
   GraphQLNonNull,
   GraphQLInputObjectType,
 } from "graphql";
 import * as resolver from "../resolvers";
 import * as type from "../types";
+import * as field from "./fields"
 
 const BankPageRecordType = new GraphQLObjectType({
   name: "BankPageRecord",
   description: "A Single Bank Page Record",
   fields: () => ({
-    id: {
-      type: GraphQLNonNull(GraphQLInt),
+    account: {
+      type: type.AccountType,
+      description: "Main account details",
+      resolve: (record) => resolver.accountById(record.accountId),
+    },
+    accountId: field.accountId,
+    accountName: field.accountName,  // remove?
+    adjustedRecord: field.adjustedRecord,
+    bankPage: {
+      type: BankPageType,
+      description: "Bank page details",
+      resolve: (record) => resolver.bankPageById(record.bankPageId),
     },
     bankPageId: {
       type: GraphQLNonNull(GraphQLInt),
+      description: "Bank page identifier",
     },
-    reference: {
-      type: GraphQLInt,
+    cumulativeBalance: field.cumulativeBalance,
+    cumulativeBalanceCalculated: field.cumulativeBalanceCalculated,
+    debitOrCredit: field.debitOrCreditName,
+    details: field.details1,
+    id: {
+      type: GraphQLNonNull(GraphQLInt),
+      description: "Bank page record identifier",
     },
-    debitOrCredit: {
-      type: GraphQLNonNull(GraphQLString),
-    },
-    cumulativeBalance: {
-      type: GraphQLFloat,
-    },
-    cumulativeBalanceCalculated: {
-      type: GraphQLFloat,
-    },
-    matchNumber: {
-      type: GraphQLInt,
-    },
-    accountId: {
-      type: GraphQLString,
-    },
-    sum: {
-      type: GraphQLFloat,
-    },
-    details: {
-      type: GraphQLString,
-    },
-    accountName: {
-      type: GraphQLString, // remove?
-    },
-    date: {
-      type: GraphQLString, // Date type
-    },
-    adjustedRecord: {
-      type: GraphQLString,
-    },
-    bankPage: {
-      type: BankPageType,
-      resolve: (record) => {
-        return resolver.bankPageById(record.bank_page_id);
-      },
-    },
-    account: {
-      type: type.AccountType,
-      resolve: (record) => {
-        return resolver.accountById(record.account_id);
-      },
-    },
+    matchNumber: field.matchNumber,
+    reference: field.reference1,
+    sum: field.sum,
+    date: field.date,
   }),
 });
 
@@ -75,12 +53,12 @@ const BankPageType = new GraphQLObjectType({
   fields: () => ({
     id: {
       type: GraphQLNonNull(GraphQLInt),
+      description: "Bank page identifier",
     },
     bankPageRecords: {
       type: GraphQLList(BankPageRecordType),
-      resolve: (page) => {
-        return resolver.bankPageRecordsByBankPageId(page.id);
-      },
+      description: "Bank page's records details list",
+      resolve: (page) =>  resolver.bankPageRecordsByBankPageId(page.id),
     },
   }),
 });
@@ -90,9 +68,11 @@ const BankErrorType = new GraphQLObjectType({
   fields: () => ({
     index: {
       type: GraphQLInt,
+      description: "Index",
     },
     err: {
       type: GraphQLString,
+      description: "Error description",
     },
   }),
 });
@@ -103,19 +83,18 @@ const PostBankPageRecord = new GraphQLInputObjectType({
   fields: () => ({
     AccountKey: {
       type: GraphQLNonNull(GraphQLString),
+      description: "Account identifier (max 15 character)", // TODO: add varification
     },
-    Reference: {
-      type: GraphQLInt,
-    },
+    Reference: field.reference1,
     CreditDebit: {
-      type: GraphQLNonNull(GraphQLInt),
+      type: GraphQLNonNull(field.debitOrCreditNumberEnum),
+      description: "Credit / Debit",
     },
     SuF: {
       type: GraphQLNonNull(GraphQLInt),
+      description: "Amount",
     },
-    Details: {
-      type: GraphQLString,
-    },
+    Details: field.details1,
   })
 })
 
@@ -124,9 +103,11 @@ const PostBankPageResponseType = new GraphQLObjectType({
   fields: () => ({
     status: {
       type: GraphQLString,
+      description: "Post proccess status",
     },
     errors: {
       type: GraphQLList(BankErrorType),
+      description: "Errors list",
     },
   }),
 });
