@@ -452,7 +452,7 @@ type BankPageRecord {
   cumulativeBalanceCalculated: Float
 
   """Credit / Debit"""
-  debitOrCredit: debitOrCreditNameEnum
+  debitOrCredit: debitOrCreditBankEnum
 
   """Remarks (max 50 characters)"""
   details: String
@@ -482,6 +482,12 @@ type BankPage {
 
   """Bank page's records details list"""
   bankPageRecords: [BankPageRecord]
+}
+
+"""Credit / Debit"""
+enum debitOrCreditBankEnum {
+  Credit
+  Debit
 }
 
 """A Single Hashavshevet Company"""
@@ -783,7 +789,7 @@ input PostBankPageRecord {
   Reference: Int
 
   """Credit / Debit"""
-  CreditDebit: debitOrCreditNumberEnum!
+  CreditDebit: debitOrCreditBankEnum!
 
   """Amount"""
   SuF: Int!

@@ -351,7 +351,7 @@ export type BankPageRecord = {
   /** Calculated cumulative balance */
   cumulativeBalanceCalculated?: Maybe<Scalars['Float']>;
   /** Credit / Debit */
-  debitOrCredit?: Maybe<DebitOrCreditNameEnum>;
+  debitOrCredit?: Maybe<DebitOrCreditBankEnum>;
   /** Remarks (max 50 characters) */
   details?: Maybe<Scalars['String']>;
   /** Bank page record identifier */
@@ -374,6 +374,12 @@ export type BankPage = {
   /** Bank page's records details list */
   bankPageRecords?: Maybe<Array<Maybe<BankPageRecord>>>;
 };
+
+/** Credit / Debit */
+export enum DebitOrCreditBankEnum {
+  Credit = 'Credit',
+  Debit = 'Debit'
+}
 
 /** A Single Hashavshevet Company */
 export type Company = {
@@ -609,7 +615,7 @@ export type PostBankPageRecord = {
   /** Reference */
   Reference?: Maybe<Scalars['Int']>;
   /** Credit / Debit */
-  CreditDebit: DebitOrCreditNumberEnum;
+  CreditDebit: DebitOrCreditBankEnum;
   /** Amount */
   SuF: Scalars['Int'];
   /** Remarks (max 50 characters) */
@@ -622,11 +628,16 @@ export type PostBankPageRecord = {
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
 
-export type StitchingResolver<TResult, TParent, TContext, TArgs> = {
+export type LegacyStitchingResolver<TResult, TParent, TContext, TArgs> = {
   fragment: string;
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
 };
 
+export type NewStitchingResolver<TResult, TParent, TContext, TArgs> = {
+  selectionSet: string;
+  resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
+};
+export type StitchingResolver<TResult, TParent, TContext, TArgs> = LegacyStitchingResolver<TResult, TParent, TContext, TArgs> | NewStitchingResolver<TResult, TParent, TContext, TArgs>;
 export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
   | ResolverFn<TResult, TParent, TContext, TArgs>
   | StitchingResolver<TResult, TParent, TContext, TArgs>;
@@ -676,7 +687,7 @@ export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
   info: GraphQLResolveInfo
 ) => Maybe<TTypes> | Promise<Maybe<TTypes>>;
 
-export type isTypeOfResolverFn<T = {}> = (obj: T, info: GraphQLResolveInfo) => boolean | Promise<boolean>;
+export type IsTypeOfResolverFn<T = {}> = (obj: T, info: GraphQLResolveInfo) => boolean | Promise<boolean>;
 
 export type NextResolverFn<T> = () => Promise<T>;
 
@@ -703,6 +714,7 @@ export type ResolversTypes = {
   debitOrCreditNumberEnum: DebitOrCreditNumberEnum;
   BankPageRecord: ResolverTypeWrapper<BankPageRecord>;
   BankPage: ResolverTypeWrapper<BankPage>;
+  debitOrCreditBankEnum: DebitOrCreditBankEnum;
   Company: ResolverTypeWrapper<Company>;
   HashavshevetUser: ResolverTypeWrapper<HashavshevetUser>;
   BatchErrorReport: ResolversTypes['BatchCheckMessage'] | ResolversTypes['BatchCheckList'];
@@ -738,6 +750,7 @@ export type ResolversParentTypes = {
   debitOrCreditNumberEnum: DebitOrCreditNumberEnum;
   BankPageRecord: BankPageRecord;
   BankPage: BankPage;
+  debitOrCreditBankEnum: DebitOrCreditBankEnum;
   Company: Company;
   HashavshevetUser: HashavshevetUser;
   BatchErrorReport: ResolversParentTypes['BatchCheckMessage'] | ResolversParentTypes['BatchCheckList'];
@@ -808,7 +821,7 @@ export type RecordResolvers<ContextType = any, ParentType extends ResolversParen
   shekelSumOpenInRecord?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   transaction?: Resolver<Maybe<ResolversTypes['Transaction']>, ParentType, ContextType>;
   transactionId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  __isTypeOf?: isTypeOfResolverFn<ParentType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
 export type AccountResolvers<ContextType = any, ParentType extends ResolversParentTypes['Account'] = ResolversParentTypes['Account']> = {
@@ -848,7 +861,7 @@ export type AccountResolvers<ContextType = any, ParentType extends ResolversPare
   centralAccount?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   accountantTransfer?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   costingCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: isTypeOfResolverFn<ParentType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
 export type BatchResolvers<ContextType = any, ParentType extends ResolversParentTypes['Batch'] = ResolversParentTypes['Batch']> = {
@@ -861,7 +874,7 @@ export type BatchResolvers<ContextType = any, ParentType extends ResolversParent
   status?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   transactions?: Resolver<Maybe<Array<Maybe<ResolversTypes['Transaction']>>>, ParentType, ContextType>;
   type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: isTypeOfResolverFn<ParentType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
 export type TransactionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Transaction'] = ResolversParentTypes['Transaction']> = {
@@ -900,7 +913,7 @@ export type TransactionResolvers<ContextType = any, ParentType extends Resolvers
   type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   username?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   valueDate?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: isTypeOfResolverFn<ParentType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
 export type BankPageRecordResolvers<ContextType = any, ParentType extends ResolversParentTypes['BankPageRecord'] = ResolversParentTypes['BankPageRecord']> = {
@@ -912,27 +925,27 @@ export type BankPageRecordResolvers<ContextType = any, ParentType extends Resolv
   bankPageId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   cumulativeBalance?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   cumulativeBalanceCalculated?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  debitOrCredit?: Resolver<Maybe<ResolversTypes['debitOrCreditNameEnum']>, ParentType, ContextType>;
+  debitOrCredit?: Resolver<Maybe<ResolversTypes['debitOrCreditBankEnum']>, ParentType, ContextType>;
   details?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   matchNumber?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   reference?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   sum?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   date?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: isTypeOfResolverFn<ParentType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
 export type BankPageResolvers<ContextType = any, ParentType extends ResolversParentTypes['BankPage'] = ResolversParentTypes['BankPage']> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   bankPageRecords?: Resolver<Maybe<Array<Maybe<ResolversTypes['BankPageRecord']>>>, ParentType, ContextType>;
-  __isTypeOf?: isTypeOfResolverFn<ParentType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
 export type CompanyResolvers<ContextType = any, ParentType extends ResolversParentTypes['Company'] = ResolversParentTypes['Company']> = {
   Company_File_Name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   Company_Name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   Comp_Vatnum?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: isTypeOfResolverFn<ParentType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
 export type HashavshevetUserResolvers<ContextType = any, ParentType extends ResolversParentTypes['HashavshevetUser'] = ResolversParentTypes['HashavshevetUser']> = {
@@ -944,7 +957,7 @@ export type HashavshevetUserResolvers<ContextType = any, ParentType extends Reso
   user_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   company_id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   branch?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  __isTypeOf?: isTypeOfResolverFn<ParentType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
 export type BatchErrorReportResolvers<ContextType = any, ParentType extends ResolversParentTypes['BatchErrorReport'] = ResolversParentTypes['BatchErrorReport']> = {
@@ -953,12 +966,12 @@ export type BatchErrorReportResolvers<ContextType = any, ParentType extends Reso
 
 export type BatchCheckMessageResolvers<ContextType = any, ParentType extends ResolversParentTypes['BatchCheckMessage'] = ResolversParentTypes['BatchCheckMessage']> = {
   batch_check?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: isTypeOfResolverFn<ParentType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
 export type BatchCheckListResolvers<ContextType = any, ParentType extends ResolversParentTypes['BatchCheckList'] = ResolversParentTypes['BatchCheckList']> = {
   batch_check?: Resolver<Maybe<Array<Maybe<ResolversTypes['ARecordErrorDetails']>>>, ParentType, ContextType>;
-  __isTypeOf?: isTypeOfResolverFn<ParentType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
 export type ARecordErrorDetailsResolvers<ContextType = any, ParentType extends ResolversParentTypes['ARecordErrorDetails'] = ResolversParentTypes['ARecordErrorDetails']> = {
@@ -969,7 +982,7 @@ export type ARecordErrorDetailsResolvers<ContextType = any, ParentType extends R
   TxtMsg?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   transaction?: Resolver<Maybe<ResolversTypes['Transaction']>, ParentType, ContextType>;
   record?: Resolver<Maybe<ResolversTypes['Record']>, ParentType, ContextType>;
-  __isTypeOf?: isTypeOfResolverFn<ParentType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
@@ -982,7 +995,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 export type NewBatchResolvers<ContextType = any, ParentType extends ResolversParentTypes['NewBatch'] = ResolversParentTypes['NewBatch']> = {
   newbatch?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   batch?: Resolver<Maybe<ResolversTypes['Batch']>, ParentType, ContextType>;
-  __isTypeOf?: isTypeOfResolverFn<ParentType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
 export type IsuueBatchResolvers<ContextType = any, ParentType extends ResolversParentTypes['IsuueBatch'] = ResolversParentTypes['IsuueBatch']> = {
@@ -991,7 +1004,7 @@ export type IsuueBatchResolvers<ContextType = any, ParentType extends ResolversP
 
 export type IssueBatchStatusResolvers<ContextType = any, ParentType extends ResolversParentTypes['IssueBatchStatus'] = ResolversParentTypes['IssueBatchStatus']> = {
   batch_issue?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: isTypeOfResolverFn<ParentType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
 export type PostTransactionsResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['PostTransactionsResponse'] = ResolversParentTypes['PostTransactionsResponse']> = {
@@ -1007,7 +1020,7 @@ export type PostTransactionsResponsWithoutErrorsResolvers<ContextType = any, Par
   batchId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   batch?: Resolver<Maybe<ResolversTypes['Batch']>, ParentType, ContextType>;
   errors?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: isTypeOfResolverFn<ParentType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
 export type PostTransactionsResponsWithErrorsResolvers<ContextType = any, ParentType extends ResolversParentTypes['PostTransactionsResponsWithErrors'] = ResolversParentTypes['PostTransactionsResponsWithErrors']> = {
@@ -1019,19 +1032,19 @@ export type PostTransactionsResponsWithErrorsResolvers<ContextType = any, Parent
   batchId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   batch?: Resolver<Maybe<ResolversTypes['Batch']>, ParentType, ContextType>;
   errors?: Resolver<Maybe<Array<Maybe<ResolversTypes['ARecordErrorDetails']>>>, ParentType, ContextType>;
-  __isTypeOf?: isTypeOfResolverFn<ParentType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
 export type PostBankPageResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['PostBankPageResponse'] = ResolversParentTypes['PostBankPageResponse']> = {
   status?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   errors?: Resolver<Maybe<Array<Maybe<ResolversTypes['BankError']>>>, ParentType, ContextType>;
-  __isTypeOf?: isTypeOfResolverFn<ParentType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
 export type BankErrorResolvers<ContextType = any, ParentType extends ResolversParentTypes['BankError'] = ResolversParentTypes['BankError']> = {
   index?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   err?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: isTypeOfResolverFn<ParentType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
 export type Resolvers<ContextType = any> = {

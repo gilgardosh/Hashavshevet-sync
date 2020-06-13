@@ -33,7 +33,7 @@ const BankPageRecordType = new GraphQLObjectType({
     },
     cumulativeBalance: field.cumulativeBalance,
     cumulativeBalanceCalculated: field.cumulativeBalanceCalculated,
-    debitOrCredit: field.debitOrCreditName,
+    debitOrCredit: field.debitOrCreditNameForBank,
     details: field.details1,
     id: {
       type: GraphQLNonNull(GraphQLInt),
@@ -87,7 +87,7 @@ const PostBankPageRecord = new GraphQLInputObjectType({ // TODO: convers keys
     },
     Reference: field.reference1,
     CreditDebit: {
-      type: GraphQLNonNull(field.debitOrCreditNumberEnum),
+      type: GraphQLNonNull(field.debitOrCreditBankEnum),
       description: "Credit / Debit",
     },
     SuF: {

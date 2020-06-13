@@ -170,6 +170,22 @@ const debitOrCreditName = {
   type: debitOrCreditNameEnum,
   description: "Credit / Debit",
 };
+const debitOrCreditBankEnum = new GraphQLEnumType({
+  name: "debitOrCreditBankEnum",
+  description: "Credit / Debit",
+  values: {
+    Credit: {
+      value: "זכות",
+    },
+    Debit: {
+      value: "חובה",
+    },
+  },
+});
+const debitOrCreditNameForBank = {
+  type: debitOrCreditBankEnum,
+  description: "Credit / Debit",
+};
 const debitOrCreditNumberEnum = new GraphQLEnumType({
   name: "debitOrCreditNumberEnum",
   description: "Credit / Debit",
@@ -457,6 +473,8 @@ export {
   debitOrCreditName,
   debitOrCreditNumber,
   debitOrCreditNumberEnum,
+  debitOrCreditBankEnum,
+  debitOrCreditNameForBank,
   debtorId,
   debtorName,
   description,
