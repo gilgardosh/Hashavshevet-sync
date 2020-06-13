@@ -7,7 +7,7 @@ import {
   GraphQLUnionType,
 } from "graphql";
 import * as resolver from "../resolvers";
-import * as type from "../types";
+import * as type from "./graphqlTypes";
 import * as field from "./fields"
 
 const BatchType = new GraphQLObjectType({

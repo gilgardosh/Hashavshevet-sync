@@ -6,7 +6,7 @@ import {
   getAllAccounts,
   getAllBankPageRecords,
   getAllBankPages,
-} from "./hashavshevetGetAll/getAllFunctions";
+} from "./hashavshevet/hashavshevet";
 
 const recordById = new DataLoader(async (recordIds) => {
   const recordsList = await getAllRecords();

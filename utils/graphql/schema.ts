@@ -5,13 +5,12 @@ import {
   GraphQLList,
   GraphQLInt,
   printSchema,
-  GraphQLBoolean,
   GraphQLNonNull,
 } from "graphql";
-import * as graphqlType from "./types";
+import * as graphqlType from "./types/graphqlTypes";
 import * as resolver from "./resolvers";
-import * as hashavshevet from "../wizcloudProccess/wizCloudFetch";
-import { PostBankPageRecord } from "./types/bankPages";
+import * as hashavshevet from "./hashavshevet/wizcloud/wizCloudFetch";
+import * as type from "./types/types";
 
 const RootQueryType = new GraphQLObjectType({
   name: "Query",
@@ -25,7 +24,7 @@ const RootQueryType = new GraphQLObjectType({
           description: "Record identifier",
         },
       },
-      resolve: (_, args) => resolver.recordById(args.id),
+      resolve: (_, args: type.QueryGetRecordByIdArgs) => resolver.recordById(args.id),
     },
     getRecords: {
       type: GraphQLList(graphqlType.RecordType),
@@ -41,7 +40,7 @@ const RootQueryType = new GraphQLObjectType({
           description: "Transaction identifier",
         },
       },
-      resolve: (_, args) => resolver.transactionById(args.id),
+      resolve: (_, args: type.QueryGetTransactionByIdArgs) => resolver.transactionById(args.id),
     },
     getTransactions: {
       type: GraphQLList(graphqlType.TransactionType),
@@ -57,7 +56,7 @@ const RootQueryType = new GraphQLObjectType({
           description: "Batch identifier",
         },
       },
-      resolve: (_, args) => resolver.batchById(args.id),
+      resolve: (_, args: type.QueryGetBatchByIdArgs) => resolver.batchById(args.id),
     },
     getBatches: {
       type: GraphQLList(graphqlType.BatchType),
@@ -73,7 +72,7 @@ const RootQueryType = new GraphQLObjectType({
           description: "Account identifier",
         },
       },
-      resolve: (_, args) => resolver.accountById(args.id),
+      resolve: (_, args: type.QueryGetAccountByIdArgs) => resolver.accountById(args.id),
     },
     getAccounts: {
       type: GraphQLList(graphqlType.AccountType),
@@ -89,7 +88,7 @@ const RootQueryType = new GraphQLObjectType({
           description: "Bank page record identifier",
         },
       },
-      resolve: (_, args) => resolver.bankPageRecordById(args.id),
+      resolve: (_, args: type.QueryGetBankPageRecordByIdArgs) => resolver.bankPageRecordById(args.id),
     },
     getBankPageRecords: {
       type: GraphQLList(graphqlType.BankPageRecordType),
@@ -106,7 +105,7 @@ const RootQueryType = new GraphQLObjectType({
           description: "Bank page identifier",
         },
       },
-      resolve: (_, args) => resolver.bankPageById(args.id),
+      resolve: (_, args: type.QueryGetBankPageByIdArgs) => resolver.bankPageById(args.id),
     },
     getBankPages: {
       type: GraphQLList(graphqlType.BankPageType),
@@ -133,7 +132,7 @@ const RootQueryType = new GraphQLObjectType({
           description: "check the batch having this ID",
         },
       },
-      resolve: (_, args) => resolver.checkBatchById(args.id),
+      resolve: (_, args: type.QueryCheckBatchArgs) => resolver.checkBatchById(args.id),
     },
   }),
 });
@@ -153,29 +152,29 @@ const RootMutationType = new GraphQLObjectType({
         "Checks and inputs the temporary batch into the permanent storage",
       args: {
         id: {
-          type: GraphQLInt,
+          type: GraphQLNonNull(GraphQLInt),
           description: "Input the batch having this ID",
         },
       },
-      resolve: (_, args) => resolver.issueBatch(args.id),
+      resolve: (_, args: type.MutationIssueBatchArgs) => resolver.issueBatch(args.id),
     },
     postTransactionsToBatch: {
       type: graphqlType.PostTransactionsResponseType,
       description:
         "Import transactions to a new or already existing temporary batch. You may check for errors or input the batch into the permanent storage (if no errors were found).",
       args: graphqlType.postTransactionsToBatchArgs,
-      resolve: (_, args) => resolver.postTransactionsToBatch(args),
+      resolve: (_, args: type.MutationPostTransactionsToBatchArgs) => resolver.postTransactionsToBatch(args),
     },
     postBankPage: {
       type: graphqlType.PostBankPageResponseType,
       description: "Import  or update records to chosen index",
       args: {
         bankPageRecords: {
-          type: GraphQLList(PostBankPageRecord),
+          type: GraphQLNonNull(GraphQLList(graphqlType.PostBankPageRecord)),
           description: "Bank page's records details list",
         },
       },
-      resolve: (_, args) => resolver.postBankPage(args),
+      resolve: (_, args: type.MutationPostBankPageArgs) => resolver.postBankPage(args),
     },
   }),
 });

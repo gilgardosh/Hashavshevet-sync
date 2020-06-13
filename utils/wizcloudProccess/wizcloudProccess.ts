@@ -1,5 +1,5 @@
 import { getMesh, findAndParseConfig } from "@graphql-mesh/runtime";
-import { wizCloudAuth } from "./wizCloudAuth";
+import { wizCloudAuth } from "../graphql/hashavshevet/wizcloud/wizCloudAuth";
 
 async function getHashData(
   startDate: string,

@@ -62,8 +62,8 @@ const UserType = new GraphQLObjectType({ // TODO: convers keys
     },
   }),
 });
-export * from "./types/batches";
-export * from "./types/recordsTransactions";
-export * from "./types/accounts";
-export * from "./types/bankPages";
+export * from "./batches";
+export * from "./recordsTransactions";
+export * from "./accounts";
+export * from "./bankPages";
 export { CompanyType, UserType };

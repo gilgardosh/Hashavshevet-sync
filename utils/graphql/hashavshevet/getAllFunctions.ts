@@ -1,4 +1,4 @@
-import { exportDataRecords } from "../../wizcloudProccess/wizCloudFetch";
+import { exportDataRecords } from "./hashavshevet";
 import * as dataFile from "./dataFiles";
 import * as type from "../types/types";
 
@@ -249,4 +249,4 @@ export {
   getAllBankPageRecords,
   getAllBankPages,
 };
-export * from "../../wizcloudProccess/wizCloudFetch"
+export * from "./wizcloud/wizCloudFetch"

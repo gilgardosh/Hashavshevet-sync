@@ -445,7 +445,7 @@ export type Mutation = {
 
 /** Root Mutation */
 export type MutationIssueBatchArgs = {
-  id?: Maybe<Scalars['Int']>;
+  id: Scalars['Int'];
 };
 
 
@@ -461,7 +461,7 @@ export type MutationPostTransactionsToBatchArgs = {
 
 /** Root Mutation */
 export type MutationPostBankPageArgs = {
-  bankPageRecords?: Maybe<Array<Maybe<PostBankPageRecord>>>;
+  bankPageRecords: Array<Maybe<PostBankPageRecord>>;
 };
 
 export type NewBatch = {
@@ -615,6 +615,7 @@ export type PostBankPageRecord = {
   /** Remarks (max 50 characters) */
   Details?: Maybe<Scalars['String']>;
 };
+
 
 
 
@@ -973,9 +974,9 @@ export type ARecordErrorDetailsResolvers<ContextType = any, ParentType extends R
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createNewBatch?: Resolver<Maybe<ResolversTypes['NewBatch']>, ParentType, ContextType>;
-  issueBatch?: Resolver<Maybe<ResolversTypes['IsuueBatch']>, ParentType, ContextType, RequireFields<MutationIssueBatchArgs, never>>;
+  issueBatch?: Resolver<Maybe<ResolversTypes['IsuueBatch']>, ParentType, ContextType, RequireFields<MutationIssueBatchArgs, 'id'>>;
   postTransactionsToBatch?: Resolver<Maybe<ResolversTypes['PostTransactionsResponse']>, ParentType, ContextType, RequireFields<MutationPostTransactionsToBatchArgs, never>>;
-  postBankPage?: Resolver<Maybe<ResolversTypes['PostBankPageResponse']>, ParentType, ContextType, RequireFields<MutationPostBankPageArgs, never>>;
+  postBankPage?: Resolver<Maybe<ResolversTypes['PostBankPageResponse']>, ParentType, ContextType, RequireFields<MutationPostBankPageArgs, 'bankPageRecords'>>;
 };
 
 export type NewBatchResolvers<ContextType = any, ParentType extends ResolversParentTypes['NewBatch'] = ResolversParentTypes['NewBatch']> = {

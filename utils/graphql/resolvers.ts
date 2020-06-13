@@ -1,5 +1,5 @@
 import * as loader from "./loaders";
-import * as hashavshevet from "./hashavshevetGetAll/hashavshevet";
+import * as hashavshevet from "./hashavshevet/hashavshevet";
 import * as type from "./types/types";
 
 function allRecords() {
@@ -10,11 +10,11 @@ function recordById(id: number) {
   return loader.recordById.load(id);
 }
 
-function recordsByTransactionId(transactionId) {
+function recordsByTransactionId(transactionId: number) {
   return loader.recordsByTransactionId.load(transactionId);
 }
 
-function recordsByBatcnId(batchId) {
+function recordsByBatcnId(batchId: number) {
   return loader.recordsByBatcnId.load(batchId);
 }
 
@@ -26,7 +26,7 @@ function transactionById(id: number) {
   return loader.transactionById.load(id);
 }
 
-function transactionsByBatcnId(batchId) {
+function transactionsByBatcnId(batchId: number) {
   return loader.transactionsByBatcnId.load(batchId);
 }
 

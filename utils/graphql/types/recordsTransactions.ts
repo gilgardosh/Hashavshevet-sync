@@ -10,7 +10,7 @@ import {
   GraphQLBoolean,
 } from "graphql";
 import * as resolver from "../resolvers";
-import * as graphqlType from "../types";
+import * as graphqlType from "./graphqlTypes";
 import * as field from "./fields";
 
 const RecordType = new GraphQLObjectType({

@@ -567,7 +567,7 @@ type Mutation {
   """Checks and inputs the temporary batch into the permanent storage"""
   issueBatch(
     """Input the batch having this ID"""
-    id: Int
+    id: Int!
   ): IsuueBatch
 
   """
@@ -597,7 +597,7 @@ type Mutation {
   """Import  or update records to chosen index"""
   postBankPage(
     """Bank page's records details list"""
-    bankPageRecords: [PostBankPageRecord]
+    bankPageRecords: [PostBankPageRecord]!
   ): PostBankPageResponse
 }
 

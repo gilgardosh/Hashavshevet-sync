@@ -4,6 +4,7 @@ import { schema, createSDL } from "./utils/graphql/schema";
 import { executeSync } from "./utils/compareAlgorithm/compareAlgorithm";
 
 const app = express();
+const PORT: number = 5000;
 
 app.use(
   "/graphql",
@@ -15,9 +16,8 @@ app.use(
 
 createSDL();
 
-app.listen(5000, () => {
-  console.log("Server Running on");
-  console.log("http://localhost:5000/graphql");
+app.listen(PORT, () => {
+  console.log(`GrapiQL Server Running on http://localhost:${PORT}/graphql`);
 });
 
 // executeSync(2);
