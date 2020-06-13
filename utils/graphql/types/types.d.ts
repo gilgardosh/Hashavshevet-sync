@@ -105,9 +105,9 @@ export type Record = {
   /** Cumulative balance without opening balance */
   cumulativeBalanceWithoutOpeningBalance?: Maybe<Scalars['Float']>;
   /** Credit / Debit */
-  debitOrCredit?: Maybe<Scalars['String']>;
+  debitOrCredit?: Maybe<DebitOrCreditNameEnum>;
   /** Credit / Debit */
-  debitOrCreditNumber?: Maybe<DebitOrCreditNumber>;
+  debitOrCreditNumber?: Maybe<DebitOrCreditNumberEnum>;
   /** Estimated total amount */
   estimatedSum?: Maybe<Scalars['Float']>;
   /** Credit amount in foreign currency */
@@ -123,7 +123,7 @@ export type Record = {
   /** Total amount in foreign currency closed in record */
   foreignCurrencySumClosedInRecord?: Maybe<Scalars['Float']>;
   /** Total amount in foreign currency open  in record */
-  foreignCurrencySunOpenInRecord?: Maybe<Scalars['Float']>;
+  foreignCurrencySumOpenInRecord?: Maybe<Scalars['Float']>;
   /** Record identifier */
   id: Scalars['Int'];
   /** Match number - card analysis */
@@ -320,7 +320,13 @@ export type Transaction = {
 };
 
 /** Credit / Debit */
-export enum DebitOrCreditNumber {
+export enum DebitOrCreditNameEnum {
+  Credit = 'Credit',
+  Debit = 'Debit'
+}
+
+/** Credit / Debit */
+export enum DebitOrCreditNumberEnum {
   Credit = 'Credit',
   Debit = 'Debit'
 }
@@ -345,7 +351,7 @@ export type BankPageRecord = {
   /** Calculated cumulative balance */
   cumulativeBalanceCalculated?: Maybe<Scalars['Float']>;
   /** Credit / Debit */
-  debitOrCredit?: Maybe<Scalars['String']>;
+  debitOrCredit?: Maybe<DebitOrCreditNameEnum>;
   /** Remarks (max 50 characters) */
   details?: Maybe<Scalars['String']>;
   /** Bank page record identifier */
@@ -418,9 +424,9 @@ export type ARecordErrorDetails = {
   /** Error message */
   TxtMsg?: Maybe<Scalars['String']>;
   /** Transaction details */
-  transaction?: Maybe<Batch>;
+  transaction?: Maybe<Transaction>;
   /** Record details */
-  record?: Maybe<Batch>;
+  record?: Maybe<Record>;
 };
 
 /** Root Mutation */
@@ -573,7 +579,7 @@ export type PostRecord = {
   /** Account identifier (max 15 characters) */
   accountId: Scalars['String'];
   /** Credit / Debit */
-  debitOrCreditNumber: DebitOrCreditNumber;
+  debitOrCreditNumber: DebitOrCreditNumberEnum;
   /** Foreign currency amount */
   foreignCurrencySum?: Maybe<Scalars['Float']>;
   /** NIS amount */
@@ -603,7 +609,7 @@ export type PostBankPageRecord = {
   /** Reference */
   Reference?: Maybe<Scalars['Int']>;
   /** Credit / Debit */
-  CreditDebit: DebitOrCreditNumber;
+  CreditDebit: DebitOrCreditNumberEnum;
   /** Amount */
   SuF: Scalars['Int'];
   /** Remarks (max 50 characters) */
@@ -692,7 +698,8 @@ export type ResolversTypes = {
   Account: ResolverTypeWrapper<Account>;
   Batch: ResolverTypeWrapper<Batch>;
   Transaction: ResolverTypeWrapper<Transaction>;
-  debitOrCreditNumber: DebitOrCreditNumber;
+  debitOrCreditNameEnum: DebitOrCreditNameEnum;
+  debitOrCreditNumberEnum: DebitOrCreditNumberEnum;
   BankPageRecord: ResolverTypeWrapper<BankPageRecord>;
   BankPage: ResolverTypeWrapper<BankPage>;
   Company: ResolverTypeWrapper<Company>;
@@ -726,7 +733,8 @@ export type ResolversParentTypes = {
   Account: Account;
   Batch: Batch;
   Transaction: Transaction;
-  debitOrCreditNumber: DebitOrCreditNumber;
+  debitOrCreditNameEnum: DebitOrCreditNameEnum;
+  debitOrCreditNumberEnum: DebitOrCreditNumberEnum;
   BankPageRecord: BankPageRecord;
   BankPage: BankPage;
   Company: Company;
@@ -779,8 +787,8 @@ export type RecordResolvers<ContextType = any, ParentType extends ResolversParen
   cumulativeBalanceBySortKey?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   cumulativeBalanceOfOpenSumInRecord?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   cumulativeBalanceWithoutOpeningBalance?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  debitOrCredit?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  debitOrCreditNumber?: Resolver<Maybe<ResolversTypes['debitOrCreditNumber']>, ParentType, ContextType>;
+  debitOrCredit?: Resolver<Maybe<ResolversTypes['debitOrCreditNameEnum']>, ParentType, ContextType>;
+  debitOrCreditNumber?: Resolver<Maybe<ResolversTypes['debitOrCreditNumberEnum']>, ParentType, ContextType>;
   estimatedSum?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   foreignCurrencyCredit?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   foreignCurrencyCumulativeBalance?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
@@ -788,7 +796,7 @@ export type RecordResolvers<ContextType = any, ParentType extends ResolversParen
   foreignCurrencyDebit?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   foreignCurrencySum?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   foreignCurrencySumClosedInRecord?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  foreignCurrencySunOpenInRecord?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  foreignCurrencySumOpenInRecord?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   matchNumberCardAnalysis?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   shekelCredit?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
@@ -903,7 +911,7 @@ export type BankPageRecordResolvers<ContextType = any, ParentType extends Resolv
   bankPageId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   cumulativeBalance?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   cumulativeBalanceCalculated?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  debitOrCredit?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  debitOrCredit?: Resolver<Maybe<ResolversTypes['debitOrCreditNameEnum']>, ParentType, ContextType>;
   details?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   matchNumber?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
@@ -958,8 +966,8 @@ export type ARecordErrorDetailsResolvers<ContextType = any, ParentType extends R
   recId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   field?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   TxtMsg?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  transaction?: Resolver<Maybe<ResolversTypes['Batch']>, ParentType, ContextType>;
-  record?: Resolver<Maybe<ResolversTypes['Batch']>, ParentType, ContextType>;
+  transaction?: Resolver<Maybe<ResolversTypes['Transaction']>, ParentType, ContextType>;
+  record?: Resolver<Maybe<ResolversTypes['Record']>, ParentType, ContextType>;
   __isTypeOf?: isTypeOfResolverFn<ParentType>;
 };
 

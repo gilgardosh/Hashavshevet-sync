@@ -47,7 +47,7 @@ async function getAllRecords() {
           foreignCurrencySum: r["foreign_currency_sum"],
           foreignCurrencySumClosedInRecord:
             r["foreign_currency_sum_closed_in_record"],
-          foreignCurrencySunOpenInRecord:
+          foreignCurrencySumOpenInRecord:
             r["foreign_currency_sun_open_in_record"],
           estimatedSum: r["estimated_sum"],
           transactionId: r["transaction_id"],

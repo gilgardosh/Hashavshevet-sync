@@ -2,7 +2,6 @@ import {
   GraphQLString,
   GraphQLInt,
   GraphQLFloat,
-  GraphQLNonNull,
   GraphQLEnumType,
 } from "graphql";
 
@@ -102,6 +101,14 @@ const costingCodeFilter = {
   type: GraphQLString,
   description: "Cost-center code filter",
 };
+const counterAccountId = {
+  type: GraphQLString,
+  description: "Counter account identifier",
+};
+const counterAccountName = {
+  type: GraphQLString, // TODO: can be removed
+  description: "Counter account name",
+};
 const country = {
   type: GraphQLString,
   description: "Country (max 20 characters)", // TODO: add validation
@@ -118,9 +125,21 @@ const cumulativeBalance = {
   type: GraphQLFloat,
   description: "Cumulative balance",
 };
+const cumulativeBalanceBySortKey = {
+  type: GraphQLFloat,
+  description: "Cumulative balance by sorting code",
+};
 const cumulativeBalanceCalculated = {
   type: GraphQLFloat,
   description: "Calculated cumulative balance",
+};
+const cumulativeBalanceOfOpenSumInRecord = {
+  type: GraphQLFloat,
+  description: "Cumulative balance of total open amount of record",
+};
+const cumulativeBalanceWithoutOpeningBalance = {
+  type: GraphQLFloat,
+  description: "Cumulative balance without opening balance",
 };
 const currencyCode = {
   type: GraphQLString,
@@ -135,12 +154,24 @@ const date3 = {
   type: GraphQLString,
   description: "Additional date", // TODO: create validation for date type mm/dd/yyyy
 };
+const debitOrCreditNameEnum = new GraphQLEnumType({
+  name: "debitOrCreditNameEnum",
+  description: "Credit / Debit",
+  values: {
+    Credit: {
+      value: "Credit",
+    },
+    Debit: {
+      value: "Debit",
+    },
+  },
+});
 const debitOrCreditName = {
-  type: GraphQLString,
+  type: debitOrCreditNameEnum,
   description: "Credit / Debit",
 };
 const debitOrCreditNumberEnum = new GraphQLEnumType({
-  name: "debitOrCreditNumber",
+  name: "debitOrCreditNumberEnum",
   description: "Credit / Debit",
   values: {
     Credit: {
@@ -183,6 +214,10 @@ const email = {
   type: GraphQLString,
   description: "Email",
 };
+const estimatedSum = {
+  type: GraphQLFloat,
+  description: "Estimated total amount",
+};
 const exchangeRateDifferences = {
   type: GraphQLString,
   description: "exchange rate differences", // TODO: Enum type, perhaps NonNull
@@ -195,9 +230,33 @@ const filter = {
   type: GraphQLString, // TODO: NonNull? add varification
   description: "Filtering (5 characters)",
 };
+const foreignCurrencyCredit = {
+  type: GraphQLFloat,
+  description: "Credit amount in foreign currency",
+};
+const foreignCurrencyCumulativeBalance = {
+  type: GraphQLFloat,
+  description: "Cumulative balance in foreign currency",
+};
+const foreignCurrencyCumulativeBalanceWithoutOpeningBalance = {
+  type: GraphQLFloat,
+  description: "Cumulative balance in foreign currency without opening balance",
+};
+const foreignCurrencyDebit = {
+  type: GraphQLFloat,
+  description: "Dedit amount in foreign currency",
+};
 const foreignCurrencySum = {
   type: GraphQLFloat,
   description: "Total amount in foreign currency",
+};
+const foreignCurrencySumClosedInRecord = {
+  type: GraphQLFloat,
+  description: "Total amount in foreign currency closed in record",
+};
+const foreignCurrencySumOpenInRecord = {
+  type: GraphQLFloat,
+  description: "Total amount in foreign currency open  in record",
 };
 const generalDiscountPercent = {
   type: GraphQLFloat,
@@ -238,6 +297,11 @@ const mainAccount = {
 const matchNumber = {
   type: GraphQLInt,
   description: "Match number",
+};
+const matchNumberCardAnalysis = {
+  // TODO: is the same as matchNumber?
+  type: GraphQLInt,
+  description: "Match number - card analysis",
 };
 const maxCredit = {
   type: GraphQLFloat,
@@ -283,9 +347,29 @@ const registerNumber = {
   type: GraphQLInt,
   description: "Register number",
 };
+const shekelCredit = {
+  type: GraphQLFloat,
+  description: "Credit amount in NIS",
+};
+const shekelCumulativeBalanceByFilter = {
+  type: GraphQLFloat,
+  description: "Cumulative balance in NIS by filter",
+};
+const shekelDebit = {
+  type: GraphQLFloat,
+  description: "Dedit amount in NIS",
+};
 const shekelSum = {
   type: GraphQLFloat,
   description: "Total NIS amount",
+};
+const shekelSumClosedInRecord = {
+  type: GraphQLFloat,
+  description: "Total NIS amount closed in record",
+};
+const shekelSumOpenInRecord = {
+  type: GraphQLFloat,
+  description: "Total NIS amount open  in record",
 };
 const sortGroup = {
   type: GraphQLInt, // TODO: Enum type?
@@ -357,11 +441,16 @@ export {
   costingCode,
   costingCodeName,
   costingCodeFilter,
+  counterAccountId,
+  counterAccountName,
   country,
   creditorId,
   creditorName,
   cumulativeBalance,
+  cumulativeBalanceBySortKey,
   cumulativeBalanceCalculated,
+  cumulativeBalanceOfOpenSumInRecord,
+  cumulativeBalanceWithoutOpeningBalance,
   currencyCode,
   date,
   date3,
@@ -375,10 +464,17 @@ export {
   details2,
   dueDate,
   email,
+  estimatedSum,
   exchangeRateDifferences,
   fax,
   filter,
+  foreignCurrencyCredit,
+  foreignCurrencyCumulativeBalance,
+  foreignCurrencyCumulativeBalanceWithoutOpeningBalance,
+  foreignCurrencyDebit,
   foreignCurrencySum,
+  foreignCurrencySumClosedInRecord,
+  foreignCurrencySumOpenInRecord,
   generalDiscountPercent,
   incomeFileNumber,
   initDate,
@@ -389,6 +485,7 @@ export {
   linkedFile,
   mainAccount,
   matchNumber,
+  matchNumberCardAnalysis,
   maxCredit,
   maxCreditCurrency,
   maxObligo,
@@ -400,7 +497,12 @@ export {
   reference2,
   reference3,
   registerNumber,
+  shekelCredit,
+  shekelCumulativeBalanceByFilter,
+  shekelDebit,
   shekelSum,
+  shekelSumClosedInRecord,
+  shekelSumOpenInRecord,
   sortGroup,
   status,
   stornoCancelledTransactionId,

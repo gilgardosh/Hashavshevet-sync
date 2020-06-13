@@ -104,10 +104,10 @@ type Record {
   cumulativeBalanceWithoutOpeningBalance: Float
 
   """Credit / Debit"""
-  debitOrCredit: String
+  debitOrCredit: debitOrCreditNameEnum
 
   """Credit / Debit"""
-  debitOrCreditNumber: debitOrCreditNumber
+  debitOrCreditNumber: debitOrCreditNumberEnum
 
   """Estimated total amount"""
   estimatedSum: Float
@@ -131,7 +131,7 @@ type Record {
   foreignCurrencySumClosedInRecord: Float
 
   """Total amount in foreign currency open  in record"""
-  foreignCurrencySunOpenInRecord: Float
+  foreignCurrencySumOpenInRecord: Float
 
   """Record identifier"""
   id: Int!
@@ -414,7 +414,13 @@ type Transaction {
 }
 
 """Credit / Debit"""
-enum debitOrCreditNumber {
+enum debitOrCreditNameEnum {
+  Credit
+  Debit
+}
+
+"""Credit / Debit"""
+enum debitOrCreditNumberEnum {
   Credit
   Debit
 }
@@ -446,7 +452,7 @@ type BankPageRecord {
   cumulativeBalanceCalculated: Float
 
   """Credit / Debit"""
-  debitOrCredit: String
+  debitOrCredit: debitOrCreditNameEnum
 
   """Remarks (max 50 characters)"""
   details: String
@@ -547,10 +553,10 @@ type ARecordErrorDetails {
   TxtMsg: String
 
   """Transaction details"""
-  transaction: Batch
+  transaction: Transaction
 
   """Record details"""
-  record: Batch
+  record: Record
 }
 
 """Root Mutation"""
@@ -743,7 +749,7 @@ input PostRecord {
   accountId: String!
 
   """Credit / Debit"""
-  debitOrCreditNumber: debitOrCreditNumber!
+  debitOrCreditNumber: debitOrCreditNumberEnum!
 
   """Foreign currency amount"""
   foreignCurrencySum: Float
@@ -777,7 +783,7 @@ input PostBankPageRecord {
   Reference: Int
 
   """Credit / Debit"""
-  CreditDebit: debitOrCreditNumber!
+  CreditDebit: debitOrCreditNumberEnum!
 
   """Amount"""
   SuF: Int!

@@ -40,102 +40,36 @@ const RecordType = new GraphQLObjectType({
       description: "Counter account details",
       resolve: (record) => resolver.accountById(record.counterAccountId),
     },
-    counterAccountId: {
-      type: GraphQLString,
-      description: "Counter account identifier",
-    },
-    counterAccountName: {
-      type: GraphQLString, // TODO: can be removed
-      description: "Counter account name",
-    },
-    cumulativeBalance: {
-      type: GraphQLFloat,
-      description: "Cumulative balance",
-    },
-    cumulativeBalanceBySortKey: {
-      type: GraphQLFloat,
-      description: "Cumulative balance by sorting code",
-    },
-    cumulativeBalanceOfOpenSumInRecord: {
-      type: GraphQLFloat,
-      description: "Cumulative balance of total open amount of record",
-    },
-    cumulativeBalanceWithoutOpeningBalance: {
-      type: GraphQLFloat,
-      description: "Cumulative balance without opening balance",
-    },
-    debitOrCredit: {
-      type: GraphQLString,
-      description: "Credit / Debit",
-    },
-    debitOrCreditNumber: {
-      type: field.debitOrCreditNumberEnum,
-      description: "Credit / Debit",
-    },
-    estimatedSum: {
-      type: GraphQLFloat,
-      description: "Estimated total amount",
-    },
-    foreignCurrencyCredit: {
-      type: GraphQLFloat,
-      description: "Credit amount in foreign currency",
-    },
-    foreignCurrencyCumulativeBalance: {
-      type: GraphQLFloat,
-      description: "Cumulative balance in foreign currency",
-    },
-    foreignCurrencyCumulativeBalanceWithoutOpeningBalance: {
-      type: GraphQLFloat,
-      description: "Cumulative balance in foreign currency without opening balance",
-    },
-    foreignCurrencyDebit: {
-      type: GraphQLFloat,
-      description: "Dedit amount in foreign currency",
-    },
-    foreignCurrencySum: {
-      type: GraphQLFloat,
-      description: "Total amount in foreign currency",
-    },
-    foreignCurrencySumClosedInRecord: {
-      type: GraphQLFloat,
-      description: "Total amount in foreign currency closed in record",
-    },
-    foreignCurrencySunOpenInRecord: {
-      type: GraphQLFloat,
-      description: "Total amount in foreign currency open  in record",
-    },
+    counterAccountId: field.counterAccountId,
+    counterAccountName: field.counterAccountName,
+    cumulativeBalance: field.cumulativeBalance,
+    cumulativeBalanceBySortKey: field.cumulativeBalanceBySortKey,
+    cumulativeBalanceOfOpenSumInRecord:
+      field.cumulativeBalanceOfOpenSumInRecord,
+    cumulativeBalanceWithoutOpeningBalance:
+      field.cumulativeBalanceWithoutOpeningBalance,
+    debitOrCredit: field.debitOrCreditName,
+    debitOrCreditNumber: field.debitOrCreditNumber,
+    estimatedSum: field.estimatedSum,
+    foreignCurrencyCredit: field.foreignCurrencyCredit,
+    foreignCurrencyCumulativeBalance: field.foreignCurrencyCumulativeBalance,
+    foreignCurrencyCumulativeBalanceWithoutOpeningBalance:
+      field.foreignCurrencyCumulativeBalanceWithoutOpeningBalance,
+    foreignCurrencyDebit: field.foreignCurrencyDebit,
+    foreignCurrencySum: field.foreignCurrencySum,
+    foreignCurrencySumClosedInRecord: field.foreignCurrencySumClosedInRecord,
+    foreignCurrencySumOpenInRecord: field.foreignCurrencySumOpenInRecord,
     id: {
       type: GraphQLNonNull(GraphQLInt),
       description: "Record identifier",
     },
-    matchNumberCardAnalysis: {
-      type: GraphQLInt,
-      description: "Match number - card analysis",
-    },
-    shekelCredit: {
-      type: GraphQLFloat,
-      description: "Credit amount in NIS",
-    },
-    shekelCumulativeBalanceByFilter: {
-      type: GraphQLFloat,
-      description: "Cumulative balance in NIS by filter",
-    },
-    shekelDebit: {
-      type: GraphQLFloat,
-      description: "Dedit amount in NIS",
-    },
-    shekelSum: {
-      type: GraphQLFloat,
-      description: "Total NIS amount",
-    },
-    shekelSumClosedInRecord: {
-      type: GraphQLFloat,
-      description: "Total NIS amount closed in record",
-    },
-    shekelSumOpenInRecord: {
-      type: GraphQLFloat,
-      description: "Total NIS amount open  in record",
-    },
+    matchNumberCardAnalysis: field.matchNumberCardAnalysis,
+    shekelCredit: field.shekelCredit,
+    shekelCumulativeBalanceByFilter: field.shekelCumulativeBalanceByFilter,
+    shekelDebit: field.shekelDebit,
+    shekelSum: field.shekelSum,
+    shekelSumClosedInRecord: field.shekelSumClosedInRecord,
+    shekelSumOpenInRecord: field.shekelSumOpenInRecord,
     transaction: {
       type: TransactionType,
       description: "Transaction details",
@@ -212,7 +146,8 @@ const TransactionType = new GraphQLObjectType({
   }),
 });
 
-const PostTransactionsResponseFields = { // TODO: convers keys
+const PostTransactionsResponseFields = {
+  // TODO: convers keys
   status: {
     type: GraphQLString,
     description: "Final Status",
