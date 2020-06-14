@@ -8,7 +8,7 @@ import {
 } from "graphql";
 import * as resolver from "../resolvers";
 import * as graphqlType from "./graphqlTypes";
-import * as field from "./fields"
+import * as field from "./fields";
 
 const BankPageRecordType = new GraphQLObjectType({
   name: "BankPageRecord",
@@ -20,7 +20,7 @@ const BankPageRecordType = new GraphQLObjectType({
       resolve: (record) => resolver.accountById(record.accountId),
     },
     accountId: field.accountId,
-    accountName: field.accountName,  // TODO: remove?
+    accountName: field.accountName, // TODO: remove?
     adjustedRecord: field.adjustedRecord,
     bankPage: {
       type: BankPageType,
@@ -58,12 +58,13 @@ const BankPageType = new GraphQLObjectType({
     bankPageRecords: {
       type: GraphQLList(BankPageRecordType),
       description: "Bank page's records details list",
-      resolve: (page) =>  resolver.bankPageRecordsByBankPageId(page.id),
+      resolve: (page) => resolver.bankPageRecordsByBankPageId(page.id),
     },
   }),
 });
 
-const BankErrorType = new GraphQLObjectType({ // TODO: convers keys
+const BankErrorType = new GraphQLObjectType({
+  // TODO: convers keys
   name: "BankError",
   fields: () => ({
     index: {
@@ -77,7 +78,7 @@ const BankErrorType = new GraphQLObjectType({ // TODO: convers keys
   }),
 });
 
-const PostBankPageRecord = new GraphQLInputObjectType({ // TODO: convers keys
+const PostBankPageRecord = new GraphQLInputObjectType({
   name: "PostBankPageRecord",
   description: "Interface for posting new Bank Page Record",
   fields: () => ({
@@ -96,8 +97,8 @@ const PostBankPageRecord = new GraphQLInputObjectType({ // TODO: convers keys
     },
     details: field.details1,
     date: field.date,
-  })
-})
+  }),
+});
 
 const PostBankPageResponseType = new GraphQLObjectType({
   name: "PostBankPageResponse",
@@ -113,4 +114,9 @@ const PostBankPageResponseType = new GraphQLObjectType({
   }),
 });
 
-export { BankPageRecordType, BankPageType, PostBankPageRecord, PostBankPageResponseType };
+export {
+  BankPageRecordType,
+  BankPageType,
+  PostBankPageRecord,
+  PostBankPageResponseType,
+};

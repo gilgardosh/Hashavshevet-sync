@@ -190,10 +190,10 @@ const debitOrCreditNumberEnum = new GraphQLEnumType({
   name: "debitOrCreditNumberEnum",
   description: "Credit / Debit",
   values: {
-    Credit: {
+    Debit: {
       value: 1,
     },
-    Debit: {
+    Credit: {
       value: -1,
     },
   },
