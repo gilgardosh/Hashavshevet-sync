@@ -790,4 +790,7 @@ input PostBankPageRecord {
 
   """Remarks (max 50 characters)"""
   Details: String
+
+  """Date"""
+  DatF: String
 }

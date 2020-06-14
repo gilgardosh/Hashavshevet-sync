@@ -95,6 +95,7 @@ const PostBankPageRecord = new GraphQLInputObjectType({ // TODO: convers keys
       description: "Amount",
     },
     Details: field.details1,
+    DatF: field.date,
   })
 })
 
