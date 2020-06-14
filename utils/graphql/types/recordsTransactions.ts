@@ -48,7 +48,7 @@ const RecordType = new GraphQLObjectType({
       field.cumulativeBalanceOfOpenSumInRecord,
     cumulativeBalanceWithoutOpeningBalance:
       field.cumulativeBalanceWithoutOpeningBalance,
-    debitOrCredit: field.debitOrCreditName,
+    debitOrCredit: field.debitOrCreditNameForBank,
     debitOrCreditNumber: field.debitOrCreditNumber,
     estimatedSum: field.estimatedSum,
     foreignCurrencyCredit: field.foreignCurrencyCredit,
