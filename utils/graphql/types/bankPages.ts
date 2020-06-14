@@ -81,21 +81,21 @@ const PostBankPageRecord = new GraphQLInputObjectType({ // TODO: convers keys
   name: "PostBankPageRecord",
   description: "Interface for posting new Bank Page Record",
   fields: () => ({
-    AccountKey: {
+    accountId: {
       type: GraphQLNonNull(GraphQLString),
       description: "Account identifier (max 15 character)", // TODO: add varification
     },
-    Reference: field.reference1,
-    CreditDebit: {
+    reference: field.reference1,
+    creditOrDebit: {
       type: GraphQLNonNull(field.debitOrCreditNumberEnum),
       description: "Credit / Debit",
     },
-    SuF: {
+    shekelSum: {
       type: GraphQLNonNull(GraphQLInt),
       description: "Amount",
     },
-    Details: field.details1,
-    DatF: field.date,
+    details: field.details1,
+    date: field.date,
   })
 })
 

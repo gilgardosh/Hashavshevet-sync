@@ -777,20 +777,20 @@ type BankError {
 """Interface for posting new Bank Page Record"""
 input PostBankPageRecord {
   """Account identifier (max 15 character)"""
-  AccountKey: String!
+  accountId: String!
 
   """Reference"""
-  Reference: Int
+  reference: Int
 
   """Credit / Debit"""
-  CreditDebit: debitOrCreditNumberEnum!
+  creditOrDebit: debitOrCreditNumberEnum!
 
   """Amount"""
-  SuF: Int!
+  shekelSum: Int!
 
   """Remarks (max 50 characters)"""
-  Details: String
+  details: String
 
   """Date"""
-  DatF: String
+  date: String
 }

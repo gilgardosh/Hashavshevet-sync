@@ -79,11 +79,6 @@ function postTransactionsToBatch(
   });
   // maping response to local key names
   // .then(
-  //   (res) => {
-  //     return {
-  //       status: res.status
-  //     }
-  //   }
   // );
 }
 
@@ -132,7 +127,24 @@ function bankPageById(id: number) {
 }
 
 function postBankPage(args: type.MutationPostBankPageArgs) {
-  return hashavshevet.importBankPageRecords({ rows: args.bankPageRecords });
+    // maping request to hashavshevet key names
+    const rowsData = args.bankPageRecords.map((r) => {
+      return {
+        AccountKey: r.accountId,
+        Reference: r.reference,
+        CreditDebit: r.creditOrDebit,
+        SuF: r.shekelSum,
+        Details: r.details,
+        DatF: r.date,
+      };
+    });
+    // hashavshevet API call
+    return hashavshevet.importBankPageRecords({
+      rows: rowsData,
+    });
+    // maping response to local key names
+    // .then(
+    // );
 }
 
 export {

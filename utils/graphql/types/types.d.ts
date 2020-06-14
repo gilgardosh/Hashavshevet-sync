@@ -605,17 +605,17 @@ export type BankError = {
 /** Interface for posting new Bank Page Record */
 export type PostBankPageRecord = {
   /** Account identifier (max 15 character) */
-  AccountKey: Scalars['String'];
+  accountId: Scalars['String'];
   /** Reference */
-  Reference?: Maybe<Scalars['Int']>;
+  reference?: Maybe<Scalars['Int']>;
   /** Credit / Debit */
-  CreditDebit: DebitOrCreditNumberEnum;
+  creditOrDebit: DebitOrCreditNumberEnum;
   /** Amount */
-  SuF: Scalars['Int'];
+  shekelSum: Scalars['Int'];
   /** Remarks (max 50 characters) */
-  Details?: Maybe<Scalars['String']>;
+  details?: Maybe<Scalars['String']>;
   /** Date */
-  DatF?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['String']>;
 };
 
 
