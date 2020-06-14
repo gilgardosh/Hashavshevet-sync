@@ -87,7 +87,7 @@ const PostBankPageRecord = new GraphQLInputObjectType({ // TODO: convers keys
     },
     Reference: field.reference1,
     CreditDebit: {
-      type: GraphQLNonNull(field.debitOrCreditBankEnum),
+      type: GraphQLNonNull(field.debitOrCreditNumberEnum),
       description: "Credit / Debit",
     },
     SuF: {

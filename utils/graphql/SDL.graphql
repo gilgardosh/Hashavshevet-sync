@@ -783,7 +783,7 @@ input PostBankPageRecord {
   Reference: Int
 
   """Credit / Debit"""
-  CreditDebit: debitOrCreditBankEnum!
+  CreditDebit: debitOrCreditNumberEnum!
 
   """Amount"""
   SuF: Int!
