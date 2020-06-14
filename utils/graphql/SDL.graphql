@@ -104,7 +104,7 @@ type Record {
   cumulativeBalanceWithoutOpeningBalance: Float
 
   """Credit / Debit"""
-  debitOrCredit: debitOrCreditNameEnum
+  debitOrCredit: debitOrCreditBankEnum
 
   """Credit / Debit"""
   debitOrCreditNumber: debitOrCreditNumberEnum
@@ -414,7 +414,7 @@ type Transaction {
 }
 
 """Credit / Debit"""
-enum debitOrCreditNameEnum {
+enum debitOrCreditBankEnum {
   Credit
   Debit
 }
@@ -482,12 +482,6 @@ type BankPage {
 
   """Bank page's records details list"""
   bankPageRecords: [BankPageRecord]
-}
-
-"""Credit / Debit"""
-enum debitOrCreditBankEnum {
-  Credit
-  Debit
 }
 
 """A Single Hashavshevet Company"""
