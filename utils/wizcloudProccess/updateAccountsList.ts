@@ -43,7 +43,7 @@ async function getAccountsList() {
     }
   }`;
   const res: type.Query = await graphqlCall(query);
-  const accounts = res.accounts;
+  const accounts = res.getAccounts;
   return Object.assign(
     {},
     ...accounts.map((account) => ({ [account.id]: account }))
