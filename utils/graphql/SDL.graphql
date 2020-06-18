@@ -421,8 +421,8 @@ enum debitOrCreditBankEnum {
 
 """Credit / Debit"""
 enum debitOrCreditNumberEnum {
-  Credit
   Debit
+  Credit
 }
 
 """A Single Bank Page Record"""
@@ -786,7 +786,7 @@ input PostBankPageRecord {
   creditOrDebit: debitOrCreditNumberEnum!
 
   """Amount"""
-  shekelSum: Int!
+  shekelSum: Float!
 
   """Remarks (max 50 characters)"""
   details: String
