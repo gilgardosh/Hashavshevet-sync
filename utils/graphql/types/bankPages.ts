@@ -5,6 +5,7 @@ import {
   GraphQLInt,
   GraphQLNonNull,
   GraphQLInputObjectType,
+  GraphQLFloat,
 } from "graphql";
 import * as resolver from "../resolvers";
 import * as graphqlType from "./graphqlTypes";
@@ -92,7 +93,7 @@ const PostBankPageRecord = new GraphQLInputObjectType({
       description: "Credit / Debit",
     },
     shekelSum: {
-      type: GraphQLNonNull(GraphQLInt),
+      type: GraphQLNonNull(GraphQLFloat),
       description: "Amount",
     },
     details: field.details1,
