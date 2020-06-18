@@ -786,7 +786,7 @@ input PostBankPageRecord {
   creditOrDebit: debitOrCreditNumberEnum!
 
   """Amount"""
-  shekelSum: Float!
+  sum: Float!
 
   """Remarks (max 50 characters)"""
   details: String

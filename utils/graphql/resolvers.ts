@@ -133,7 +133,7 @@ function postBankPage(args: type.MutationPostBankPageArgs) {
         AccountKey: r.accountId,
         Reference: r.reference,
         CreditDebit: r.creditOrDebit,
-        SuF: r.shekelSum,
+        SuF: r.sum,
         Details: r.details,
         DatF: r.date,
       };

@@ -327,8 +327,8 @@ export enum DebitOrCreditBankEnum {
 
 /** Credit / Debit */
 export enum DebitOrCreditNumberEnum {
-  Credit = 'Credit',
-  Debit = 'Debit'
+  Debit = 'Debit',
+  Credit = 'Credit'
 }
 
 /** A Single Bank Page Record */
@@ -611,7 +611,7 @@ export type PostBankPageRecord = {
   /** Credit / Debit */
   creditOrDebit: DebitOrCreditNumberEnum;
   /** Amount */
-  shekelSum: Scalars['Int'];
+  sum: Scalars['Float'];
   /** Remarks (max 50 characters) */
   details?: Maybe<Scalars['String']>;
   /** Date */

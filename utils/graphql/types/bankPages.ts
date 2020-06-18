@@ -92,7 +92,7 @@ const PostBankPageRecord = new GraphQLInputObjectType({
       type: GraphQLNonNull(field.debitOrCreditNumberEnum),
       description: "Credit / Debit",
     },
-    shekelSum: {
+    sum: {
       type: GraphQLNonNull(GraphQLFloat),
       description: "Amount",
     },
