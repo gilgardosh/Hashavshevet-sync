@@ -10,7 +10,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs = __importStar(require("fs"));
 const graphql_1 = require("graphql");
 const graphqlType = __importStar(require("./types/graphqlTypes"));
-const resolver = __importStar(require("./resolvers"));
+const resolver = __importStar(require("./utils/resolvers"));
 const hashavshevet = __importStar(require("./hashavshevet/wizcloud/wizCloudFetch"));
 const RootQueryType = new graphql_1.GraphQLObjectType({
     name: "Query",

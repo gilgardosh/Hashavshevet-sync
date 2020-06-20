@@ -8,7 +8,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const graphql_1 = require("graphql");
-const resolver = __importStar(require("../resolvers"));
+const resolver = __importStar(require("../utils/resolvers"));
 const type = __importStar(require("./graphqlTypes"));
 const field = __importStar(require("./fields"));
 const BatchType = new graphql_1.GraphQLObjectType({
@@ -46,6 +46,7 @@ const BatchType = new graphql_1.GraphQLObjectType({
 });
 exports.BatchType = BatchType;
 const recordErrorType = new graphql_1.GraphQLObjectType({
+    // TODO: convers keys
     name: "ARecordErrorDetails",
     fields: () => ({
         headerID: {
@@ -86,6 +87,7 @@ const recordErrorType = new graphql_1.GraphQLObjectType({
 });
 exports.recordErrorType = recordErrorType;
 const BatchCheckIfListType = new graphql_1.GraphQLObjectType({
+    // TODO: convers keys
     name: "BatchCheckList",
     fields: () => ({
         batch_check: {
@@ -95,6 +97,7 @@ const BatchCheckIfListType = new graphql_1.GraphQLObjectType({
     }),
 });
 const BatchCheckIfStringType = new graphql_1.GraphQLObjectType({
+    // TODO: convers keys
     name: "BatchCheckMessage",
     fields: () => ({
         batch_check: {
@@ -118,6 +121,7 @@ const CheckBatchType = new graphql_1.GraphQLUnionType({
 });
 exports.CheckBatchType = CheckBatchType;
 const createNewBatchType = new graphql_1.GraphQLObjectType({
+    // TODO: convers keys
     name: "NewBatch",
     fields: () => ({
         newbatch: {
@@ -135,6 +139,7 @@ const createNewBatchType = new graphql_1.GraphQLObjectType({
 });
 exports.createNewBatchType = createNewBatchType;
 const IssueBatchStatusType = new graphql_1.GraphQLObjectType({
+    // TODO: convers keys
     name: "IssueBatchStatus",
     fields: () => ({
         batch_issue: {

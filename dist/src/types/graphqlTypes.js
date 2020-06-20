@@ -5,6 +5,7 @@ function __export(m) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const graphql_1 = require("graphql");
 const CompanyType = new graphql_1.GraphQLObjectType({
+    // TODO: convers keys
     name: "Company",
     description: "A Single Hashavshevet Company",
     fields: () => ({
@@ -24,12 +25,13 @@ const CompanyType = new graphql_1.GraphQLObjectType({
 });
 exports.CompanyType = CompanyType;
 const UserType = new graphql_1.GraphQLObjectType({
+    // TODO: convers keys
     name: "HashavshevetUser",
     description: "A Single User on Hashavshevet",
     fields: () => ({
         cid: {
             type: graphql_1.GraphQLNonNull(graphql_1.GraphQLString),
-            description: ""
+            description: "",
         },
         user: {
             type: graphql_1.GraphQLNonNull(graphql_1.GraphQLString),

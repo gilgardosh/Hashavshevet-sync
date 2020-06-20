@@ -8,7 +8,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const graphql_1 = require("graphql");
-const resolver = __importStar(require("../resolvers"));
+const resolver = __importStar(require("../utils/resolvers"));
 const graphqlType = __importStar(require("./graphqlTypes"));
 const field = __importStar(require("./fields"));
 const BankPageRecordType = new graphql_1.GraphQLObjectType({
