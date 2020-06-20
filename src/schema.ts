@@ -116,12 +116,12 @@ const RootQueryType = new GraphQLObjectType({
       type: GraphQLList(graphqlType.CompanyType),
       description:
         "List of Companies for user token thats defined on: 'WizcloudApiPrivateKey'",
-      resolve: () => hashavshevet.getCompanies(),
+      resolve: () => resolver.userCompanies(),
     },
     getUserDetails: {
       type: graphqlType.UserType,
       description: "Get User Details",
-      resolve: () => hashavshevet.napi(),
+      resolve: () => resolver.userDetails(),
     },
     checkBatch: {
       type: graphqlType.CheckBatchType,

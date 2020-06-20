@@ -41,64 +41,58 @@ function wizCloudFetch(path, data = {}) {
   return p;
 }
 
-export async function napi() {
-  return wizCloudFetch("api/napi").then((data) => {
-    return data.session;
-  });
+export function napi() {
+  return wizCloudFetch("api/napi");
 }
 // jurnal
-export async function addTransactionsToBatch(data) {
+export function addTransactionsToBatch(data) {
   return wizCloudFetch("jtransApi/tmpBatch", data);
 }
-export async function checkBatch(data) {
+export function checkBatch(data) {
   return wizCloudFetch("jtransApi/chkBatch", data);
 }
-export async function newBatch() {
+export function newBatch() {
   return wizCloudFetch("jtransApi/newBatch");
 }
-export async function issueBatch(data) {
+export function issueBatch(data) {
   return wizCloudFetch("jtransApi/issueBatch", data);
 }
 // index
-export async function importIndexRecords(data) {
+export function importIndexRecords(data) {
   return wizCloudFetch("IndexApi/importIndex", data);
 }
-export async function deleteIndexRecords(data) {
+export function deleteIndexRecords(data) {
   return wizCloudFetch("IndexApi/deleteIndex", data);
 }
 // bankpages
-export async function importBankPageRecords(data) {
+export function importBankPageRecords(data) {
   return wizCloudFetch("BankPagesApi/importBankPage", data);
 }
 // data export
-export async function exportDataRecords(data) {
+export function exportDataRecords(data) {
   return wizCloudFetch("ExportDataApi/exportData", data);
 }
 // inv documents
-export async function createDocument(data) {
+export function createDocument(data) {
   return wizCloudFetch("invApi/createDoc", data);
 }
-export async function showDocument(data) {
+export function showDocument(data) {
   return wizCloudFetch("invApi/getDoc", data);
 }
-export async function delDocument(data) {
+export function delDocument(data) {
   return wizCloudFetch("invApi/delDocument", data);
 }
-export async function issueDoc(data) {
+export function issueDoc(data) {
   return wizCloudFetch("invApi/issueDocument", data);
 }
 // crm
-export async function crmActivities(data) {
+export function crmActivities(data) {
   return wizCloudFetch("crmActivitiesApi/createSchema", data);
 }
-export async function crmActivitiesTest(data) {
+export function crmActivitiesTest(data) {
   return wizCloudFetch("crmActivitiesTest/createSchema", data);
 }
 // companies list
-export async function getCompanies() {
-  return await wizCloudFetch("CompanyListToTokenApi/TokenCompanies").then(
-    (data) => {
-      return data.repdata;
-    }
-  );
+export function getCompanies() {
+  return wizCloudFetch("CompanyListToTokenApi/TokenCompanies");
 }
