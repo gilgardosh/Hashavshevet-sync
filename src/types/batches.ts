@@ -6,9 +6,9 @@ import {
   GraphQLNonNull,
   GraphQLUnionType,
 } from "graphql";
-import * as resolver from "../resolvers";
+import * as resolver from "../utils/resolvers";
 import * as type from "./graphqlTypes";
-import * as field from "./fields"
+import * as field from "./fields";
 
 const BatchType = new GraphQLObjectType({
   name: "Batch",
@@ -44,7 +44,8 @@ const BatchType = new GraphQLObjectType({
   }),
 });
 
-const recordErrorType = new GraphQLObjectType({  // TODO: convers keys
+const recordErrorType = new GraphQLObjectType({
+  // TODO: convers keys
   name: "ARecordErrorDetails",
   fields: () => ({
     headerID: {
@@ -53,7 +54,7 @@ const recordErrorType = new GraphQLObjectType({  // TODO: convers keys
     },
     err: {
       type: GraphQLInt,
-      description: "Error code",  // TODO: whats the meaning of this err?
+      description: "Error code", // TODO: whats the meaning of this err?
     },
     recId: {
       type: GraphQLInt,
@@ -84,7 +85,8 @@ const recordErrorType = new GraphQLObjectType({  // TODO: convers keys
   }),
 });
 
-const BatchCheckIfListType = new GraphQLObjectType({ // TODO: convers keys
+const BatchCheckIfListType = new GraphQLObjectType({
+  // TODO: convers keys
   name: "BatchCheckList",
   fields: () => ({
     batch_check: {
@@ -94,7 +96,8 @@ const BatchCheckIfListType = new GraphQLObjectType({ // TODO: convers keys
   }),
 });
 
-const BatchCheckIfStringType = new GraphQLObjectType({ // TODO: convers keys
+const BatchCheckIfStringType = new GraphQLObjectType({
+  // TODO: convers keys
   name: "BatchCheckMessage",
   fields: () => ({
     batch_check: {
@@ -117,7 +120,8 @@ const CheckBatchType = new GraphQLUnionType({
   },
 });
 
-const createNewBatchType = new GraphQLObjectType({ // TODO: convers keys
+const createNewBatchType = new GraphQLObjectType({
+  // TODO: convers keys
   name: "NewBatch",
   fields: () => ({
     newbatch: {
@@ -134,7 +138,8 @@ const createNewBatchType = new GraphQLObjectType({ // TODO: convers keys
   }),
 });
 
-const IssueBatchStatusType = new GraphQLObjectType({ // TODO: convers keys
+const IssueBatchStatusType = new GraphQLObjectType({
+  // TODO: convers keys
   name: "IssueBatchStatus",
   fields: () => ({
     batch_issue: {

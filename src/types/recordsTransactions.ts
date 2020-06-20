@@ -9,7 +9,7 @@ import {
   GraphQLInputObjectType,
   GraphQLBoolean,
 } from "graphql";
-import * as resolver from "../resolvers";
+import * as resolver from "../utils/resolvers";
 import * as graphqlType from "./graphqlTypes";
 import * as field from "./fields";
 

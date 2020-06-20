@@ -32,9 +32,7 @@ const transactionById = new DataLoader(async (transacrionIds) => {
 const transactionsByBatcnId = new DataLoader(async (batchIds) => {
   const transactionsList = await resolver.allTransactions();
   return await batchIds.map((id) => {
-    return transactionsList.filter(
-      (transaction) => transaction.batchId === id
-    );
+    return transactionsList.filter((transaction) => transaction.batchId === id);
   });
 });
 

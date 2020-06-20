@@ -5,7 +5,8 @@ import {
   GraphQLNonNull,
 } from "graphql";
 
-const CompanyType = new GraphQLObjectType({ // TODO: convers keys
+const CompanyType = new GraphQLObjectType({
+  // TODO: convers keys
   name: "Company",
   description: "A Single Hashavshevet Company",
   fields: () => ({
@@ -24,13 +25,14 @@ const CompanyType = new GraphQLObjectType({ // TODO: convers keys
   }),
 });
 
-const UserType = new GraphQLObjectType({ // TODO: convers keys
+const UserType = new GraphQLObjectType({
+  // TODO: convers keys
   name: "HashavshevetUser",
   description: "A Single User on Hashavshevet",
   fields: () => ({
     cid: {
       type: GraphQLNonNull(GraphQLString),
-      description: ""
+      description: "",
     },
     user: {
       type: GraphQLNonNull(GraphQLString),

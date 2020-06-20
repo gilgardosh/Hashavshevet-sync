@@ -1,6 +1,6 @@
 import * as loader from "./loaders";
-import * as hashavshevet from "./hashavshevet/hashavshevet";
-import * as type from "./types/types";
+import * as hashavshevet from "../hashavshevet/hashavshevet";
+import * as type from "../types/types";
 
 function allRecords() {
   return (
