@@ -1,7 +1,6 @@
 import express from "express";
 import expressGraphQL from "express-graphql";
-import { schema, createSDL } from "./utils/graphql/schema";
-import { executeSync } from "./utils/compareAlgorithm/compareAlgorithm";
+import { schema, createSDL } from "./src/schema";
 
 const app = express();
 const PORT: number = 5000;
@@ -19,5 +18,3 @@ createSDL();
 app.listen(PORT, () => {
   console.log(`GrapiQL Server Running on http://localhost:${PORT}/graphql`);
 });
-
-// executeSync(2);

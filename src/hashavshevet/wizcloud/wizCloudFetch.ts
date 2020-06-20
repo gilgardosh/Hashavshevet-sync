@@ -43,7 +43,7 @@ function wizCloudFetch(path, data = {}) {
 
 export async function napi() {
   return wizCloudFetch("api/napi").then((data) => {
-    return data["session"];
+    return data.session;
   });
 }
 // jurnal
@@ -98,7 +98,7 @@ export async function crmActivitiesTest(data) {
 export async function getCompanies() {
   return await wizCloudFetch("CompanyListToTokenApi/TokenCompanies").then(
     (data) => {
-      return data["repdata"];
+      return data.repdata;
     }
   );
 }

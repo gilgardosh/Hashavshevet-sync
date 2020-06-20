@@ -66,7 +66,7 @@ function postTransactionsToBatch(
       TransDebID: t.debtorId,
       TransType: t.type,
       ValueDate: t.valueDate,
-      moves: moves,
+      moves,
     };
   });
   // hashavshevet API call
@@ -75,7 +75,7 @@ function postTransactionsToBatch(
     insertolastb: args.insertToLastBatch,
     check: args.checkBatch,
     issue: args.issueBatch,
-    rows: rows,
+    rows,
   });
   // maping response to local key names
   // .then(

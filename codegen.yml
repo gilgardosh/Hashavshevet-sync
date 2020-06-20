@@ -1,6 +1,6 @@
 schema: http://localhost:5000/graphql
 generates:
-  ./utils/graphql/types/types.d.ts:
+  ./src/types/types.d.ts:
     plugins:
       - typescript
       - typescript-operations

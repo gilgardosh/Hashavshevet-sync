@@ -186,7 +186,7 @@ const schema = new GraphQLSchema({
 
 function createSDL() {
   const dataForSDL = printSchema(schema);
-  fs.writeFile(`./utils/graphql/SDL.graphql`, dataForSDL, "utf8", (err) => {
+  fs.writeFile(`./src/SDL.graphql`, dataForSDL, "utf8", (err) => {
     if (err) {
       console.log("An error occured while writing JSON Object to File.");
       console.log(err);
