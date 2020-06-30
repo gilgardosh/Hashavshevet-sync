@@ -36,7 +36,8 @@ $ npm run dev
 - smart algorithm to compare transactions
 
 # technical issues:
-- how to define personal account for hashavshevet inputs (the "me" side from bank transactions)
 - how to manage temporary inputs to hashavshevet
 - differentiate handling temp and issued batches
 - what to do with hashavshevet transactions that doesn't appear in bank accounts?
+- response keys with different types handling (examp. ./graphql/types/recordsTransactions => addTransactionsResponsType function)
+- add record and transaction errors (from checkBatch) as data in original type

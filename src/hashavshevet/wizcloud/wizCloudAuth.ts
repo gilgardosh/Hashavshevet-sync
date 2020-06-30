@@ -1,5 +1,5 @@
 import { config } from "dotenv";
-let fetch = require("node-fetch");
+import fetch from "node-fetch";
 
 config();
 
@@ -15,7 +15,7 @@ function wizCloudAuth() {
     const url = `https://lb1.wizcloud.co.il/createSession/${wizKey}/${company}`;
     fetch(url)
       .then((res) => res.text())
-      .then((data) => resolve(data))
+      .then((authToken) => resolve(authToken))
       .catch((error) => reject({ reason: "auth http fail", err: error }));
   });
   return p;
