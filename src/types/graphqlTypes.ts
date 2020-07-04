@@ -33,23 +33,23 @@ const UserType = new GraphQLObjectType({
             type: GraphQLNonNull(GraphQLString),
             description: '',
         },
-        use_name: {
+        useName: {
             type: GraphQLNonNull(GraphQLString),
             description: '',
         },
-        wizcomp_no: {
+        wizcompNo: {
             type: GraphQLString,
             description: '',
         },
-        company_name: {
+        companyName: {
             type: GraphQLString,
             description: '',
         },
-        user_id: {
+        userId: {
             type: GraphQLNonNull(GraphQLInt),
             description: '',
         },
-        company_id: {
+        companyId: {
             type: GraphQLInt,
             description: '',
         },

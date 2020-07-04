@@ -365,9 +365,9 @@ async function userCompanies() {
     return await hashavshevet
         .getCompanies()
         .then((d: { repdata: any[] }) => d.repdata)
-        // TODO: temorary until datafiles update
+        // rename keys to camelCase
         .then((companyListRaw) => {
-            const companyList = [];
+            const companyList: type.Company[] = [];
             for (const c of companyListRaw) {
                 companyList.push({
                     companyFileName: c.Company_File_Name,
@@ -377,16 +377,33 @@ async function userCompanies() {
             }
             return companyList;
         })
-        // end of temporary
-        .then((companyList) => {
+        .then((companyList: type.Company[]) => {
             return companyList;
         });
 }
 
 async function userDetails() {
-    return await hashavshevet.napi().then((data: { session: unknown }) => {
-        return data.session;
-    });
+    return await hashavshevet
+        .napi()
+        .then((d: { session: unknown }) => d.session)
+        // rename keys to camelCase
+        .then((raw: any) => {
+            const userDetails: type.HashavshevetUser = {
+                cid: raw.cid,
+                user: raw.user,
+                userId: raw.user_id,
+                companyId: raw.company_id,
+                branch: raw.branch,
+                useName: raw.use_name,
+                wizcompNo: raw.wizcomp_no,
+                companyName: raw.company_name,
+            };
+
+            return userDetails;
+        })
+        .then((userDetails: type.HashavshevetUser) => {
+            return userDetails;
+        });
 }
 
 export {

@@ -382,11 +382,11 @@ export type HashavshevetUser = {
     __typename?: 'HashavshevetUser';
     cid: Scalars['String'];
     user: Scalars['String'];
-    use_name: Scalars['String'];
-    wizcomp_no?: Maybe<Scalars['String']>;
-    company_name?: Maybe<Scalars['String']>;
-    user_id: Scalars['Int'];
-    company_id?: Maybe<Scalars['Int']>;
+    useName: Scalars['String'];
+    wizcompNo?: Maybe<Scalars['String']>;
+    companyName?: Maybe<Scalars['String']>;
+    userId: Scalars['Int'];
+    companyId?: Maybe<Scalars['Int']>;
     branch?: Maybe<Scalars['Int']>;
 };
 
@@ -616,7 +616,7 @@ export type StitchingResolver<TResult, TParent, TContext, TArgs> = {
     resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
 };
 
-export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
+export type Resolver<TResult, TParent = any, TContext = any, TArgs = any> =
     | ResolverFn<TResult, TParent, TContext, TArgs>
     | StitchingResolver<TResult, TParent, TContext, TArgs>;
 
@@ -655,21 +655,21 @@ export type SubscriptionObject<TResult, TKey extends string, TParent, TContext, 
     | SubscriptionSubscriberObject<TResult, TKey, TParent, TContext, TArgs>
     | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>;
 
-export type SubscriptionResolver<TResult, TKey extends string, TParent = {}, TContext = {}, TArgs = {}> =
+export type SubscriptionResolver<TResult, TKey extends string, TParent = any, TContext = any, TArgs = any> =
     | ((...args: any[]) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
     | SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>;
 
-export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
+export type TypeResolveFn<TTypes, TParent = any, TContext = any> = (
     parent: TParent,
     context: TContext,
     info: GraphQLResolveInfo,
 ) => Maybe<TTypes> | Promise<Maybe<TTypes>>;
 
-export type isTypeOfResolverFn<T = {}> = (obj: T, info: GraphQLResolveInfo) => boolean | Promise<boolean>;
+export type isTypeOfResolverFn<T = any> = (obj: T, info: GraphQLResolveInfo) => boolean | Promise<boolean>;
 
 export type NextResolverFn<T> = () => Promise<T>;
 
-export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs = {}> = (
+export type DirectiveResolverFn<TResult = any, TParent = any, TContext = any, TArgs = any> = (
     next: NextResolverFn<TResult>,
     parent: TParent,
     args: TArgs,
@@ -681,7 +681,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
     String: ResolverTypeWrapper<Scalars['String']>;
     Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
-    Query: ResolverTypeWrapper<{}>;
+    Query: ResolverTypeWrapper<any>;
     Int: ResolverTypeWrapper<Scalars['Int']>;
     Record: ResolverTypeWrapper<Record>;
     Float: ResolverTypeWrapper<Scalars['Float']>;
@@ -698,7 +698,7 @@ export type ResolversTypes = {
     BatchCheckMessage: ResolverTypeWrapper<BatchCheckMessage>;
     BatchCheckList: ResolverTypeWrapper<BatchCheckList>;
     ARecordErrorDetails: ResolverTypeWrapper<ARecordErrorDetails>;
-    Mutation: ResolverTypeWrapper<{}>;
+    Mutation: ResolverTypeWrapper<any>;
     NewBatch: ResolverTypeWrapper<NewBatch>;
     IsuueBatch:
         | ResolversTypes['IssueBatchStatus']
@@ -721,7 +721,7 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
     String: Scalars['String'];
     Boolean: Scalars['Boolean'];
-    Query: {};
+    Query: any;
     Int: Scalars['Int'];
     Record: Record;
     Float: Scalars['Float'];
@@ -738,7 +738,7 @@ export type ResolversParentTypes = {
     BatchCheckMessage: BatchCheckMessage;
     BatchCheckList: BatchCheckList;
     ARecordErrorDetails: ARecordErrorDetails;
-    Mutation: {};
+    Mutation: any;
     NewBatch: NewBatch;
     IsuueBatch:
         | ResolversParentTypes['IssueBatchStatus']
@@ -991,9 +991,9 @@ export type CompanyResolvers<
     ContextType = any,
     ParentType extends ResolversParentTypes['Company'] = ResolversParentTypes['Company']
 > = {
-    Company_File_Name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-    Company_Name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-    Comp_Vatnum?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    companyFileName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    companyName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    compVatnum?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
     __isTypeOf?: isTypeOfResolverFn<ParentType>;
 };
 
