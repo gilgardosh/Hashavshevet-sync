@@ -2,8 +2,6 @@ import { wizCloudAuth } from "./wizCloudAuth";
 import request from "request";
 
 function wizCloudFetch(path, data = {}) {
-  console.log("ping");
-
   const p = new Promise((resolve, reject) => {
     wizCloudAuth()
       .then(
