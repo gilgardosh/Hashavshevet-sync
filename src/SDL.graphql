@@ -487,13 +487,13 @@ type BankPage {
 """A Single Hashavshevet Company"""
 type Company {
   """"""
-  Company_File_Name: String!
+  companyFileName: String!
 
   """"""
-  Company_Name: String!
+  companyName: String!
 
   """"""
-  Comp_Vatnum: String!
+  compVatnum: String!
 }
 
 """A Single User on Hashavshevet"""

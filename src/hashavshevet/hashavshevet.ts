@@ -1,2 +1,2 @@
-export * from "./getAllFunctions";
-export * from "./wizcloud/wizCloudFetch";
+export * from './getAllFunctions';
+export * from './wizcloud/wizCloudFetch';
