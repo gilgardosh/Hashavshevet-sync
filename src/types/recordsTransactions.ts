@@ -213,7 +213,9 @@ const PostTransactionsResponseType = new GraphQLUnionType({
     resolveType: (data) => {
         if (typeof data.errors === 'string' || typeof data.errors === 'undefined') {
             return PostTransactionsResponseWithoutErrors;
-        } else if (typeof data.errors === 'object') {
+        }
+        // if(typeof data.errors === 'object')
+        else {
             return PostTransactionsResponseWithErrors;
         }
     },

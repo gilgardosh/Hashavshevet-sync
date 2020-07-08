@@ -107,7 +107,9 @@ const CheckBatchType = new GraphQLUnionType({
     resolveType: (data) => {
         if (typeof data.batch_check === 'string') {
             return BatchCheckIfStringType;
-        } else if (typeof data.batch_check === 'object') {
+        }
+        // if(typeof data.batch_check === 'object')
+        else {
             return BatchCheckIfListType;
         }
     },
@@ -151,7 +153,9 @@ const IssueBatchType = new GraphQLUnionType({
             return IssueBatchStatusType;
         } else if (typeof data.batch_check === 'string') {
             return BatchCheckIfStringType;
-        } else if (typeof data.batch_check === 'object') {
+        }
+        // if (typeof data.batch_check === 'object')
+        else {
             return BatchCheckIfListType;
         }
     },

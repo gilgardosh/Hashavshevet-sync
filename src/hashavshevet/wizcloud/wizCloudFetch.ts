@@ -16,7 +16,7 @@ function wizCloudFetch(path, data = {}) {
                         method: 'POST',
                         url,
                     };
-                    request.post(options, (error, response, body) => {
+                    request.post(options, (error, response) => {
                         if (error) {
                             console.log(error);
                             reject(error);

@@ -18,5 +18,11 @@
     }
   },
   "plugins": ["@typescript-eslint"],
-  "rules": {}
+  "rules": {
+    "camelcase" : ["warn", {}],
+    "@typescript-eslint/no-var-requires": 0,
+    "new-cap" : ["warn", { "newIsCap": false }],
+    "no-void": ["warn", { "allowAsStatement": false }],
+    "no-prototype-builtins" : "warn"
+  }
 }
