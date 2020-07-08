@@ -27,7 +27,8 @@
     "node-fetch": "^2.6.0",
     "prettier": "^2.0.5",
     "request": "^2.88.2",
-    "sofa-api": "^0.7.0"
+    "sofa-api": "^0.7.0",
+    "swagger-ui-express": "^4.1.4"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.14.0",
