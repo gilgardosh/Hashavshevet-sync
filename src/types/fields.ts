@@ -189,7 +189,7 @@ const debitOrCreditNumberEnum = new GraphQLEnumType({
             value: 1,
         },
         Credit: {
-            value: -1,
+            value: 0,
         },
     },
 });
