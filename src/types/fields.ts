@@ -189,12 +189,28 @@ const debitOrCreditNumberEnum = new GraphQLEnumType({
             value: 1,
         },
         Credit: {
-            value: 0,
+            value: -1,
         },
     },
 });
 const debitOrCreditNumber = {
     type: debitOrCreditNumberEnum,
+    description: 'Credit / Debit',
+};
+const debitOrCreditNumberEnumInput = new GraphQLEnumType({
+    name: 'debitOrCreditNumberEnumInput',
+    description: 'Credit / Debit',
+    values: {
+        Debit: {
+            value: 1,
+        },
+        Credit: {
+            value: 0,
+        },
+    },
+});
+const debitOrCreditNumberInput = {
+    type: debitOrCreditNumberEnumInput,
     description: 'Credit / Debit',
 };
 const debtorId = {
@@ -347,7 +363,7 @@ const reference1 = {
     description: 'Reference',
 };
 const reference2 = {
-    type: GraphQLInt,
+    type: GraphQLFloat,
     description: 'Reference-2',
 };
 const reference3 = {
@@ -467,7 +483,9 @@ export {
     date3,
     debitOrCreditName,
     debitOrCreditNumber,
+    debitOrCreditNumberInput,
     debitOrCreditNumberEnum,
+    debitOrCreditNumberEnumInput,
     debitOrCreditBankEnum,
     debitOrCreditNameForBank,
     debtorId,

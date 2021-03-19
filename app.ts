@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 
 import { graphql } from "graphql";
 import { readFileSync } from 'fs';
-// import { sortBy, reverse } from 'lodash';
+import { sortBy, reverse, intersectionWith, differenceWith } from 'lodash';
 import moment from 'moment';
 
 const app = express();
@@ -28,7 +28,7 @@ app.listen(PORT, () => {
 
 async function inputToHashavshevet() {
 
-  const mayTransactions = JSON.parse(readFileSync('./saved_tax_reports_2020_03_04_05_06.json', 'utf8'));
+  const mayTransactions = JSON.parse(readFileSync('./Amsterdam_01_2020.json', 'utf8'));
 
   const transactionsListToMutation = [];
 
@@ -106,7 +106,7 @@ async function inputToHashavshevet() {
     transactionsListToMutation.push(transactionToInput);
 
     const inputVariables = {
-      batchId: 150,
+      batchId: 151,
       insertToLastBatch: false,
       checkBatch: false,
       issueBatch: false,
@@ -166,77 +166,82 @@ async function inputToHashavshevet() {
   };
 }
 
-// async function compareHashavshevetToDB() {
-//   const getTransactions = `
-//   {
-//     getTransactions {
-//       id
-//       dueDate
-//       creditorId
-//       shekelSum
-//       foreignCurrencySum
-//       debtorId
-//       currencyCode
-//       records {
-//         debitOrCredit
-//         counterAccountId
-//         accountId
-//         shekelCredit
-//         shekelDebit
-//         shekelSum
-//         foreignCurrencySum
-//         foreignCurrencyCredit
-//         foreignCurrencyDebit
-//       }
-//       description
-//       reference1
-//       reference2
-//       type
-//       valueDate
-//       date3
-//       details1
-//     }
-//   }
-// `;
+async function compareHashavshevetToDB() {
+  const getTransactions = `
+  {
+    getTransactions {
+      id
+      dueDate
+      creditorId
+      shekelSum
+      foreignCurrencySum
+      debtorId
+      currencyCode
+      records {
+        debitOrCredit
+        counterAccountId
+        accountId
+        shekelCredit
+        shekelDebit
+        shekelSum
+        foreignCurrencySum
+        foreignCurrencyCredit
+        foreignCurrencyDebit
+      }
+      description
+      reference1
+      reference2
+      type
+      valueDate
+      date3
+      details1
+      batchId
+    }
+  }
+`;
 
-//   try {
-//     let result = await graphql(schema, getTransactions);
-//     let sortedTransactions = sortBy(result.data.getTransactions, ['date']);
-//     console.log(JSON.stringify(result.data.getTransactions[100]));
-//   } catch (error) {
-//     console.log(error);
-//   }
+  try {
+    let result = await graphql(schema, getTransactions);
+    // let sortedTransactions = sortBy(result.data.getTransactions, ['date']);
+    let sortedTransactions = reverse(sortBy(result.data.getTransactions, (transaction) => (new Date(transaction.dueDate))));
+    console.log(sortedTransactions[20].description);
+    console.log(sortedTransactions[20].shekelSum);
+    console.log(sortedTransactions[20].dueDate);
+    console.log(moment(sortedTransactions[20].dueDate).format('DD/MM/YYYY'));
+  } catch (error) {
+    console.log(error);
+  }
 
-// }
+}
 
-// async function compareHashavshevetBankTransactionsToDB() {
-//   const getTransactions = `
-//   {
-//     getBankPageRecords {
-//       id
-//       reference
-//       debitOrCredit
-//       cumulativeBalance
-//       cumulativeBalanceCalculated
-//       accountId
-//       sum
-//       details
-//       date
-//       adjustedRecord
-//     }
-//   }
-// `;
+async function compareHashavshevetBankTransactionsToDB() {
+  const getTransactions = `
+  {
+    getBankPageRecords {
+      id
+      reference
+      debitOrCredit
+      cumulativeBalance
+      cumulativeBalanceCalculated
+      accountId
+      sum
+      details
+      date
+      adjustedRecord
+    }
+  }
+`;
 
-//   try {
-//     let result = await graphql(schema, getTransactions);
-//     let filteredTransactions = result.data.getBankPageRecords.filter((transaction) => (transaction.accountId == 'עוש'));
-//     let sortedTransactions = reverse(sortBy(filteredTransactions, (transaction) => (new Date(transaction.date))));
-//     console.log(JSON.stringify(result.data.getBankPageRecords[100]));
-//   } catch (error) {
-//     console.log(error);
-//   }
+  try {
+    let result = await graphql(schema, getTransactions);
+    let filteredTransactions = result.data.getBankPageRecords.filter((transaction) => (transaction.accountId == 'עוש'));
+    let sortedTransactions = reverse(sortBy(filteredTransactions, (transaction) => (new Date(transaction.date))));
+    console.log(JSON.stringify(result.data.getBankPageRecords[100]));
+  } catch (error) {
+    console.log(error);
+  }
 
-// }
+}
 
 
 async function inputBankPagesToHashavshevet() {
@@ -273,16 +278,16 @@ async function inputBankPagesToHashavshevet() {
     };
 
     const addBankPagehMutation = `
-    mutation AddBankPage($bankPageRecords: [PostBankPageRecord]!) {
-      postBankPage(bankPageRecords: $bankPageRecords) {    
-        status
-        errors {
-          index
-          err
+      mutation AddBankPage($bankPageRecords: [PostBankPageRecord]!) {
+        postBankPage(bankPageRecords: $bankPageRecords) {    
+          status
+          errors {
+            index
+            err
+          }
         }
       }
-    }
-  `;
+    `;
 
     try {
       console.log(bankPageToInput);
@@ -293,14 +298,14 @@ async function inputBankPagesToHashavshevet() {
       console.log(error);
     }
   
-  };
+  }
 }
 
 
 // inputToHashavshevet();
+// inputBankPagesToHashavshevet();
 // compareHashavshevetToDB();
 // compareHashavshevetBankTransactionsToDB();
-inputBankPagesToHashavshevet();
 
 
 

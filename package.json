@@ -1,8 +1,9 @@
 {
-  "name": "hashavshevet-sync",
-  "version": "1.0.0",
+  "name": "hashavshevet-sync-uri-test",
+  "version": "1.0.4",
   "description": "",
-  "main": "node app.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "prestart": "npm run build",
