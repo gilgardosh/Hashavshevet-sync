@@ -1,12 +1,16 @@
 # hashavshevet-sync
 
+# pre-use:
+Prepare your WizcloudApiPrivateKey (personal token) and WizcloudApiDBName (company key):
+
+- WWizcloudApiPrivateKey is created/viewed within the wizcloud UI. You can find it at נתונים כלליים > תונכניות עזר > ניהול אסימוני הרשאות
+
+- WizcloudApiDBName can be retrieved from the companies list page (the landing page after logging into wizcloud). When a company description is hovered (even if it's an empty description), a tooltip with the key appears
+
 # deploy:
 create .env file, and add the following:
-  WIZ_KEY={wiz token here}
-  WIZ_COMPANY={company code here}
-
-  BANK_USER_CODE={bank user code here}
-  BANK_PASSWORD={bank password here}
+  WIZ_KEY={personal token here}
+  WIZ_COMPANY={company key here}
 
 $ npm i
 
