@@ -5,12 +5,13 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
+    "prebuild": "yarn json2types",
     "build": "tsc",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "prestart": "npm run build",
     "start": "tsc && node dist/app.js",
     "dev": "ts-node app.ts",
-    "generate": "graphql-codegen"
+    "json2types": "json2ts -i src/jsonSchemas/ -o src/types/"
   },
   "author": "",
   "license": "ISC",
@@ -25,13 +26,12 @@
     "eslint-plugin-prettier": "^3.1.4",
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
-    "graphql": "^15.0.0",
+    "json-schema-to-typescript": "^10.1.4",
     "lodash": "4.17.15",
     "moment": "2.26.0",
     "node-fetch": "^2.6.0",
     "prettier": "^2.0.5",
     "request": "^2.88.2",
-    "sofa-api": "^0.7.0",
     "swagger-ui-express": "^4.1.4"
   },
   "devDependencies": {
