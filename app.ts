@@ -1,25 +1,33 @@
-import express from "express";
-import expressGraphQL from "express-graphql";
-import { schema } from "./src/schema";
-import bodyParser from "body-parser";
+import express from 'express';
+import expressGraphQL from 'express-graphql';
+import { schemaInitiator } from './src/schema';
+import bodyParser from 'body-parser';
 
-import { graphql } from "graphql";
+import { graphql } from 'graphql';
 import { readFileSync } from 'fs';
 import { sortBy, reverse, intersectionWith, differenceWith } from 'lodash';
 import moment from 'moment';
+import { config } from 'dotenv';
 
 const app = express();
-const PORT: number = 5000;
-
+const PORT = 5000;
 
 app.use(bodyParser.json());
 
+config();
+
+const WIZ_KEY = process.env.DEP_WIZ_KEY;
+const WIZ_COMPANY = process.env.DEP_WIZ_COMPANY;
+const WIZ_URL = process.env.DEP_WIZ_URL;
+
+const schema = schemaInitiator(WIZ_KEY, WIZ_COMPANY, WIZ_URL);
+
 app.use(
-  "/graphql",
+  '/graphql',
   expressGraphQL({
     graphiql: true,
     schema,
-  })
+  }),
 );
 
 app.listen(PORT, () => {
@@ -27,28 +35,28 @@ app.listen(PORT, () => {
 });
 
 async function inputToHashavshevet() {
-
   const mayTransactions = JSON.parse(readFileSync('./Amsterdam_01_2020.json', 'utf8'));
 
   const transactionsListToMutation = [];
 
   function parseTransToIntToZero(amount) {
-    return (amount && amount != '') ? parseFloat(amount) : 0
+    return amount && amount != '' ? parseFloat(amount) : 0;
   }
 
   function parseTransToIntToNull(amount) {
-    return (amount && amount != '') ? parseFloat(amount) : null
+    return amount && amount != '' ? parseFloat(amount) : null;
   }
 
   for (const transaction of mayTransactions) {
+    const overallSum =
+      transaction.סכום_חובה_1 && transaction.סכום_חובה_1 != ''
+        ? parseTransToIntToZero(transaction.סכום_חובה_1) + parseTransToIntToZero(transaction.סכום_חובה_2)
+        : parseTransToIntToZero(transaction.סכום_זכות_1) + parseTransToIntToZero(transaction.סכום_זכות_2);
 
-    const overallSum = (transaction.סכום_חובה_1 && transaction.סכום_חובה_1 != '') ?
-      parseTransToIntToZero(transaction.סכום_חובה_1) + parseTransToIntToZero(transaction.סכום_חובה_2) :
-      parseTransToIntToZero(transaction.סכום_זכות_1) + parseTransToIntToZero(transaction.סכום_זכות_2);
-
-    const overallForeignSum = (transaction.סכום_חובה_1 && transaction.סכום_חובה_1 != '') ?
-      parseTransToIntToZero(transaction.מטח_סכום_חובה_1) + parseTransToIntToZero(transaction.מטח_סכום_חובה_2) :
-      parseTransToIntToZero(transaction.מטח_סכום_זכות_1) + parseTransToIntToZero(transaction.מטח_סכום_זכות_2);
+    const overallForeignSum =
+      transaction.סכום_חובה_1 && transaction.סכום_חובה_1 != ''
+        ? parseTransToIntToZero(transaction.מטח_סכום_חובה_1) + parseTransToIntToZero(transaction.מטח_סכום_חובה_2)
+        : parseTransToIntToZero(transaction.מטח_סכום_זכות_1) + parseTransToIntToZero(transaction.מטח_סכום_זכות_2);
 
     const transactionToInput = {
       dueDate: transaction.תאריך_ערך, // TODO: Fix after they fix
@@ -64,13 +72,13 @@ async function inputToHashavshevet() {
       date3: transaction.תאריך_3,
       details1: transaction.id,
       type: transaction.סוג_תנועה,
-      records: []
+      records: [],
     };
 
     if (parseTransToIntToNull(transaction.סכום_חובה_1)) {
       transactionToInput.records.push({
         accountId: transaction.חשבון_חובה_1,
-        debitOrCreditNumber: "Debit",
+        debitOrCreditNumber: 'Debit',
         shekelSum: parseTransToIntToZero(transaction.סכום_חובה_1),
         foreignCurrencySum: parseTransToIntToNull(transaction.מטח_סכום_חובה_1),
       });
@@ -79,28 +87,28 @@ async function inputToHashavshevet() {
     if (parseTransToIntToNull(transaction.סכום_זכות_1)) {
       transactionToInput.records.push({
         accountId: transaction.חשבון_זכות_1,
-        debitOrCreditNumber: "Credit",
+        debitOrCreditNumber: 'Credit',
         shekelSum: parseTransToIntToZero(transaction.סכום_זכות_1),
         foreignCurrencySum: parseTransToIntToNull(transaction.מטח_סכום_זכות_1),
       });
     }
 
     if (parseTransToIntToNull(transaction.סכום_חובה_2)) {
-          transactionToInput.records.push({
-            accountId: transaction.חשבון_חובה_2,
-            debitOrCreditNumber: "Debit",
-            shekelSum: parseTransToIntToZero(transaction.סכום_חובה_2),
-            foreignCurrencySum: parseTransToIntToNull(transaction.מטח_זכות_חובה_2),
-          });
+      transactionToInput.records.push({
+        accountId: transaction.חשבון_חובה_2,
+        debitOrCreditNumber: 'Debit',
+        shekelSum: parseTransToIntToZero(transaction.סכום_חובה_2),
+        foreignCurrencySum: parseTransToIntToNull(transaction.מטח_זכות_חובה_2),
+      });
     }
 
     if (parseTransToIntToNull(transaction.סכום_זכות_2)) {
-        transactionToInput.records.push({
-          accountId: transaction.חשבון_זכות_2,
-          debitOrCreditNumber: "Credit",
-          shekelSum: parseTransToIntToZero(transaction.סכום_זכות_2),
-          foreignCurrencySum: parseTransToIntToNull(transaction.מטח_סכום_זכות_2),
-        });
+      transactionToInput.records.push({
+        accountId: transaction.חשבון_זכות_2,
+        debitOrCreditNumber: 'Credit',
+        shekelSum: parseTransToIntToZero(transaction.סכום_זכות_2),
+        foreignCurrencySum: parseTransToIntToNull(transaction.מטח_סכום_זכות_2),
+      });
     }
 
     transactionsListToMutation.push(transactionToInput);
@@ -110,7 +118,7 @@ async function inputToHashavshevet() {
       insertToLastBatch: false,
       checkBatch: false,
       issueBatch: false,
-      transactionsList: [transactionToInput]
+      transactionsList: [transactionToInput],
     };
 
     const createTransactionMutation = `
@@ -147,23 +155,24 @@ async function inputToHashavshevet() {
     }
   `;
 
-    if ((parseTransToIntToZero(transaction.סכום_חובה_1) +
+    if (
+      parseTransToIntToZero(transaction.סכום_חובה_1) +
         parseTransToIntToZero(transaction.סכום_חובה_2) +
         parseTransToIntToZero(transaction.סכום_זכות_1) +
-        parseTransToIntToZero(transaction.סכום_זכות_2))
-          != 0
-        ) {
-          try {
-            let result = await graphql(schema, createTransactionMutation, null, null, inputVariables);
-            console.log(JSON.stringify(result));
-            if (result.errors) {
-              console.log(result);
-            }
-          } catch (error) {
-            console.log(error);
-          }
+        parseTransToIntToZero(transaction.סכום_זכות_2) !=
+      0
+    ) {
+      try {
+        const result = await graphql(schema, createTransactionMutation, null, null, inputVariables);
+        console.log(JSON.stringify(result));
+        if (result.errors) {
+          console.log(result);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
-  };
+  }
 }
 
 async function compareHashavshevetToDB() {
@@ -201,9 +210,11 @@ async function compareHashavshevetToDB() {
 `;
 
   try {
-    let result = await graphql(schema, getTransactions);
+    const result = await graphql(schema, getTransactions);
     // let sortedTransactions = sortBy(result.data.getTransactions, ['date']);
-    let sortedTransactions = reverse(sortBy(result.data.getTransactions, (transaction) => (new Date(transaction.dueDate))));
+    const sortedTransactions = reverse(
+      sortBy(result.data.getTransactions, (transaction) => new Date(transaction.dueDate)),
+    );
     console.log(sortedTransactions[20].description);
     console.log(sortedTransactions[20].shekelSum);
     console.log(sortedTransactions[20].dueDate);
@@ -211,7 +222,6 @@ async function compareHashavshevetToDB() {
   } catch (error) {
     console.log(error);
   }
-
 }
 
 async function compareHashavshevetBankTransactionsToDB() {
@@ -233,22 +243,18 @@ async function compareHashavshevetBankTransactionsToDB() {
 `;
 
   try {
-    let result = await graphql(schema, getTransactions);
-    let filteredTransactions = result.data.getBankPageRecords.filter((transaction) => (transaction.accountId == 'עוש'));
-    let sortedTransactions = reverse(sortBy(filteredTransactions, (transaction) => (new Date(transaction.date))));
+    const result = await graphql(schema, getTransactions);
+    const filteredTransactions = result.data.getBankPageRecords.filter((transaction) => transaction.accountId == 'עוש');
+    const sortedTransactions = reverse(sortBy(filteredTransactions, (transaction) => new Date(transaction.date)));
     console.log(JSON.stringify(result.data.getBankPageRecords[100]));
   } catch (error) {
     console.log(error);
   }
-
 }
 
-
 async function inputBankPagesToHashavshevet() {
-
   const transactions = JSON.parse(readFileSync('./merged_tables.json', 'utf8'));
   for (const transaction of transactions) {
-
     let accountId = '';
     switch (transaction.account_type) {
       case 'checking_ils':
@@ -259,22 +265,22 @@ async function inputBankPagesToHashavshevet() {
         break;
       case 'checking_usd':
         accountId = 'עוש1';
-        break;        
+        break;
       default:
-          console.error('unknown account type', transaction.account_type);
+        console.error('unknown account type', transaction.account_type);
     }
 
     const bankPageToInput = {
       accountId: accountId,
-      reference: transaction.bank_reference, 
-      creditOrDebit: (transaction.event_amount > 0) ? 'Credit' : 'Debit',
+      reference: transaction.bank_reference,
+      creditOrDebit: transaction.event_amount > 0 ? 'Credit' : 'Debit',
       sum: Math.abs(transaction.event_amount),
       details: transaction.bank_description.replace('״', '').replace('"', ''),
       date: moment(transaction.event_date, 'YYYY-MM-DD').format('DD/MM/YYYY'),
     };
 
     const inputVariables = {
-      bankPageRecords: [bankPageToInput]
+      bankPageRecords: [bankPageToInput],
     };
 
     const addBankPagehMutation = `
@@ -291,23 +297,18 @@ async function inputBankPagesToHashavshevet() {
 
     try {
       console.log(bankPageToInput);
-      let result = await graphql(schema, addBankPagehMutation, null, null, inputVariables);
+      const result = await graphql(schema, addBankPagehMutation, null, null, inputVariables);
       console.log(result);
-      
     } catch (error) {
       console.log(error);
     }
-  
   }
 }
-
 
 // inputToHashavshevet();
 // inputBankPagesToHashavshevet();
 // compareHashavshevetToDB();
 // compareHashavshevetBankTransactionsToDB();
-
-
 
 // console.log(transactionsListToMutation);
 // console.log(JSON.stringify(inputVariables));

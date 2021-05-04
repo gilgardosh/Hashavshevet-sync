@@ -1,2 +1,2 @@
-import { schema } from "./src/schema";
-export default schema;
+import { schemaInitiator } from './src/schema';
+export default schemaInitiator;
