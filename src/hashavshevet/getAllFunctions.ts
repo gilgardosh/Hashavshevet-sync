@@ -1,5 +1,7 @@
 import { exportDataRecords } from './hashavshevet';
+import * as bankPageSchemaFile from '../jsonSchemas/bankPage.json';
 import * as dataFile from './dataFiles';
+import { validateSchema } from '../utils/validator';
 
 function getAll(datafile: string, parameters = []) {
   const data = {
@@ -27,7 +29,11 @@ async function getAllAccounts() {
 }
 
 async function getAllBankPageRecords() {
-  return await getAll(dataFile.bankPageRecords);
+  const data = await getAll(dataFile.bankPageRecords);
+  const { repdata } = data as { repdata: any[] };
+  const validation = await validateSchema(bankPageSchemaFile, repdata);
+  if (!validation.isValid) throw new Error(validation.errors);
+  return data;
 }
 
 export { getAllRecords, getAllTransactions, getAllBatches, getAllAccounts, getAllBankPageRecords };
