@@ -6,17 +6,17 @@
  */
 
 export type BankPage = {
-  id: number;
-  bank_page_id: number;
-  reference?: number;
-  debit_or_credit?: "חובה" | "זכות";
-  cumulative_balance?: number;
-  cumulative_balance_calculated?: number;
-  match_number?: number;
-  account_id?: string;
-  sum?: number;
-  details?: string;
-  account_name?: string;
+  accountId?: string;
+  accountName?: string;
+  adjustedRecord?: string;
+  bankPageId: number;
+  cumulativeBalance?: number;
+  cumulativeBalanceCalculated?: number;
   date?: string;
-  adjusted_record?: string;
+  debitOrCredit?: "חובה" | "זכות";
+  details?: string;
+  id: number;
+  matchNumber?: number | null;
+  reference?: number;
+  sum?: number;
 }[];

@@ -3,43 +3,63 @@ import * as bankPageSchemaFile from '../jsonSchemas/bankPage.json';
 import * as recordSchemaFile from '../jsonSchemas/record.json';
 import * as dataFile from './dataFiles';
 import { validateSchema } from '../utils/validator';
+import { BankPage, Record } from '../types';
 
 function getAll(datafile: string, parameters = []) {
   const data = {
     datafile,
-    parameters: [],
+    parameters,
   };
   if (parameters.length) data.parameters = parameters;
   return exportDataRecords(data);
 }
 
-async function getAllRecords() {
-  const data = await getAll(dataFile.records);
-  const { repdata } = data as { repdata: any[] };
-  const validation = await validateSchema(recordSchemaFile, repdata);
+const getAllRecords = async (): Promise<Record[]> => {
+  const data = await getAll(dataFile.records).then((res: { repdata: Record[] }) => res.repdata);
+  const validation = await validateSchema(recordSchemaFile, data);
   if (!validation.isValid) throw new Error(validation.errors);
   return data;
-}
+};
 
-async function getAllTransactions() {
+const getAllTransactions = async () => {
   return await getAll(dataFile.transactions);
-}
+};
 
-async function getAllBatches() {
+const getAllBatches = async () => {
   return await getAll(dataFile.batches);
-}
+};
 
-async function getAllAccounts() {
+const getAllAccounts = async () => {
   return await getAll(dataFile.accounts);
-}
+};
 
-async function getAllBankPageRecords() {
-  const data = await getAll(dataFile.bankPageRecords);
-  const { repdata } = data as { repdata: any[] };
-  const validation = await validateSchema(bankPageSchemaFile, repdata);
+const getBankPageRecords = async (filters: BankPageRecordsFilters = {}): Promise<BankPage[]> => {
+  const data = await getAll(dataFile.bankPageRecords, [
+    {
+      p_name: '__MUSTACH_P0__',
+      id: '0', // if you change this, parameter will be ignored
+      type: 'long',
+      name: 'betweenIDs',
+      defVal: filters.minID || -999999999,
+      opName: 'מ..עד',
+      opOrigin: 'from',
+    },
+    {
+      p_name: '__MUSTACH_P1__',
+      id: '500', // if you change this, parameter will be ignored
+      type: 'long',
+      name: 'betweenIDs1',
+      defVal: filters.maxID || 999999999,
+      opName: 'מ..עד',
+      opOrigin: 'to',
+    },
+  ]).then((res: { repdata: BankPage[] }) => res.repdata);
+  const validation = await validateSchema(bankPageSchemaFile, data);
   if (!validation.isValid) throw new Error(validation.errors);
   return data;
-}
+};
 
-export { getAllRecords, getAllTransactions, getAllBatches, getAllAccounts, getAllBankPageRecords };
+type BankPageRecordsFilters = { minID?: number; maxID?: number };
+
+export { getAllRecords, getAllTransactions, getAllBatches, getAllAccounts, getBankPageRecords };
 export * from './wizcloud/wizCloudFetch';

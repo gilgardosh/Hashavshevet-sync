@@ -5,47 +5,47 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
-      "id": {
-        "type": "integer"
-      },
-      "bank_page_id": {
-        "type": "integer"
-      },
-      "reference": {
-        "type": "integer"
-      },
-      "debit_or_credit": {
-        "type": "string",
-        "enum": ["חובה", "זכות"]
-      },
-      "cumulative_balance": {
-        "type": "number"
-      },
-      "cumulative_balance_calculated": {
-        "type": "number"
-      },
-      "match_number": {
-        "type": "integer"
-      },
-      "account_id": {
+      "accountId": {
         "type": "string"
       },
-      "sum": {
+      "accountName": {
+        "type": "string"
+      },
+      "adjustedRecord": {
+        "type": "string"
+      },
+      "bankPageId": {
+        "type": "integer"
+      },
+      "cumulativeBalance": {
         "type": "number"
       },
-      "details": {
-        "type": "string"
-      },
-      "account_name": {
-        "type": "string"
+      "cumulativeBalanceCalculated": {
+        "type": "number"
       },
       "date": {
         "type": "string"
       },
-      "adjusted_record": {
+      "debitOrCredit": {
+        "type": "string",
+        "enum": ["חובה", "זכות"]
+      },
+      "details": {
         "type": "string"
+      },
+      "id": {
+        "type": "integer"
+      },
+      "matchNumber": {
+        "type": ["integer", "null"]
+      },
+      "reference": {
+        "type": "integer"
+      },
+      "sum": {
+        "type": "number"
       }
     },
-    "required": ["id", "bank_page_id"]
+    "required": ["id", "bankPageId"]
   }
 }
