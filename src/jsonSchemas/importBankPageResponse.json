@@ -6,7 +6,7 @@
   "properties": {
     "status": {
       "type": "string",
-      "enum": ["errors"]
+      "enum": ["errors", "OK"]
     },
     "errors": {
       "type": "array",

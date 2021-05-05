@@ -6,7 +6,7 @@
  */
 
 export interface ImportBankPageResponse {
-  status: "errors";
+  status: "errors" | "OK";
   errors: {
     index: number;
     field?: string;

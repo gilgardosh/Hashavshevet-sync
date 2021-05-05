@@ -1,2 +1,2 @@
-import { schemaInitiator } from './src/schema';
-export default schemaInitiator;
+import { app } from './src/hashavshevet';
+export default app;

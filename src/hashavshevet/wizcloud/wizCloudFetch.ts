@@ -1,5 +1,8 @@
 import { wizCloudAuth } from './wizCloudAuth';
 import request from 'request';
+import { ImportBankPageResponse } from '../../types';
+import { validateSchema } from '../../utils/validator';
+import * as bankPageResponseSchemaFile from '../../jsonSchemas/importBankPageResponse.json';
 
 function wizCloudFetch(path, data = {}) {
   const wizUrl = process.env.WIZ_URL;
@@ -41,58 +44,69 @@ function wizCloudFetch(path, data = {}) {
   return p;
 }
 
-export function napi() {
+export const napi = () => {
   return wizCloudFetch('api/napi');
-}
+};
 // jurnal
-export function addTransactionsToBatch(data) {
+export const addTransactionsToBatch = (data) => {
   return wizCloudFetch('jtransApi/tmpBatch', data);
-}
-export function checkBatch(data) {
+};
+export const checkBatch = (data) => {
   return wizCloudFetch('jtransApi/chkBatch', data);
-}
-export function newBatch() {
+};
+export const newBatch = () => {
   return wizCloudFetch('jtransApi/newBatch');
-}
-export function issueBatch(data) {
+};
+export const issueBatch = (data) => {
   return wizCloudFetch('jtransApi/issueBatch', data);
-}
+};
 // index
-export function importIndexRecords(data) {
+export const importIndexRecords = (data) => {
   return wizCloudFetch('IndexApi/importIndex', data);
-}
-export function deleteIndexRecords(data) {
+};
+export const deleteIndexRecords = (data) => {
   return wizCloudFetch('IndexApi/deleteIndex', data);
-}
+};
 // bankpages
-export function importBankPageRecords(data) {
-  return wizCloudFetch('BankPagesApi/importBankPage', data);
-}
+export const importBankPageRecords = async (records: BankPageImportType[]): Promise<ImportBankPageResponse> => {
+  const data = await wizCloudFetch('BankPagesApi/importBankPage', { rows: records });
+  const validation = await validateSchema(bankPageResponseSchemaFile, data);
+  return data as ImportBankPageResponse;
+};
 // data export
-export function exportDataRecords(data) {
+export const exportDataRecords = (data) => {
   return wizCloudFetch('ExportDataApi/exportData', data);
-}
+};
 // inv documents
-export function createDocument(data) {
+export const createDocument = (data) => {
   return wizCloudFetch('invApi/createDoc', data);
-}
-export function showDocument(data) {
+};
+export const showDocument = (data) => {
   return wizCloudFetch('invApi/getDoc', data);
-}
-export function delDocument(data) {
+};
+export const delDocument = (data) => {
   return wizCloudFetch('invApi/delDocument', data);
-}
-export function issueDoc(data) {
+};
+export const issueDoc = (data) => {
   return wizCloudFetch('invApi/issueDocument', data);
-}
+};
 // crm
-export function crmActivities(data) {
+export const crmActivities = (data) => {
   return wizCloudFetch('crmActivitiesApi/createSchema', data);
-}
-export function crmActivitiesTest(data) {
+};
+export const crmActivitiesTest = (data) => {
   return wizCloudFetch('crmActivitiesTest/createSchema', data);
-}
+};
 // companies list
-export function getCompanies() {
+export const getCompanies = () => {
   return wizCloudFetch('CompanyListToTokenApi/TokenCompanies');
-}
+};
+
+type BankPageImportType = {
+  AccountKey: string;
+  Reference?: number; // TODO: integer
+  CreditDebit: 1 | 0;
+  SuF: number;
+  Details?: string;
+  DatF: string;
+};
