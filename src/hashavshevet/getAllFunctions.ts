@@ -1,9 +1,9 @@
 import { exportDataRecords } from './hashavshevet';
-import * as bankPageSchemaFile from '../jsonSchemas/bankPage.json';
+import * as bankPageSchemaFile from '../jsonSchemas/bankPageRecord.json';
 import * as recordSchemaFile from '../jsonSchemas/record.json';
 import * as dataFile from './dataFiles';
 import { validateSchema } from '../utils/validator';
-import { BankPage, Record } from '../types';
+import { BankPageRecord, Record } from '../types';
 
 function getAll(datafile: string, parameters = []) {
   const data = {
@@ -33,7 +33,7 @@ const getAllAccounts = async () => {
   return await getAll(dataFile.accounts);
 };
 
-const getBankPageRecords = async (filters: BankPageRecordsFilters = {}): Promise<BankPage[]> => {
+const getBankPageRecords = async (filters: BankPageRecordsFilters = {}): Promise<BankPageRecord[]> => {
   const data = await getAll(dataFile.bankPageRecords, [
     {
       p_name: '__MUSTACH_P0__',
@@ -53,7 +53,7 @@ const getBankPageRecords = async (filters: BankPageRecordsFilters = {}): Promise
       opName: 'מ..עד',
       opOrigin: 'to',
     },
-  ]).then((res: { repdata: BankPage[] }) => res.repdata);
+  ]).then((res: { repdata: BankPageRecord[] }) => res.repdata);
   const validation = await validateSchema(bankPageSchemaFile, data);
   if (!validation.isValid) throw new Error(validation.errors);
   return data;

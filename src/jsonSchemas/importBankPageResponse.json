@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "errors"],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["errors"]
+    },
+    "errors": {
+      "type": "array",
+      "additionalProperties": false,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["index"],
+        "properties": {
+          "index": {
+            "type": "integer"
+          },
+          "field": {
+            "type": "string"
+          },
+          "err": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
