@@ -10,7 +10,6 @@
     },
     "errors": {
       "type": "array",
-      "additionalProperties": false,
       "items": {
         "type": "object",
         "additionalProperties": false,
