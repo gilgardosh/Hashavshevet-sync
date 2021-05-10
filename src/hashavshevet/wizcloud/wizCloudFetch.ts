@@ -1,48 +1,37 @@
-import { wizCloudAuth } from './wizCloudAuth';
-import request from 'request';
 import { ImportBankPageResponse } from '../../types';
 import { validateSchema } from '../../utils/validator';
 import * as bankPageResponseSchemaFile from '../../jsonSchemas/importBankPageResponse.json';
+import fetch from 'node-fetch';
+import QueryString from 'qs';
 
-function wizCloudFetch(path, data = {}) {
+const wizCloudFetch = async (path, data = {}) => {
+  const authToken = process.env.WIZ_AUTH;
   const wizUrl = process.env.WIZ_URL;
+  const url = `${wizUrl}${path}`;
 
-  const p = new Promise((resolve, reject) => {
-    wizCloudAuth()
-      .then(
-        (token) => {
-          const wizAuthToken = token;
-          const url = `${wizUrl}${path}`;
-          const options = {
-            form: data,
-            headers: {
-              Authorization: `Bearer ${wizAuthToken}`,
-            },
-            method: 'POST',
-            url,
-          };
-          request.post(options, (error, response) => {
-            if (error) {
-              console.log(error);
-              reject(error);
-            } else {
-              resolve(JSON.parse(response.body));
-            }
-          });
-        },
-        (error) => {
-          console.log('ERR12', error);
-          throw new Error('auth error');
-        },
-      )
-      .catch((e) => {
-        console.log('ERR12', e);
-        throw new Error('auth error');
-      });
-  });
+  const cleanUrl = (url: string) => {
+    return url.replace('https://', '').replace('http://', '').replace('/', '');
+  };
 
-  return p;
-}
+  let options = {
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+      'content-type': 'application/x-www-form-urlencoded',
+    },
+    method: 'POST',
+    host: cleanUrl(wizUrl),
+  };
+
+  options.headers['host'] = cleanUrl(wizUrl);
+  options['body'] = QueryString.stringify(data);
+  return await fetch(url, options)
+    .then((res) => res.json())
+    .then((json) => json)
+    .catch((e) => {
+      console.log(e);
+      throw new Error('request error');
+    });
+};
 
 export const napi = () => {
   return wizCloudFetch('api/napi');

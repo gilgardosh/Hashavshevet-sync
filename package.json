@@ -2,16 +2,15 @@
   "name": "hashavshevet-sync-uri-test",
   "version": "1.0.4",
   "description": "",
-  "exports": "./index.ts",
+  "exports": "./dist/index.js",
   "license": "ISC",
   "type":"module",
   "scripts": {
     "prebuild": "yarn json2types",
     "build": "tsc",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
-    "prestart": "npm run build",
-    "start": "tsc",
-    "json2types": "json2ts -i src/jsonSchemas/ -o src/types/"
+    "dev": "ts-node ./app.ts",
+    "json2types": "json2ts -i ./src/jsonSchemas/ -o ./src/types/"
   },
   "engines": {
     "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
@@ -19,12 +18,16 @@
   "dependencies": {
     "ajv": "8.3.0",
     "dotenv": "9.0.1",
+    "got": "11.8.2",
     "json-schema-to-typescript": "10.1.4",
     "node-fetch": "2.6.1",
+    "qs": "6.10.1",
     "request": "2.88.2"
   },
   "devDependencies": {
     "@types/node": "15.0.2",
+    "@types/node-fetch": "2.5.10",
+    "@types/qs": "6.9.6",
     "@typescript-eslint/eslint-plugin": "4.22.1",
     "@typescript-eslint/parser": "4.22.1",
     "eslint": "7.26.0",

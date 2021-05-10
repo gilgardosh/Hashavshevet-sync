@@ -3,11 +3,7 @@ import fetch from 'node-fetch';
 
 config();
 
-function wizCloudAuth() {
-  const wizKey = process.env.WIZ_KEY; // copied from apiPermits.html
-  const company = process.env.WIZ_COMPANY; // wizcloud server domain, defaults to wizcloud.co.il;
-  const wizUrl = process.env.WIZ_URL;
-
+function wizCloudAuth(wizKey: string, company: string, wizUrl: string) {
   const p = new Promise((resolve, reject) => {
     if (!wizKey) {
       reject(new Error('Missing Hashavshevet ser key or company ID'));
