@@ -14,7 +14,7 @@ export type BankPageRecord = {
   cumulativeBalanceCalculated?: number;
   date?: string;
   debitOrCredit?: "חובה" | "זכות";
-  details?: string;
+  details?: string | null;
   id: number;
   matchNumber?: number | null;
   reference?: number;
