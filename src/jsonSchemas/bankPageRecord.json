@@ -31,7 +31,7 @@
         "enum": ["חובה", "זכות"]
       },
       "details": {
-        "type": "string"
+        "type": ["string", "null"]
       },
       "id": {
         "type": "integer"
