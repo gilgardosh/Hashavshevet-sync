@@ -1,4 +1,4 @@
-import { getBankPageRecords, importBankPageRecords, getAllRecords } from './hashavshevet/hashavshevet';
+import { getBankPageRecords, importBankPageRecords, getAllRecords, getCompanies, newBatch, napi, getAllBatches } from './hashavshevet/hashavshevet';
 import { wizCloudAuth } from './hashavshevet/wizcloud/wizCloudAuth';
 
 export const app = async (wizPersonalToken: string, wizCompanyKey: string, wizUrl: string) => {
@@ -15,5 +15,9 @@ export const app = async (wizPersonalToken: string, wizCompanyKey: string, wizUr
     getBankPageRecords,
     importBankPageRecords,
     getAllRecords,
+    getCompanies,
+    newBatch,
+    napi,
+    getAllBatches
   };
 };

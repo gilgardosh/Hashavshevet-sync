@@ -10,7 +10,6 @@ function getAll(datafile: string, parameters = []) {
     datafile,
     parameters,
   };
-  if (parameters.length) data.parameters = parameters;
   return exportDataRecords(data);
 }
 

@@ -4,7 +4,6 @@
   "description": "",
   "exports": "./dist/index.js",
   "license": "ISC",
-  "type":"module",
   "scripts": {
     "prebuild": "yarn json2types",
     "build": "tsc",

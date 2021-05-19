@@ -3,6 +3,7 @@ import { validateSchema } from '../../utils/validator';
 import * as bankPageResponseSchemaFile from '../../jsonSchemas/importBankPageResponse.json';
 import fetch from 'node-fetch';
 import QueryString from 'qs';
+import { ImportBankPageRequest } from '../../types/importBankPageRequest';
 
 const wizCloudFetch = async (path, data = {}) => {
   const authToken = process.env.WIZ_AUTH;
@@ -33,13 +34,13 @@ const wizCloudFetch = async (path, data = {}) => {
     });
 };
 
-export const napi = () => {
-  return wizCloudFetch('api/napi');
-};
+// export const napi = () => {
+//   return wizCloudFetch('api/napi');
+// };
 // jurnal
-export const addTransactionsToBatch = (data) => {
-  return wizCloudFetch('jtransApi/tmpBatch', data);
-};
+// export const addTransactionsToBatch = (data) => {
+//   return wizCloudFetch('jtransApi/tmpBatch', data);
+// };
 export const checkBatch = (data) => {
   return wizCloudFetch('jtransApi/chkBatch', data);
 };
@@ -58,7 +59,8 @@ export const deleteIndexRecords = (data) => {
 };
 // bankpages
 export const importBankPageRecords = async (records: BankPageImportType[]): Promise<ImportBankPageResponse> => {
-  const data = await wizCloudFetch('BankPagesApi/importBankPage', { rows: records });
+  const input: ImportBankPageRequest = { rows: records}
+  const data = await wizCloudFetch('BankPagesApi/importBankPage', input);
   const validation = await validateSchema(bankPageResponseSchemaFile, data);
   return data as ImportBankPageResponse;
 };
